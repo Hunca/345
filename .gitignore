@@ -17,3 +17,5 @@
 *.ini
 *.exe
 .vscode/
+*.dll
+*.a
