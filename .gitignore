@@ -19,3 +19,7 @@
 .vscode/
 *.dll
 *.a
+.vs/
+CMakeFiles/
+src/
+test/
