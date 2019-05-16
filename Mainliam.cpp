@@ -24,54 +24,57 @@ int main() {
 	innerTable.setOutlineThickness(59.f);
 	innerTable.setOutlineColor(sf::Color::Blue);
 
-	// while (window.isOpen())
-	// {
-        ball.vx = (ball.x - (ball.x-(ball.radius/10)));
-        ball.vy = (ball.y - ball.y);
-        printf("%f, %f", ball.vx, ball.vy);
+    ball.vx = (ball.x - (ball.x-(ball.radius/20)));
+    ball.vy = (ball.y - (ball.y-(ball.radius/20)));
+
+    ball.ax = 0;
+    ball.ay = 0;
+
+	while (window.isOpen())
+	{
 		sf::Event event;
+        while (window.pollEvent(event)){
+			if (event.type == sf::Event::Closed){
+				window.close();
+            }
+		}
 		
         while(ball.vx != 0 || ball.vy != 0){
-            while (window.pollEvent(event))
-		    {
-			if (event.type == sf::Event::Closed)
-				window.close();
-		    }
-            if(fabs(ball.vx*ball.vx + ball.vy*ball.vy) < 0.01f){
-                ball.vx = 0;
-                ball.vy = 0;
+            
+            if (ball.x < 210) {
+                ball.vx *= -1;
             }
+            if (ball.x + ball.radius * 2 > tableWidth + 210) {
+                ball.vx *= -1;
+            }
+            if(ball.y < 210){
+                ball.vy *= -1;
+            }
+            if(ball.y + ball.radius*2 > tableHeight+210){
+                ball.vy *= -1;
+            }
+
+            ball.ax = (-ball.vx) * 0.00075f;
+            ball.ay = (-ball.vy) * 0.00075f;
+
+            ball.vx += ball.ax;
+            ball.vy += ball.ay;
+
             ball.x += ball.vx;
             ball.y += ball.vy;
             shape.setPosition(ball.x, ball.y);
-           // if (shape.getPosition().x + shape.getRadius() * 2 >= tableWidth + 210) {
-            if (shape.getPosition().x <= 210) {
-                    ball.vx = (ball.x + +(ball.radius/10));
-                    ball.vy = (ball.y - ball.y);
-            }
-            if (shape.getPosition().x + shape.getRadius() * 2 >= tableWidth + 210) {
 
-                    ball.vx = (ball.x - (ball.x+(ball.radius/10)));
-                    ball.vy = (ball.y - ball.y);
+            if(fabs(ball.vx*ball.vx + ball.vy*ball.vy) < 0.005f){
+                ball.vx = 0;
+                ball.vy = 0;
             }
-            // if (direction == false) {
-            //     shape.move(1.f, 0.f);
-            //     if (shape.getPosition().x + shape.getRadius() * 2 >= tableWidth + 210) {
-            //         direction = true;
-            //     }
-            // }
-            // if (direction == true) {
-            //     shape.move(-1.f, 0.f);
-            //     if (shape.getPosition().x <= 210) {
-            //         direction = false;
-            //     }
-            // }
+
             window.clear();
             window.draw(innerTable);
             window.draw(shape);
             window.display();
         }
 		
-	//}
+	}
     return 0;
 }
