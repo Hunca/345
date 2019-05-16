@@ -3,9 +3,9 @@
 class Ball {
 private:
 	int num;
+public:
 	float x, y, vx, vy, ax, ay, radius, speed;
 	bool isSunk, isMoving;
-public:
 	Ball(int ballNum, float rad, float xPos, float yPos);
 	~Ball();
 	float getX();
