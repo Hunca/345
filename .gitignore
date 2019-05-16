@@ -16,6 +16,7 @@
 *.smod
 *.ini
 *.exe
+.vscode/
 *.dll
 *.a
 .vs/
