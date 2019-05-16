@@ -1,11 +1,15 @@
 #include "Ball.h"
 int num;
-float x, y, radius, speed;
-Ball::Ball(int ballNum, float xPos, float yPos, float rad) {
+float x, y, vx, vy, ax, ay, radius, speed;
+bool isSunk;
+
+Ball::Ball(int ballNum, float rad, float xPos, float yPos) {
 	num = ballNum;
-	x = xPos;
-	y = yPos;
+	x = xPos; y = yPos;
+	vx = 0; vy = 0;
+	ax = 0; ay = 0;
 	radius = rad;
+	isSunk = false;
 }
 Ball::~Ball() {
 

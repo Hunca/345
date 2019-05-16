@@ -17,5 +17,7 @@
 *.ini
 *.exe
 .vscode/
-*.dll
-*.a
+.vs/
+CMakeFiles/
+src/
+test/
