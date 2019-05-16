@@ -6,6 +6,14 @@
 
 using namespace std;
 
+struct player {
+    int ballSuit;
+    int playersBallsLeft;
+    int player;
+};
+
+int ballsLeft = 15;
+
 int main() {
 	bool direction = false;
 	int windowWidth = 1182, windowHeight = 801;
@@ -24,8 +32,8 @@ int main() {
 	innerTable.setOutlineThickness(59.f);
 	innerTable.setOutlineColor(sf::Color::Blue);
 
-    ball.vx = (ball.x - (ball.x-(ball.radius/20)));
-    ball.vy = (ball.y - (ball.y-(ball.radius/20)));
+    ball.vx = 0;
+    ball.vy = 0;
 
     ball.ax = 0;
     ball.ay = 0;
@@ -38,6 +46,16 @@ int main() {
 				window.close();
             }
 		}
+
+        window.clear();
+            window.draw(innerTable);
+            window.draw(shape);
+            window.display();
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+            ball.vx = (ball.x - (ball.x-(ball.radius/20)));
+            ball.vy = (ball.y - (ball.y-(ball.radius/20)));
+        }
 		
         while(ball.vx != 0 || ball.vy != 0){
             
@@ -77,4 +95,14 @@ int main() {
 		
 	}
     return 0;
+}
+
+void swapPlayer(player player){
+    if(player.player == 1){
+        player.player = 2;
+    }
+    if(player.ballSuit < 8){
+        player.ballSuit = 9;
+    }
+    player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
 }
