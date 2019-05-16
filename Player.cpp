@@ -2,6 +2,7 @@
 #include "Ball.h"
 #include <string>
 #include <iostream>
+#include <math.h>
 #include <SFML/System.hpp>
 
 using namespace std;
@@ -23,4 +24,15 @@ sf::Transform Player::rotateRight(sf::Transform transform, float rotation, float
 
 sf::Vector2f Player::aimSetup(Ball cueBall) {
     return sf::Vector2f(cueBall.getX() + cueBall.getRadius() - 10, cueBall.getY() - cueBall.getRadius() - 10);
+}
+
+sf::Vector2f Player::setPower(sf::Vector2f pos, bool elevation) {
+    if(elevation) {
+        pos.x += sin(0) * 0.2;
+        pos.y += cos(0) * 0.2;
+    } else {
+        pos.x += sin(0) * -0.2;
+        pos.y += cos(0) * -0.2;
+    }
+    return pos;
 }
