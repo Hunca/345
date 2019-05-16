@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <string>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -27,7 +28,6 @@ int main() {
 	innerTable.setFillColor(sf::Color::Green);
 	innerTable.setOutlineThickness(59.f);
 	innerTable.setOutlineColor(sf::Color::Blue);
-    aim.setRotation(0);
     sf::Transform transform;
     while (window.isOpen())
 	{
@@ -37,14 +37,35 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+    
+        float distance = sqrtf(((aim.getPosition().x + aim.getRadius()) - (shape.getPosition().x + shape.getRadius())) *
+        ((aim.getPosition().x + aim.getRadius()) - (shape.getPosition().x + shape.getRadius())) +
+        ((aim.getPosition().y + aim.getRadius()) - (shape.getPosition().y + shape.getRadius())) * 
+        ((aim.getPosition().y + aim.getRadius()) - (shape.getPosition().y + shape.getRadius())));    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             transform.rotate(aim.getRotation() + 0.1f, shape.getPosition().x + shape.getRadius(), shape.getPosition().y + shape.getRadius());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             transform.rotate(aim.getRotation() - 0.1f, shape.getPosition().x + shape.getRadius(), shape.getPosition().y + shape.getRadius());
         }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            if (distance <= 140) {
+                aim.setPosition(aim.getPosition().x + sin(0) * -0.2, aim.getPosition().y + cos(0) * -0.2);
+                cue.power = distance - 40;
+                cout << cue.power;
+                cout << '\n';
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            if (distance >= 40) {
+                aim.setPosition(aim.getPosition().x + sin(0) * 0.2, aim.getPosition().y + cos(0) * 0.2);
+                cue.power = distance - 40;
+                cout << cue.power;
+                cout << '\n';
+            }
+        }
         window.clear();
-		window.draw(innerTable);
+        window.draw(innerTable);
 		window.draw(shape);
         window.draw(aim, transform);
 		window.display();

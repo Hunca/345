@@ -14,9 +14,5 @@ Player::~Player() {
 }
 
 sf::Vector2f Player::aimSetup(Ball cueBall) {
-    // cout << cueBall.getRadius();
-    return sf::Vector2f(cueBall.getX() + cueBall.getRadius() - 10, cueBall.getY() - cueBall.getRadius());
-}
-sf::Vector2f Player::rotateLeft(Ball cueBall, sf::Vector2f aim) {
-    return sf::Vector2f(0, 0);
+    return sf::Vector2f(cueBall.getX() + cueBall.getRadius() - 10, cueBall.getY() - cueBall.getRadius() - 10);
 }
