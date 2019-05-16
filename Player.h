@@ -7,6 +7,6 @@ private:
 public:
     Player();
     ~Player();
-    void test(Ball cueBall); 
+    void aimSetup(Ball cueBall);
 };
 #endif

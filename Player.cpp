@@ -12,6 +12,6 @@ Player::~Player() {
 
 }
 
-void Player::test(Ball cueBall) {
+void Player::aimSetup(Ball cueBall) {
     cout << cueBall.getRadius();
 }
