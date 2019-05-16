@@ -12,5 +12,7 @@ public:
     Player();
     ~Player();
     sf::Vector2f aimSetup(Ball cueBall);
+    sf::Transform rotateLeft(sf::Transform transform, float rotation, float x, float y, float radius);
+    sf::Transform rotateRight(sf::Transform transform, float rotation, float x, float y, float radius);
 };
 #endif

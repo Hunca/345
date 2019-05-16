@@ -43,25 +43,22 @@ int main() {
         ((aim.getPosition().y + aim.getRadius()) - (shape.getPosition().y + shape.getRadius())) * 
         ((aim.getPosition().y + aim.getRadius()) - (shape.getPosition().y + shape.getRadius())));    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            transform.rotate(aim.getRotation() + 0.1f, shape.getPosition().x + shape.getRadius(), shape.getPosition().y + shape.getRadius());
+            transform = cue.rotateRight(transform, aim.getRotation(), ball.getX(), ball.getY(), ball.getRadius());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            transform.rotate(aim.getRotation() - 0.1f, shape.getPosition().x + shape.getRadius(), shape.getPosition().y + shape.getRadius());
+            transform = cue.rotateLeft(transform, aim.getRotation(), ball.getX(), ball.getY(), ball.getRadius());
+            //transform.rotate(aim.getRotation() - 0.1f, shape.getPosition().x + shape.getRadius(), shape.getPosition().y + shape.getRadius());
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (distance <= 140) {
                 aim.setPosition(aim.getPosition().x + sin(0) * -0.2, aim.getPosition().y + cos(0) * -0.2);
                 cue.power = distance - 40;
-                cout << cue.power;
-                cout << '\n';
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             if (distance >= 40) {
                 aim.setPosition(aim.getPosition().x + sin(0) * 0.2, aim.getPosition().y + cos(0) * 0.2);
                 cue.power = distance - 40;
-                cout << cue.power;
-                cout << '\n';
             }
         }
         window.clear();
