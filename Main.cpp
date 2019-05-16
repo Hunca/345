@@ -7,12 +7,21 @@ using namespace std;
 
 int main() {
 	bool direction = false;
-	int windowWidth = 870, windowHeight = 489;
+	int windowWidth = 1182, windowHeight = 801;
+	int tableWidth = 762, tableHeight = 381;
+	
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
-	Ball ball(1, 20.f, 20.f, 20.f);
+	
+	Ball ball(1, 210.f, 210.f, 20.f);
 	sf::CircleShape shape(ball.getRadius());
 	shape.setPosition(ball.getX(), ball.getY());
-	shape.setFillColor(sf::Color::Green);
+	shape.setFillColor(sf::Color::White);
+
+	sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
+	innerTable.setPosition(210.f,210.f);
+	innerTable.setFillColor(sf::Color::Green);
+	innerTable.setOutlineThickness(59.f);
+	innerTable.setOutlineColor(sf::Color::Blue);
 
 	while (window.isOpen())
 	{
@@ -24,17 +33,18 @@ int main() {
 		}
 		if (direction == false) {
 			shape.move(1.f, 0.f);
-			if (shape.getPosition().x + shape.getRadius() * 2 >= windowWidth) {
+			if (shape.getPosition().x + shape.getRadius() * 2 >= tableWidth + 210) {
 				direction = true;
 			}
 		}
 		if (direction == true) {
 			shape.move(-1.f, 0.f);
-			if (shape.getPosition().x <= 0) {
+			if (shape.getPosition().x <= 210) {
 				direction = false;
 			}
 		}
 		window.clear();
+		window.draw(innerTable);
 		window.draw(shape);
 		window.display();
 	}
