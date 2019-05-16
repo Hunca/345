@@ -12,14 +12,16 @@ struct player {
     int player;
 };
 
-int ballsLeft = 15;
+    int ballsLeft = 15;
+    int windowWidth = 1182, windowHeight = 801;
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
 
 int main() {
 	bool direction = false;
-	int windowWidth = 1182, windowHeight = 801;
+	
 	int tableWidth = 762, tableHeight = 381;
 	
-	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
+	
 	
 	Ball ball(1, 20.f, 210.f, 210.f);
 	sf::CircleShape shape(ball.getRadius());
@@ -96,6 +98,8 @@ int main() {
 	}
     return 0;
 }
+
+
 
 void swapPlayer(player player){
     if(player.player == 1){
