@@ -14,7 +14,7 @@ int main() {
 	
 	Ball ball(1, tableWidth/2, tableHeight, 20.f);
 	Player cue;
-	cue.test(ball);
+	//cue.test(ball);
 	sf::CircleShape shape(ball.getRadius());
 	shape.setPosition(ball.getX(), ball.getY());
 	shape.setFillColor(sf::Color::White);
