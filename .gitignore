@@ -16,3 +16,9 @@
 *.smod
 *.ini
 *.exe
+*.dll
+*.a
+.vs/
+CMakeFiles/
+src/
+test/
