@@ -15,7 +15,7 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
 
-	Ball ball(1, 210.f, 210.f, 8.55f);
+	Ball ball(1, 8.55f, 210.f, 210.f);
 	sf::CircleShape shape(ball.getRadius());
 	shape.setPosition(ball.getX(), ball.getY());
 	shape.setFillColor(sf::Color::White);
