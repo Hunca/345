@@ -14,26 +14,14 @@ struct player {
 
     int ballsLeft = 15;
     int windowWidth = 1182, windowHeight = 801;
+    int tableWidth = 762, tableHeight = 381;
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
+    sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
+    bool direction = false;
 
-int main() {
-	bool direction = false;
-	
-	int tableWidth = 762, tableHeight = 381;
-	
-	
-	
-	Ball ball(1, 20.f, 210.f, 210.f);
-	sf::CircleShape shape(ball.getRadius());
-	shape.setPosition(ball.getX(), ball.getY());
-	shape.setFillColor(sf::Color::White);
 
-	sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
-	innerTable.setPosition(210.f,210.f);
-	innerTable.setFillColor(sf::Color::Green);
-	innerTable.setOutlineThickness(59.f);
-	innerTable.setOutlineColor(sf::Color::Blue);
 
+void moveBall(Ball ball, sf::CircleShape shape){
     ball.vx = 0;
     ball.vy = 0;
 
@@ -96,10 +84,7 @@ int main() {
         }
 		
 	}
-    return 0;
 }
-
-
 
 void swapPlayer(player player){
     if(player.player == 1){
@@ -109,4 +94,20 @@ void swapPlayer(player player){
         player.ballSuit = 9;
     }
     player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
+}
+
+int main() {
+	Ball ball(1, 20.f, 210.f, 210.f);
+	sf::CircleShape shape(ball.getRadius());
+	shape.setPosition(ball.getX(), ball.getY());
+	shape.setFillColor(sf::Color::White);
+
+	innerTable.setPosition(210.f,210.f);
+	innerTable.setFillColor(sf::Color::Green);
+	innerTable.setOutlineThickness(59.f);
+	innerTable.setOutlineColor(sf::Color::Blue);
+
+    moveBall(ball, shape);
+
+    return 0;
 }
