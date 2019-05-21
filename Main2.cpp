@@ -10,15 +10,6 @@ int windowWidth = 1182, windowHeight = 801;
 int tableWidth = 762, tableHeight = 381;
 
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
-
-sf::Transform rotateLeft(sf::Transform transform, float rotation, float x, float y, float radius) {
-    return transform.rotate(rotation - 0.1f, x + radius, y + radius);
-}
-
-sf::Transform rotateRight(sf::Transform transform, float rotation, float x, float y, float radius) {
-    return transform.rotate(rotation + 0.1f, x + radius, y + radius);
-}
-
 sf::Vector2f aimSetup(Ball cueBall) {
     return sf::Vector2f(cueBall.getX() + cueBall.getRadius() - 10, cueBall.getY() - cueBall.getRadius() - 10);
 }
@@ -47,10 +38,10 @@ sf::Vector2f playerTurn(Ball ball, sf::CircleShape aim, sf::RectangleShape inner
             ((aim.getPosition().y + aim.getRadius()) - (ball.y + ball.radius)) * 
             ((aim.getPosition().y + aim.getRadius()) - (ball.y + ball.radius)));    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            transform = rotateRight(transform, aim.getRotation(), ball.getX(), ball.getY(), ball.getRadius());
+            transform.rotate(aim.getRotation() + 0.1f, ball.x + ball.radius, ball.y + ball.radius);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            transform = rotateLeft(transform, aim.getRotation(), ball.getX(), ball.getY(), ball.getRadius());
+            transform.rotate(aim.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (distance <= 140) {
@@ -73,9 +64,7 @@ sf::Vector2f playerTurn(Ball ball, sf::CircleShape aim, sf::RectangleShape inner
     }
 }
 int main() {
-	
-
-    Ball ball(1, 20.f, tableWidth / 2, tableHeight);
+	Ball ball(1, 20.f, tableWidth / 2, tableHeight);
     Player cue;
 	sf::CircleShape shape(ball.getRadius());
 	shape.setPosition(ball.getX(), ball.getY());
@@ -99,35 +88,7 @@ int main() {
 				window.close();
 		}
         playerTurn(ball, aim, innerTable, shape);
-        
-        
-        // float distance = sqrtf(((aim.getPosition().x + aim.getRadius()) - (shape.getPosition().x + shape.getRadius())) *
-        // ((aim.getPosition().x + aim.getRadius()) - (shape.getPosition().x + shape.getRadius())) +
-        // ((aim.getPosition().y + aim.getRadius()) - (shape.getPosition().y + shape.getRadius())) * 
-        // ((aim.getPosition().y + aim.getRadius()) - (shape.getPosition().y + shape.getRadius())));    
-        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        //     transform = cue.rotateRight(transform, aim.getRotation(), ball.getX(), ball.getY(), ball.getRadius());
-        // }
-        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        //     transform = cue.rotateLeft(transform, aim.getRotation(), ball.getX(), ball.getY(), ball.getRadius());
-        // }
-        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        //     if (distance <= 140) {
-        //         aim.setPosition(cue.setPower(aim.getPosition(), false));
-        //         cue.power = distance - 40;
-        //     }
-        // }
-        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        //     if (distance >= 40) {
-        //         aim.setPosition(cue.setPower(aim.getPosition(), true));
-        //         cue.power = distance - 40;
-        //     }
-        // }
-        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        //     aim.getPosition();
-
-        // }
-
+        // moveBall(ball );
         window.clear();
         window.draw(innerTable);
 		window.draw(shape);
