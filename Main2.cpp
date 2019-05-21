@@ -39,6 +39,8 @@ sf::Vector2f playerTurn(Ball ball, sf::CircleShape aim, sf::RectangleShape inner
             ((aim.getPosition().y + aim.getRadius()) - (ball.y + ball.radius)));    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             transform.rotate(aim.getRotation() + 0.1f, ball.x + ball.radius, ball.y + ball.radius);
+            cout << aim.getPosition().x;
+            cout << "\n";
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             transform.rotate(aim.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
