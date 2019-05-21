@@ -18,18 +18,15 @@ struct player {
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
     sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
     bool direction = false;
+    Ball ball(1, 20.f, 525.f, 525.f);
 
-
-
-void moveBall(Ball ball, sf::CircleShape shape){
+void moveBall(Ball ball, sf::CircleShape shape, int velocityX, int velocityY){
     ball.vx = 0;
     ball.vy = 0;
 
     ball.ax = 0;
     ball.ay = 0;
 
-	while (window.isOpen())
-	{
 		sf::Event event;
         while (window.pollEvent(event)){
 			if (event.type == sf::Event::Closed){
@@ -37,18 +34,24 @@ void moveBall(Ball ball, sf::CircleShape shape){
             }
 		}
 
-        window.clear();
-            window.draw(innerTable);
-            window.draw(shape);
-            window.display();
+        
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-            ball.vx = (ball.x - (ball.x-(ball.radius/20)));
-            ball.vy = (ball.y - (ball.y-(ball.radius/20)));
-        }
+        // if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        //     ball.vx = (ball.x - (ball.x-(ball.radius/20)));
+        //     ball.vy = (ball.y - (ball.y-(ball.radius/20)));
+        // }
+
+        ball.vx = (ball.x - velocityX) * 0.05f;
+        ball.vy = (ball.y - velocityY) * 0.05f;
 		
         while(ball.vx != 0 || ball.vy != 0){
             
+            while (window.pollEvent(event)){
+			if (event.type == sf::Event::Closed){
+				window.close();
+            }
+		}
+
             if (ball.x < 210) {
                 ball.vx *= -1;
             }
@@ -73,6 +76,7 @@ void moveBall(Ball ball, sf::CircleShape shape){
             shape.setPosition(ball.x, ball.y);
 
             if(fabs(ball.vx*ball.vx + ball.vy*ball.vy) < 0.005f){
+                shape.setPosition(ball.x, ball.y);
                 ball.vx = 0;
                 ball.vy = 0;
             }
@@ -82,8 +86,59 @@ void moveBall(Ball ball, sf::CircleShape shape){
             window.draw(shape);
             window.display();
         }
-		
-	}
+}
+
+sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
+    if(elevation) {
+        pos.x += sin(0) * 0.2;
+        pos.y += cos(0) * 0.2;
+    } else {
+        pos.x += sin(0) * -0.2;
+        pos.y += cos(0) * -0.2;
+    }
+    return pos;
+}
+
+sf::Vector2f playerTurn(Ball ball, sf::CircleShape aim, sf::CircleShape shape) {
+    sf::Transform transform;
+    while(true) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+        float distance = sqrtf(((aim.getPosition().x + aim.getRadius()) - (ball.x + ball.getRadius())) *
+            ((aim.getPosition().x + aim.getRadius()) - (ball.x + ball.radius)) +
+            ((aim.getPosition().y + aim.getRadius()) - (ball.y + ball.radius)) * 
+            ((aim.getPosition().y + aim.getRadius()) - (ball.y + ball.radius)));    
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            transform.rotate(aim.getRotation() + 0.1f, ball.x + ball.radius, ball.y + ball.radius);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            printf("aim x %d aim y");
+            transform.rotate(aim.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+            if (distance <= 140) {
+                aim.setPosition(setPower(aim.getPosition(), false));
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+            if (distance >= 40) {
+                aim.setPosition(setPower(aim.getPosition(), true));
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            printf("aim x %d aim y %d, ballx %d bally %d", aim.getPosition().x+aim.getRadius(), aim.getPosition().y+aim.getRadius(), ball.x, ball.y);
+            moveBall(ball, shape, aim.getPosition().x-aim.getRadius(), aim.getPosition().y-aim.getRadius());
+            return aim.getPosition();
+        }
+        window.clear();
+        window.draw(innerTable);
+        window.draw(shape);
+        window.draw(aim, transform);
+        window.display();
+    }
 }
 
 void swapPlayer(player player){
@@ -97,7 +152,6 @@ void swapPlayer(player player){
 }
 
 int main() {
-	Ball ball(1, 20.f, 210.f, 210.f);
 	sf::CircleShape shape(ball.getRadius());
 	shape.setPosition(ball.getX(), ball.getY());
 	shape.setFillColor(sf::Color::White);
@@ -107,7 +161,26 @@ int main() {
 	innerTable.setOutlineThickness(59.f);
 	innerTable.setOutlineColor(sf::Color::Blue);
 
-    moveBall(ball, shape);
+    sf::CircleShape aim(10);
+    aim.setPosition(sf::Vector2f(ball.getX() + ball.getRadius() - 10, ball.getY() - ball.getRadius() - 10));
+    aim.setFillColor(sf::Color::Black);
 
+    while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+        //printf("shape x %d shape y %d, ballx %d bally %d", shape.getPosition().x, shape.getPosition().y, ball.x, ball.y);
+        playerTurn(ball, aim, shape);
+        aim.setPosition(sf::Vector2f(ball.x + ball.radius - 10, ball.y - ball.radius - 10));
+
+        window.clear();
+        window.draw(innerTable);
+		window.draw(shape);
+        window.display();
+	}
     return 0;
 }
