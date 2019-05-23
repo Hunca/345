@@ -1,6 +1,6 @@
 #include "Ball.h"
 int num;
-float x, y, vx, vy, ax, ay, radius, speed;
+float x, y, vx, vy, ax, ay, radius, mass;
 bool isSunk;
 
 Ball::Ball(int ballNum, float rad, float xPos, float yPos) {
@@ -10,16 +10,7 @@ Ball::Ball(int ballNum, float rad, float xPos, float yPos) {
 	ax = 0; ay = 0;
 	radius = rad;
 	isSunk = false;
+	mass = 10.f;
 }
 Ball::~Ball() {
-
-}
-float Ball::getX() {
-	return x;
-}
-float Ball::getY() {
-	return y;
-}
-float Ball::getRadius() {
-	return radius;
 }

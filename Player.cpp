@@ -23,7 +23,7 @@ sf::Transform Player::rotateRight(sf::Transform transform, float rotation, float
 }
 
 sf::Vector2f Player::aimSetup(Ball cueBall) {
-    return sf::Vector2f(cueBall.getX() + cueBall.getRadius() - 10, cueBall.getY() - cueBall.getRadius() - 10);
+    return sf::Vector2f(cueBall.x + cueBall.radius - 10, cueBall.y - cueBall.radius - 10);
 }
 
 sf::Vector2f Player::setPower(sf::Vector2f pos, bool elevation) {
