@@ -93,19 +93,29 @@ void moveBall(Ball ball, int velocityX, int velocityY){
 }
 
 sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
+    // float delta_x = pos.x - (ball.x);
+    // float delta_y = pos.y - (ball.x);
+    // float r = atan2(delta_y, delta_x);
+    printf("cue  %f %f\n", pos.x, pos.y);
+    printf("ball  %f %f\n", ball.x, ball.y);
     if(elevation) {
-        pos.x += sin(0) * 0.2;
-        pos.y += cos(0) * 0.2;
+        pos.x += (ball.x - (pos.x-10)) * 0.005;
+        pos.y += (ball.y - (pos.y-10)) * 0.005;
+        // pos.x += sin(r) * 0.2;
+        // pos.y += cos(r) * 0.2;
     } else {
-        pos.x += sin(0) * -0.2;
-        pos.y += cos(0) * -0.2;
+        pos.x -= (ball.x - (pos.x - 10)) * 0.005;
+        pos.y -= (ball.y - (pos.y - 10)) * 0.005;
+        // pos.x += sin(r) * -0.2;
+        // pos.y += cos(r) * -0.2;
     }
+    
     return pos;
 }
 
 void playerTurn(Ball ball) {
     sf::Transform transform;
-    float angle = 0.001;
+    float angle = 0.005;
     while(true) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -117,15 +127,21 @@ void playerTurn(Ball ball) {
             ((poolCue.getPosition().y + poolCue.getRadius()) - (ball.y + ball.radius)) * 
             ((poolCue.getPosition().y + poolCue.getRadius()) - (ball.y + ball.radius)));    
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            transform.rotate(poolCue.getRotation() + 0.1f, ball.x + ball.radius, ball.y + ball.radius);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             float x1 = poolCue.getPosition().x - (ball.x + (ball.radius/2));
             float y1 = poolCue.getPosition().y - (ball.y + (ball.radius / 2));
 
             float x2 = x1 * cos(angle) - y1 * sin(angle);
             float y2 = x1 * sin(angle) + y1 * cos(angle);
+            // printf("%f yeet \n", distance);
+            poolCue.setPosition(x2 + (ball.x + (ball.radius / 2)), y2 + (ball.y + (ball.radius / 2)));
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            float x1 = poolCue.getPosition().x - (ball.x + (ball.radius/2));
+            float y1 = poolCue.getPosition().y - (ball.y + (ball.radius / 2));
 
+            float x2 = x1 * cos(-angle) - y1 * sin(-angle);
+            float y2 = x1 * sin(-angle) + y1 * cos(-angle);
+            // printf("%f yeet \n", distance);
             poolCue.setPosition(x2 + (ball.x + (ball.radius / 2)), y2 + (ball.y + (ball.radius / 2)));
             //transform.rotate(poolCue.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
         }
