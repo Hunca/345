@@ -104,6 +104,7 @@ sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
 
 void playerTurn(Ball ball) {
     sf::Transform transform;
+    float angle = 0.1;
     while(true) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -118,7 +119,14 @@ void playerTurn(Ball ball) {
             transform.rotate(poolCue.getRotation() + 0.1f, ball.x + ball.radius, ball.y + ball.radius);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            transform.rotate(poolCue.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
+            float x1 = poolCue.getPosition().x - (ball.x + ball.radius);
+            float y1 = poolCue.getPosition().y - (ball.y + ball.radius);
+
+            float x2 = x1 * cos(angle) - y1 * sin(angle);
+            float y2 = x1 * sin(angle) + y1 * cos(angle);
+
+            poolCue.setPosition(x2 + ball.x + ball.radius, y2 + ball.y + ball.radius);
+            //transform.rotate(poolCue.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (distance <= 140) {
