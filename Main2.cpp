@@ -2,6 +2,7 @@
 #include "Ball.h"
 #include <string>
 #include <iostream>
+#include <array>
 #include <math.h>
 
 using namespace std;
@@ -21,6 +22,7 @@ struct player {
     Ball ball(1, 20.f, 525.f, 525.f);
     sf::CircleShape shape(ball.getRadius());
     sf::CircleShape poolCue(10);
+    Ball *balls[2];
 
 void moveBall(Ball ball, int velocityX, int velocityY){
     // ball.vx = 0;
@@ -42,7 +44,6 @@ void moveBall(Ball ball, int velocityX, int velocityY){
 
         ball.vx = (ball.x - velocityX) * 0.005f;
         ball.vy = (ball.y - velocityY) * 0.005f;
-		
         while(ball.vx != 0 || ball.vy != 0){
             
             while (window.pollEvent(event)){
@@ -66,12 +67,12 @@ void moveBall(Ball ball, int velocityX, int velocityY){
 
             ball.ax = (-ball.vx) * 0.00075f;
             ball.ay = (-ball.vy) * 0.00075f;
-
             ball.vx += ball.ax;
             ball.vy += ball.ay;
-
             ball.x += ball.vx;
             ball.y += ball.vy;
+
+            printf("%f %f \n", ball.vx, ball.vy);
             shape.setPosition(ball.x, ball.y);
             
             if(fabs(ball.vx*ball.vx + ball.vy*ball.vy) < 0.005f){
@@ -112,7 +113,8 @@ sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
     return pos;
 }
 
-void playerTurn(Ball ball) {
+void playerTurn(Ball ball, sf::CircleShape test)
+{
     sf::Transform transform;
     float angle = 0.005;
     while(true) {
@@ -145,7 +147,7 @@ void playerTurn(Ball ball) {
             //transform.rotate(poolCue.getRotation() - 0.1f, ball.x + ball.radius, ball.y + ball.radius);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            if (distance <= 140) {
+            if (distance <= 200) {
                 poolCue.setPosition(setPower(poolCue.getPosition(), false));
             }
         }
@@ -161,6 +163,8 @@ void playerTurn(Ball ball) {
         window.clear();
         window.draw(innerTable);
         window.draw(shape);
+
+        window.draw(test);
         window.draw(poolCue, transform);
         window.display();
     }
@@ -187,7 +191,12 @@ int main() {
 
     poolCue.setPosition(sf::Vector2f(ball.getX() + ball.getRadius() - 10, ball.getY() - ball.getRadius() - 10));
     poolCue.setFillColor(sf::Color::Black);
-
+    for(int i = 0; i < 2; i++) {
+        balls[i] = new Ball(1, 20.f, 425.f, 425.f);
+    }
+    
+    sf::CircleShape test(balls[0]->getRadius());
+    test.setPosition(balls[0]->x, balls[0]->y);
     while (window.isOpen())
 	{
 		sf::Event event;
@@ -196,12 +205,13 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-        playerTurn(ball);
+        playerTurn(ball, test);
         ball.x = finalX;
         ball.y = finalY;
         window.clear();
         window.draw(innerTable);
 		window.draw(shape);
+        window.draw(test);
         window.display();
 	}
     return 0;
