@@ -8,10 +8,9 @@ mode.
 We are building this program using the C++ language on Windows based computers. However we will supply instructions on how to install the various components onto both Windows and MacOS.
 
 ### Installing
+*For Windows:*
+Step 1:
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
 
 ```
 Give the example
@@ -22,12 +21,29 @@ And repeat
 ```
 until finished
 ```
+Final Step:
+You should now be able to build the program by entering:
+```
+make
+```
+in the directory of the project, and then run the program by entering:
+```
+app
+```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Running the program.
 
-## Running the tests
-
-Explain how to run the automated tests for this system
+The program takes inputs from the keyboard and will not require the use of a mouse.
+Here is a list of input keys for our program:
+```
+Left/Right Arrow Keys   | Changes direction of the cue on the cue ball.
+Up/Down Arrow Keys      | Changes the power input of the shot.
+Spacebar                | Initiates the shot to be made.
+```
+Exiting the program can be done by pressing:
+```
+alt + f4
+```
 
 ### Break down into end to end tests
 
@@ -74,4 +90,4 @@ Current there is no license, but if required we will use the MIT License.
 
 ## Acknowledgments
 
-*Will be updated as we continue our project*
+*Many thanks to the internet.*
