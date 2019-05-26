@@ -111,7 +111,7 @@ Our code base is currently too small for any automated testing to be implemented
 ## Coding Style:
 
 We will be coding our program following the K & R standard layout. 
-```
+```C++
 void checknegative(x) {
     if (x < 0) {
         puts("Negative");
@@ -123,7 +123,37 @@ void checknegative(x) {
 ---
 ## Source Code Breakdown:
 
+Using SFML a program window and a rectangle table shape is created.
+* main()
+    - Draws the table shape onto the window.
+    - Creates an array of ball objects.
+        - The ball constructor initialises each object with an ID number, radius, and initial positions.
+            - Gets positions of the ball objects through a preset array of vector positions.
+            - The cue ball and 8 ball are coloured white and black
+            - Ball objects with ID value that are not the cue ball and 8 ball are coloured accordingly 
+    - Sets up the cue (aimer) around the cue ball.
+    - Begins the game loop
+    - Runs playerTurn():
+        - Takes in keyboard input (arrow keys) to set direction and power of the cue ball.
+        - If spacebar is pressed, takes the vector value of the cue and then runs the moveBall() method.
+    - moveBall():
+        - Takes in the ball ID, the velocity of the cue ball. 
+        - Sets the velocity of the cue ball (The distance between the cue and the cue ball).
+        - Method loops through while balls are moving.
+        - Loops through every ball, ignoring those with 0 velocity (Balls that dont move).
+        - Checks to see if any balls hits a wall, if so, bounce off at the opposite angle.
+        - Change the speed of the balls with given friction (drag).
+        - Checks against all other balls to see if there is collision.
+            - If so, updates both collided balls' velocities.
+        - When balls slows down to a certain velocity, stop the ball movement.
+* main()
+    - Once all the balls stop moving, resets the cue at the cue balls new position.
+    - Sets up again for player input.
+    - Repeats.
 
+* switchPlayer()
+        - Used to swap plaers, currently not implemented for use.
+        
 
 ---
 ## Built With:
@@ -138,6 +168,12 @@ void checknegative(x) {
 ## Version:
 
 Alpha release.
+
+---
+## Project Changes:
+
+* Removal of AI
+    - We decided to remove the AI feature as it was too ambitious for us to implement into our project while remaining under our limit of 1000 lines of code.
 
 ---
 ## Authors:
@@ -156,4 +192,4 @@ Current there is no license, but if required we will use the MIT License.
 * Used javidx9's [youtube tutorial](https://www.youtube.com/watch?v=LPzyNOHY3A4) as a reference in creating circle collisions.
 * COSC 345 Lecture slides
 * *Many thanks to Google.*
-* *Shout out to caffine.*
+* *Shout out to caffeine.*
