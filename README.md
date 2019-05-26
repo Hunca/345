@@ -142,7 +142,7 @@ Using SFML a program window and a rectangle table shape is created.
         - Method loops through while balls are moving.
         - Loops through every ball, ignoring those with 0 velocity (Balls that dont move).
         - Checks to see if any balls hits a wall, if so, bounce off at the opposite angle.
-        - Change the speed of the balls with given friction (drag).
+        - Changes the speed of the balls with given friction (drag).
         - Checks against all other balls to see if there is collision.
             - If so, updates both collided balls' velocities.
         - When balls slows down to a certain velocity, stop the ball movement.
@@ -152,7 +152,7 @@ Using SFML a program window and a rectangle table shape is created.
     - Repeats.
 
 * switchPlayer()
-        - Used to swap plaers, currently not implemented for use.
+        - Used to swap players, currently not implemented for use.
         
 
 ---
