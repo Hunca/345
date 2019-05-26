@@ -4,8 +4,7 @@ An 8 ball pool game which follows the concept of 'Small Is Beautiful'. We are ai
 mode.
 
 ---
-### Prerequisites:
----
+## Prerequisites:
 
 Our team is currently building this project using the C++ language on Windows(x86) based computers. However we will supply instructions on how to build our project in both Windows(x86) and MacOS(x64). We include the [SFML](https://www.sfml-dev.org/) libraries for both Windows and MacOS versions of our project.
 
@@ -14,10 +13,9 @@ For MacOS you will require to have [Xcode](https://itunes.apple.com/nz/app/xcode
 For Windows you will require to have [Make](https://www.gnu.org/software/make/) installed, and have [Visual Studio Code setup with MinGW.](https://code.visualstudio.com/docs/cpp/config-mingw)
 
 ---
-### Installing:
----
+## Installing:
 
-#### For MacOS Users:
+### For MacOS Users:
 
 **_Please note that these instructions are for Mac users using the Xcode IDE._**
 
@@ -55,7 +53,7 @@ This can be done by using the following keyboard shortcut:**
 Command + Alt + Shift + k
 ```
 ---
-#### For Windows:
+### For Windows:
 
 ***We will assume you have properly installed [Make](https://www.gnu.org/software/make/) and [setup Visual Studio Code with MinGW.](https://code.visualstudio.com/docs/cpp/config-mingw)***
 
@@ -86,8 +84,7 @@ app
 **NB: If you edit the code, you will need to re-build the project before running it again (_Repeat the final step_)**
 
 ---
-## Running the program.
----
+### Running the program:
 
 The program takes inputs from the keyboard and will not require the use of a mouse.
 #### Here is a list of input keys for our program:
@@ -106,14 +103,12 @@ alt + f4
 Pressing the stop button on the Xcode project window.
 ```
 ---
-### Testing:
----
+## Testing:
 
-Our code base is currently too small for any automated testing.
+Our code base is currently too small for any automated testing to be implemented.
 
 ---
-### Coding Style:
----
+## Coding Style:
 
 We will be coding our program following the K & R standard layout. 
 ```
@@ -125,10 +120,13 @@ void checknegative(x) {
     }
 }
 ```
+---
+## Source Code Breakdown:
+
+
 
 ---
-## Built With
----
+## Built With:
 
 * [Visual Studio Code](https://code.visualstudio.com/) - IDE for Windows
 * [SFML](https://www.sfml-dev.org/) - External GUI Library (Both Windows and MacOS)
@@ -137,27 +135,25 @@ void checknegative(x) {
 * [Xcode](https://itunes.apple.com/nz/app/xcode/id497799835?mt=12) - IDE for MacOS
 
 ---
-## Version
----
+## Version:
 
 Alpha release.
 
 ---
-## Authors
----
+## Authors:
 
 * **Liam Chapman**
 * **Calum Hunter**
 * **John Kim**
 
 ---
-## License
----
+## License:
 
 Current there is no license, but if required we will use the MIT License.
 
 ---
-## Acknowledgments
----
-
-*Many thanks to Google.*
+## Acknowledgments:
+* Used javidx9's [youtube tutorial](https://www.youtube.com/watch?v=LPzyNOHY3A4) as a reference in creating circle collisions.
+* COSC 345 Lecture slides
+* *Many thanks to Google.*
+* *Shout out to caffine.*
