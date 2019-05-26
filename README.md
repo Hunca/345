@@ -8,9 +8,44 @@ mode.
 We are building this program using the C++ language on Windows based computers. However we will supply instructions on how to install the various components onto both Windows and MacOS.
 
 ### Installing
-*For Windows:*
-Step 1:
+**For MacOS Users:**
 
+**_Please note that these instructions are for Mac users using the Xcode IDE_**
+**_We will assume you have Xcode installed, otherwise please install Xcode before proceeding; [Download Xcode](https://itunes.apple.com/nz/app/xcode/id497799835?mt=12)_**
+
+**Step1:**
+
+Clone or download this Github repository to your local computer.
+
+**Step2:**
+
+*If you have cloned the repository, skip to Step3*
+Move zip file to desired location and unzip.
+
+**Step3:**
+
+Navigate through the project to the Apple_Build folder which contains the Xcode project file *Apple_Build.xcodeproj*
+```
+345-master/Apple_Build/Apple_Build/Apple_Build.xcodeproj
+```
+Then open the *Apple_Build.xcodeproj* with Xcode.
+
+**Step4:**
+
+Once open, to build the project, press the build and run button (found on the top left of the project window).
+_A new window will pop up with the application running._
+To stop the application from running, return to the Xcode project window and press the stop button which is next to the run button.
+
+**NB: If you edit the code, you will need to clean the build folder before building the project again for it to run.
+This can be done by pressing:
+```
+Command + Alt + Shift + k
+```
+
+***For Windows:***
+
+**Step 1:**
+Make sure to have the following 
 
 ```
 Give the example
