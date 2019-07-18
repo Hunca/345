@@ -166,8 +166,8 @@ sf::Vertex line[2];
 sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
     float delta_x = pos.x + poolCue.getRadius() - (balls[0]->x + balls[0]->radius);
     float delta_y = pos.y + poolCue.getRadius() - (balls[0]->y + balls[0]->radius);
-    line[0] = sf::Vertex(sf::Vector2f(pos.x + poolCue.getRadius(), pos.y + poolCue.getRadius()));
-    line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius));
+    line[0] = sf::Vertex(sf::Vector2f(pos.x + poolCue.getRadius(), pos.y + poolCue.getRadius()), sf::Color::Black);
+    line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
     float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
     float xChange = (delta_x/dist)*(100*dt);
     float yChange = (delta_y/dist)*(100*dt);
@@ -183,9 +183,11 @@ sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
 
 void playerTurn() {
     sf::Transform transform;
-    float angle = 0.005;
+    float angle = 4;
     while(true) {
         sf::Event event;
+        line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+        line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
@@ -199,19 +201,26 @@ void playerTurn() {
             float x1 = poolCue.getPosition().x - (balls[0]->x + (balls[0]->radius/2));
             float y1 = poolCue.getPosition().y - (balls[0]->y + (balls[0]->radius / 2));
 
-            float x2 = x1 * cos(angle) - y1 * sin(angle);
-            float y2 = x1 * sin(angle) + y1 * cos(angle);
+            float x2 = x1 * cos(angle*dt) - y1 * sin(angle*dt);
+            float y2 = x1 * sin(angle*dt) + y1 * cos(angle*dt);
             
             poolCue.setPosition(x2 + (balls[0]->x + (balls[0]->radius / 2)), y2 + (balls[0]->y + (balls[0]->radius / 2)));
+
+            line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+            line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             float x1 = poolCue.getPosition().x - (balls[0]->x + (balls[0]->radius/2));
             float y1 = poolCue.getPosition().y - (balls[0]->y + (balls[0]->radius / 2));
-
-            float x2 = x1 * cos(-angle) - y1 * sin(-angle);
-            float y2 = x1 * sin(-angle) + y1 * cos(-angle);
+            cout << x1 << " " << y1 << " \n";
+            float x2 = x1 * cos(-angle*dt) - y1 * sin(-angle*dt);
+            float y2 = x1 * sin(-angle*dt) + y1 * cos(-angle*dt);
             
+
             poolCue.setPosition(x2 + (balls[0]->x + (balls[0]->radius / 2)), y2 + (balls[0]->y + (balls[0]->radius / 2)));
+
+            line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+            line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (distance <= 140) {
@@ -232,7 +241,6 @@ void playerTurn() {
         for(int i = 0; i < ballNumbers; i++){
             window.draw(*ballShapes[i]);
         }
-
         window.draw(line, 2, sf::Lines);
         window.draw(poolCue, transform);
         window.display();
