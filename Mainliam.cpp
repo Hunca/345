@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include "Ball.h"
 #include <string>
 #include <iostream>
@@ -28,133 +29,155 @@ struct player {
     Ball *balls[5];
     sf::CircleShape *ballShapes[5];
     sf::CircleShape poolCue(10);
+    sf::Clock dtClock;
+    float dt;
 
-void moveBall(Ball ball, int velocityX, int velocityY){
-	sf::Event event;
-    while (window.pollEvent(event)){
-		if (event.type == sf::Event::Closed){
-			window.close();
-         }
-	}
-    noMovement = false;
-    balls[0]->vx = (balls[0]->x - velocityX) * 0.005f;
-    balls[0]->vy = (balls[0]->y - velocityY) * 0.005f;
-	
-    while(!noMovement){
-
-        for(int i = 0; i < ballNumbers; i++){
-            if(balls[i]->vx != 0 && balls[i]->vy != 0){
-                while (window.pollEvent(event)){
-                    if (event.type == sf::Event::Closed){
-                        window.close();
-                    }
-                }
-
-                if (balls[i]->x <= 210) { //if the ball hits the left or right cushions
-                    balls[i]->vx *= -1;
-                } else if (balls[i]->x + balls[i]->radius * 2 >= tableWidth + 210) {
-                    balls[i]->vx *= -1;
-                } 
-                if(balls[i]->y <= 210){ //if the ball hits the top or bottom cushions
-                    balls[i]->vy *= -1;
-                } else if(balls[i]->y + balls[i]->radius*2 >= tableHeight+210){
-                    balls[i]->vy *= -1;
-                }
-
-                balls[i]->ax = (-balls[i]->vx) * 0.00075f; //setting an acceloration value (friction on the table)
-                balls[i]->ay = (-balls[i]->vy) * 0.00075f;
-
-                balls[i]->vx += balls[i]->ax; //applying the friction to the velocity
-                balls[i]->vy += balls[i]->ay;
-
-                balls[i]->x += balls[i]->vx; //moviving the ball with the velocity
-                balls[i]->y += balls[i]->vy;
-                ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-
-                for(int otherBall = 0; otherBall < ballNumbers; otherBall++){
-
-                    if(balls[i]->num!=otherBall){
-                        float distanceX = (balls[i]->x - balls[otherBall]->x)*(balls[i]->x - balls[otherBall]->x);
-                        float distancey = (balls[i]->y - balls[otherBall]->y)*(balls[i]->y - balls[otherBall]->y);
-
-                        if((distanceX+distancey) <= 1600.f){ //1600.f being radius^2
-
-                            float fDistance = sqrtf((balls[i]->x - balls[otherBall]->x)*(balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y)*(balls[i]->y - balls[otherBall]->y));
-
-                            // Normal
-                            float nx = (balls[otherBall]->x - balls[i]->x) / fDistance;
-                            float ny = (balls[otherBall]->y - balls[i]->y) / fDistance;
-
-                            // Tangent
-                            float tx = -ny;
-                            float ty = nx;
-
-                            // Dot Product Tangent
-                            float dpTan1 = balls[i]->vx * tx + balls[i]->vy * ty;
-                            float dpTan2 = balls[otherBall]->vx * tx + balls[otherBall]->vy * ty;
-
-                            // Dot Product Normal
-                            float dpNorm1 = balls[i]->vx * nx + balls[i]->vy * ny;
-                            float dpNorm2 = balls[otherBall]->vx * nx + balls[otherBall]->vy * ny;
-
-                            // Conservation of momentum in 1D
-                            float m1 = (dpNorm1 * (balls[i]->mass - balls[otherBall]->mass) + 2.0f * balls[otherBall]->mass * dpNorm2) / (balls[i]->mass + balls[otherBall]->mass);
-                            float m2 = (dpNorm2 * (balls[otherBall]->mass - balls[i]->mass) + 2.0f * balls[i]->mass * dpNorm1) / (balls[i]->mass + balls[otherBall]->mass);
-
-                            // Update ball velocities
-                            balls[i]->vx = tx * dpTan1 + nx * m1;
-                            balls[i]->vy = ty * dpTan1 + ny * m1;
-                            balls[otherBall]->vx = tx * dpTan2 + nx * m2;
-                            balls[otherBall]->vy = ty * dpTan2 + ny * m2;
-                        }
-                    }
-                }
-
-                if(fabs(balls[i]->vx*balls[i]->vx + balls[i]->vy*balls[i]->vy) < 0.005f){ //if the balls velociy gets to a certain point, stop it
-                    ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-                    balls[i]->vx = 0;
-                    balls[i]->vy = 0;
-
-                }
-
-                bool currentCheck = false;
-                for(int i = 0; i < ballNumbers; i++){
-                    if(balls[i]->vx!=0 && balls[i]->vy!=0 && !currentCheck){
-                        currentCheck=true;
-                        break;
-                    }
-                }
-                if(!currentCheck){
-                    noMovement = true;
-                }
-                
-                window.clear();
-                window.draw(innerTable);
-                for(int i = 0; i < ballNumbers; i++){ //redraws the balls
-                    window.draw(*ballShapes[i]);
-                }
-                window.display();
+    void moveBall(Ball ball, int velocityX, int velocityY)
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
             }
         }
-    }
-}
+        noMovement = false;
+        balls[0]->vx = (balls[0]->x - velocityX) * 0.005f;
+        balls[0]->vy = (balls[0]->y - velocityY) * 0.005f;
 
+        while (!noMovement)
+        {
+
+            for (int i = 0; i < ballNumbers; i++)
+            {
+                if (balls[i]->vx != 0 && balls[i]->vy != 0)
+                {
+                    while (window.pollEvent(event))
+                    {
+                        if (event.type == sf::Event::Closed)
+                        {
+                            window.close();
+                        }
+                    }
+
+                    if (balls[i]->x <= 210)
+                    { //if the ball hits the left or right cushions
+                        balls[i]->vx *= -1;
+                    }
+                    else if (balls[i]->x + balls[i]->radius * 2 >= tableWidth + 210)
+                    {
+                        balls[i]->vx *= -1;
+                    }
+                    if (balls[i]->y <= 210)
+                    { //if the ball hits the top or bottom cushions
+                        balls[i]->vy *= -1;
+                    }
+                    else if (balls[i]->y + balls[i]->radius * 2 >= tableHeight + 210)
+                    {
+                        balls[i]->vy *= -1;
+                    }
+
+                    balls[i]->ax = (-balls[i]->vx) * 0.00075f; //setting an acceloration value (friction on the table)
+                    balls[i]->ay = (-balls[i]->vy) * 0.00075f;
+
+                    balls[i]->vx += balls[i]->ax; //applying the friction to the velocity
+                    balls[i]->vy += balls[i]->ay;
+
+                    balls[i]->x += balls[i]->vx; //moviving the ball with the velocity
+                    balls[i]->y += balls[i]->vy;
+                    ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
+
+                    for (int otherBall = 0; otherBall < ballNumbers; otherBall++)
+                    {
+
+                        if (balls[i]->num != otherBall)
+                        {
+                            float distanceX = (balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x);
+                            float distancey = (balls[i]->y - balls[otherBall]->y) * (balls[i]->y - balls[otherBall]->y);
+
+                            if ((distanceX + distancey) <= 1600.f)
+                            { //1600.f being radius^2
+
+                                float fDistance = sqrtf((balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y) * (balls[i]->y - balls[otherBall]->y));
+
+                                // Normal
+                                float nx = (balls[otherBall]->x - balls[i]->x) / fDistance;
+                                float ny = (balls[otherBall]->y - balls[i]->y) / fDistance;
+
+                                // Tangent
+                                float tx = -ny;
+                                float ty = nx;
+
+                                // Dot Product Tangent
+                                float dpTan1 = balls[i]->vx * tx + balls[i]->vy * ty;
+                                float dpTan2 = balls[otherBall]->vx * tx + balls[otherBall]->vy * ty;
+
+                                // Dot Product Normal
+                                float dpNorm1 = balls[i]->vx * nx + balls[i]->vy * ny;
+                                float dpNorm2 = balls[otherBall]->vx * nx + balls[otherBall]->vy * ny;
+
+                                // Conservation of momentum in 1D
+                                float m1 = (dpNorm1 * (balls[i]->mass - balls[otherBall]->mass) + 2.0f * balls[otherBall]->mass * dpNorm2) / (balls[i]->mass + balls[otherBall]->mass);
+                                float m2 = (dpNorm2 * (balls[otherBall]->mass - balls[i]->mass) + 2.0f * balls[i]->mass * dpNorm1) / (balls[i]->mass + balls[otherBall]->mass);
+
+                                // Update ball velocities
+                                balls[i]->vx = tx * dpTan1 + nx * m1;
+                                balls[i]->vy = ty * dpTan1 + ny * m1;
+                                balls[otherBall]->vx = tx * dpTan2 + nx * m2;
+                                balls[otherBall]->vy = ty * dpTan2 + ny * m2;
+                            }
+                        }
+                    }
+
+                    if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 0.005f)
+                    { //if the balls velociy gets to a certain point, stop it
+                        ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
+                        balls[i]->vx = 0;
+                        balls[i]->vy = 0;
+                    }
+
+                    bool currentCheck = false;
+                    for (int i = 0; i < ballNumbers; i++)
+                    {
+                        if (balls[i]->vx != 0 && balls[i]->vy != 0 && !currentCheck)
+                        {
+                            currentCheck = true;
+                            break;
+                        }
+                    }
+                    if (!currentCheck)
+                    {
+                        noMovement = true;
+                    }
+
+                    window.clear();
+                    window.draw(innerTable);
+                    for (int i = 0; i < ballNumbers; i++)
+                    { //redraws the balls
+                        window.draw(*ballShapes[i]);
+                    }
+                    window.display();
+                }
+            }
+        }
+}
+sf::Vertex line[2];
 sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
-    // float delta_x = pos.x - (ball.x);
-    // float delta_y = pos.y - (ball.x);
-    // float r = atan2(delta_y, delta_x);
+    float delta_x = pos.x + poolCue.getRadius() - (balls[0]->x + balls[0]->radius);
+    float delta_y = pos.y + poolCue.getRadius() - (balls[0]->y + balls[0]->radius);
+    line[0] = sf::Vertex(sf::Vector2f(pos.x + poolCue.getRadius(), pos.y + poolCue.getRadius()));
+    line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius));
+    float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
+    float xChange = (delta_x/dist)*(100*dt);
+    float yChange = (delta_y/dist)*(100*dt);
     if(elevation) {
-        pos.x += (balls[0]->x - (pos.x-10)) * 0.005;
-        pos.y += (balls[0]->y - (pos.y-10)) * 0.005;
-        // pos.x += sin(r) * 0.2;
-        // pos.y += cos(r) * 0.2;
+        pos.x -=xChange;
+        pos.y -=yChange;
     } else {
-        pos.x -= (balls[0]->x - (pos.x - 10)) * 0.005;
-        pos.y -= (balls[0]->y - (pos.y - 10)) * 0.005;
-        // pos.x += sin(r) * -0.2;
-        // pos.y += cos(r) * -0.2;
+        pos.x +=xChange;
+        pos.y +=yChange;
     }
-    
     return pos;
 }
 
@@ -167,6 +190,7 @@ void playerTurn() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        dt = dtClock.restart().asSeconds();
         float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (balls[0]->x + balls[0]->radius)) *
             ((poolCue.getPosition().x + poolCue.getRadius()) - (balls[0]->x + balls[0]->radius)) +
             ((poolCue.getPosition().y + poolCue.getRadius()) - (balls[0]->y + balls[0]->radius)) * 
@@ -208,6 +232,8 @@ void playerTurn() {
         for(int i = 0; i < ballNumbers; i++){
             window.draw(*ballShapes[i]);
         }
+
+        window.draw(line, 2, sf::Lines);
         window.draw(poolCue, transform);
         window.display();
     }
