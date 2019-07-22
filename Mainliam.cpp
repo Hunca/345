@@ -48,7 +48,7 @@ struct player {
 
         while (!noMovement)
         {
-
+            dt = dtClock.restart().asSeconds();
             for (int i = 0; i < ballNumbers; i++)
             {
                 if (balls[i]->vx != 0 && balls[i]->vy != 0)
@@ -78,11 +78,11 @@ struct player {
                         balls[i]->vy *= -1;
                     }
 
-                    balls[i]->ax = (-balls[i]->vx) * 0.00075f; //setting an acceloration value (friction on the table)
-                    balls[i]->ay = (-balls[i]->vy) * 0.00075f;
+                    balls[i]->ax = (-balls[i]->vx) * (0.00075f*dt); //setting an acceloration value (friction on the table)
+                    balls[i]->ay = (-balls[i]->vy) * (0.00075f*dt);
 
-                    balls[i]->vx += balls[i]->ax; //applying the friction to the velocity
-                    balls[i]->vy += balls[i]->ay;
+                    balls[i]->vx += (balls[i]->ax); //applying the friction to the velocity
+                    balls[i]->vy += (balls[i]->ay);
 
                     balls[i]->x += balls[i]->vx; //moviving the ball with the velocity
                     balls[i]->y += balls[i]->vy;
@@ -185,9 +185,8 @@ void playerTurn() {
     sf::Transform transform;
     float angle = 4;
     while(true) {
-        sf::Event event;
-        line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-        line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
+        sf::Event event;line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+            line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
