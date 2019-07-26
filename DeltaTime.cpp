@@ -16,6 +16,20 @@ sf::CircleShape ball(10.f);
 sf::Clock dtClock;
 float dt;
 
+struct Circle {
+    sf::Vector2f pos;
+    float radius;
+};
+
+bool collisionCheck(Circle a, Circle b) {
+  float r = a.radius + b.radius;
+  r *= r;
+  return r < ((a.pos.x + b.pos.x)*(a.pos.x + b.pos.x)) + ((a.pos.y + b.pos.y) * (a.pos.y + b.pos.y));
+}
+
+void ResolveCollision() {
+    
+}
 
 int main() {
     innerTable.setFillColor(sf::Color::Green);
@@ -30,17 +44,17 @@ int main() {
                 window.close();
         }
         window.draw(innerTable);
-
+        int speed = 200;
         dt = dtClock.restart().asSeconds();
         if(direction == true) {
-            float newX = ball.getPosition().x + (100*dt);
+            float newX = ball.getPosition().x + (speed*dt);
             float newY = ball.getPosition().y;
             ball.setPosition(sf::Vector2f(newX, newY));
             if (ball.getPosition().x + (ball.getRadius() * 2) >= innerTable.getPosition().x + tableWidth){
                 direction = false;
             }
         } else if(direction == false) {
-            float newX = ball.getPosition().x - (100*dt);
+            float newX = ball.getPosition().x - (speed*dt);
             float newY = ball.getPosition().y;
             ball.setPosition(sf::Vector2f(newX, newY));
             if (ball.getPosition().x  <= innerTable.getPosition().x){

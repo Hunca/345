@@ -13,7 +13,7 @@ struct player {
     int playersBallsLeft;
     int player;
 };
-    int ballNumbers = 5;
+    int ballNumbers = 16;
     int ballsLeft = 15;
     int windowWidth = 1182, windowHeight = 801;
     int tableWidth = 762, tableHeight = 381;
@@ -21,13 +21,13 @@ struct player {
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
     sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
     sf::Vector2f initialPositions[] = { //array of the balls positions
-        sf::Vector2f(400.5f, 381.f),  sf::Vector2f(701.5f,400.5f), sf::Vector2f(861.5f,360.5f),  sf::Vector2f(741.5f,420.5f), //0, 1, 2, 3
+        sf::Vector2f(600.5f, 381.f),  sf::Vector2f(701.5f,400.5f), sf::Vector2f(861.5f,360.5f),  sf::Vector2f(741.5f,420.5f), //0, 1, 2, 3
         sf::Vector2f(821.5f,420.5f),  sf::Vector2f(861.5f,440.5f), sf::Vector2f(781.5f,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
         sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f), sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
         sf::Vector2f(861.5f,480.5f),  sf::Vector2f(821.5f,340.5f), sf::Vector2f(781.5f,440.5f),  sf::Vector2f(821.5f,380.5f), //12, 13, 14, 15
     };
-    Ball *balls[5];
-    sf::CircleShape *ballShapes[5];
+    Ball *balls[16];
+    sf::CircleShape *ballShapes[16];
     sf::CircleShape poolCue(10);
     sf::Clock dtClock;
     float dt;
@@ -43,8 +43,8 @@ struct player {
             }
         }
         noMovement = false;
-        balls[0]->vx = (balls[0]->x - velocityX) * 0.005f;
-        balls[0]->vy = (balls[0]->y - velocityY) * 0.005f;
+        balls[0]->vx = (balls[0]->x - velocityX);
+        balls[0]->vy = (balls[0]->y - velocityY);
 
         while (!noMovement)
         {
@@ -78,14 +78,19 @@ struct player {
                         balls[i]->vy *= -1;
                     }
 
-                    balls[i]->ax = (-balls[i]->vx) * (0.00075f*dt); //setting an acceloration value (friction on the table)
-                    balls[i]->ay = (-balls[i]->vy) * (0.00075f*dt);
+                    balls[i]->ax = (-balls[i]->vx); //setting an acceloration value (friction on the table)
+                    balls[i]->ay = (-balls[i]->vy);
 
-                    balls[i]->vx += (balls[i]->ax); //applying the friction to the velocity
-                    balls[i]->vy += (balls[i]->ay);
+                    balls[i]->vx += (balls[i]->ax*dt); //applying the friction to the velocity
+                    balls[i]->vy += (balls[i]->ay*dt);
+                    
+                    // balls[i]->vx *= dt;
+                    // balls[i]->vy *= dt;
+                    // cout << balls[i]-> vx << " " << i << " vx\n";
+                    // cout << balls[i]-> vy << " " << i << " vy\n";
+                    balls[i]->x += (balls[i]->vx*dt); //moviving the ball with the velocity
+                    balls[i]->y += (balls[i]->vy*dt);
 
-                    balls[i]->x += balls[i]->vx; //moviving the ball with the velocity
-                    balls[i]->y += balls[i]->vy;
                     ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
 
                     for (int otherBall = 0; otherBall < ballNumbers; otherBall++)
@@ -100,7 +105,11 @@ struct player {
                             { //1600.f being radius^2
 
                                 float fDistance = sqrtf((balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y) * (balls[i]->y - balls[otherBall]->y));
-
+                                float distanceToMove = (balls[i]->radius + balls[otherBall]->radius) - fDistance;
+                                float angle = atan2(balls[otherBall]->y - balls[i]->y, balls[otherBall]->x- balls[i]->x);
+                                balls[otherBall]->y += cosf(angle) * distanceToMove;
+                                balls[otherBall]->x += cosf(angle) * distanceToMove;
+                                fDistance = sqrtf((balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y) * (balls[i]->y - balls[otherBall]->y));
                                 // Normal
                                 float nx = (balls[otherBall]->x - balls[i]->x) / fDistance;
                                 float ny = (balls[otherBall]->y - balls[i]->y) / fDistance;
@@ -129,8 +138,8 @@ struct player {
                             }
                         }
                     }
-
-                    if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 0.005f)
+                    cout << "fabs: " << i << ": " << fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) << "\n";
+                    if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 1.f)
                     { //if the balls velociy gets to a certain point, stop it
                         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
                         balls[i]->vx = 0;
@@ -195,7 +204,7 @@ void playerTurn() {
         float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (balls[0]->x + balls[0]->radius)) *
             ((poolCue.getPosition().x + poolCue.getRadius()) - (balls[0]->x + balls[0]->radius)) +
             ((poolCue.getPosition().y + poolCue.getRadius()) - (balls[0]->y + balls[0]->radius)) * 
-            ((poolCue.getPosition().y + poolCue.getRadius()) - (balls[0]->y + balls[0]->radius)));    
+            ((poolCue.getPosition().y + poolCue.getRadius()) - (balls[0]->y + balls[0]->radius)));  
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             float x1 = poolCue.getPosition().x - (balls[0]->x + (balls[0]->radius/2));
             float y1 = poolCue.getPosition().y - (balls[0]->y + (balls[0]->radius / 2));
@@ -211,7 +220,6 @@ void playerTurn() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             float x1 = poolCue.getPosition().x - (balls[0]->x + (balls[0]->radius/2));
             float y1 = poolCue.getPosition().y - (balls[0]->y + (balls[0]->radius / 2));
-            cout << x1 << " " << y1 << " \n";
             float x2 = x1 * cos(-angle*dt) - y1 * sin(-angle*dt);
             float y2 = x1 * sin(-angle*dt) + y1 * cos(-angle*dt);
             
@@ -222,7 +230,7 @@ void playerTurn() {
             line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            if (distance <= 140) {
+            if (distance <= 500) {
                 poolCue.setPosition(setPower(poolCue.getPosition(), false));
             }
         }
@@ -235,6 +243,8 @@ void playerTurn() {
             moveBall(*balls[0], poolCue.getPosition().x-poolCue.getRadius(), poolCue.getPosition().y-poolCue.getRadius());
             return;
         }
+
+        // cout << "test\n";
         window.clear();
         window.draw(innerTable);
         for(int i = 0; i < ballNumbers; i++){
@@ -261,7 +271,7 @@ int main() {
 	innerTable.setFillColor(sf::Color::Green);
 	innerTable.setOutlineThickness(59.f);
 	innerTable.setOutlineColor(sf::Color::Blue);
-
+    
     for(int i = 0; i < ballNumbers; i++){
         balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
@@ -282,8 +292,7 @@ int main() {
     poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
     poolCue.setFillColor(sf::Color::Black);
 
-    while (window.isOpen())
-	{
+    while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
