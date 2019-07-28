@@ -6,8 +6,16 @@
 #include <math.h>
 extern sf::CircleShape poolCue;
 extern sf::Vertex line[];
+extern bool yeeted;
 class PlayerManager {
     public:
-        static sf::Vector2f setPower(Ball *whiteBall, sf::Vector2f pos, bool elevation);
+        static void playerTurn(Ball *whiteBall);
+
+        static void setPower(Ball *whiteBall, bool elevation);
+
+    private:
+        static void aim(Ball *whiteBall, bool direction);
+        static void left(Ball *whiteBall);
+        static void right(Ball *whiteBall);
 };
 #endif

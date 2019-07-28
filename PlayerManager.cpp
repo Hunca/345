@@ -1,19 +1,92 @@
 #include "PlayerManager.h"
-
-sf::Vector2f PlayerManager::setPower(Ball *whiteBall, sf::Vector2f pos, bool elevation) {
-    float delta_x = pos.x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
-    float delta_y = pos.y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
-    line[0] = sf::Vertex(sf::Vector2f(pos.x + poolCue.getRadius(), pos.y + poolCue.getRadius()), sf::Color::Black);
+#include <iostream>
+#include <string>
+void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
+    float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
+    float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
+    line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
     line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
     float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
     float xChange = (delta_x/dist)*(100*dt);
     float yChange = (delta_y/dist)*(100*dt);
     if(elevation) {
-        pos.x -=xChange;
-        pos.y -=yChange;
+        poolCue.setPosition(poolCue.getPosition().x-xChange, poolCue.getPosition().y-yChange);
     } else {
-        pos.x +=xChange;
-        pos.y +=yChange;
+        poolCue.setPosition(poolCue.getPosition().x + xChange, poolCue.getPosition().y + yChange);
     }
-    return pos;
+}
+// void PlayerManager::aim(Ball *whiteBall, bool direction) {
+//     float speed = 4;
+//     float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
+//     float y1 = poolCue.getPosition().y - (whiteBall->y + (whiteBall->radius / 2));
+//     float x2, y2;
+//     if(direction) {//right
+//         float x2 = x1 * cos(speed * dt) - y1 * sin(speed * dt);
+//         float y2 = x1 * sin(speed * dt) + y1 * cos(speed * dt);
+//     } else {//left
+//         float x2 = x1 * cos(-speed * dt) - y1 * sin(-speed * dt);
+//         float y2 = x1 * sin(-speed * dt) + y1 * cos(-speed * dt);
+//     }
+//     std::cout << (whiteBall->x + (whiteBall->radius / 2)) << "\n";
+//     poolCue.setPosition(x2 + (whiteBall->x + (whiteBall->radius / 2)), y2 + (whiteBall->y + (whiteBall->radius / 2)));
+
+//     line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+//     line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
+// }
+
+
+void PlayerManager::left(Ball *whiteBall) {
+    float speed = 4;
+    float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
+    float y1 = poolCue.getPosition().y - (whiteBall->y + (whiteBall->radius / 2));
+    float x2 = x1 * cos(-speed * dt) - y1 * sin(-speed * dt);
+    float y2 = x1 * sin(-speed * dt) + y1 * cos(-speed * dt);
+
+    std::cout << poolCue.getPosition().x << "\n";
+    poolCue.setPosition(x2 + (whiteBall->x + (whiteBall->radius / 2)), y2 + (whiteBall->y + (whiteBall->radius / 2)));
+
+    line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+    line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
+}
+
+void PlayerManager::right(Ball *whiteBall) {
+    float angle = 4;
+    float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
+    float y1 = poolCue.getPosition().y - (whiteBall->y + (whiteBall->radius / 2));
+
+    float x2 = x1 * cos(angle * dt) - y1 * sin(angle * dt);
+    float y2 = x1 * sin(angle * dt) + y1 * cos(angle * dt);
+
+    poolCue.setPosition(x2 + (whiteBall->x + (whiteBall->radius / 2)), y2 + (whiteBall->y + (whiteBall->radius / 2)));
+
+    line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+    line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
+}
+
+void PlayerManager::playerTurn(Ball *whiteBall) {
+    dt = dtClock.restart().asSeconds();
+    float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
+        ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
+        ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
+        ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        right(whiteBall);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        left(whiteBall);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        if (distance <= 500) {
+            setPower(whiteBall, false);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        if (distance >= 40) {
+            setPower(whiteBall, true);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        yeeted = false;
+        // moveBall(poolCue.getPosition().x-poolCue.getRadius(), poolCue.getPosition().y-poolCue.getRadius());
+    }
 }
