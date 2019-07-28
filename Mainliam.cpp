@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
 #include "Ball.h"
+#include "Physics.h"
+#include "MovementManager.h"
 #include <string>
 #include <iostream>
-#include <math.h>
 #include <vector>
 
 using namespace std;
@@ -18,7 +18,7 @@ struct player {
     int windowWidth = 1182, windowHeight = 801;
     int tableWidth = 762, tableHeight = 381;
     bool noMovement = true; //boolean for moving balls
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "8BallPool");
     sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
     sf::Vector2f initialPositions[] = { //array of the balls positions
         sf::Vector2f(600.5f, 381.f),  sf::Vector2f(701.5f,400.5f), sf::Vector2f(861.5f,360.5f),  sf::Vector2f(741.5f,420.5f), //0, 1, 2, 3
@@ -32,7 +32,7 @@ struct player {
     sf::Clock dtClock;
     float dt;
 
-    void moveBall(Ball ball, int velocityX, int velocityY)
+    void moveBall(int velocityX, int velocityY)
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -42,9 +42,11 @@ struct player {
                 window.close();
             }
         }
-        noMovement = false;
-        balls[0]->vx = (balls[0]->x - velocityX);
-        balls[0]->vy = (balls[0]->y - velocityY);
+        if(noMovement) {
+            noMovement = false;
+            balls[0]->vx = (balls[0]->x - velocityX);
+            balls[0]->vy = (balls[0]->y - velocityY);
+        }
 
         while (!noMovement)
         {
@@ -60,23 +62,7 @@ struct player {
                             window.close();
                         }
                     }
-
-                    if (balls[i]->x <= 210)
-                    { //if the ball hits the left or right cushions
-                        balls[i]->vx *= -1;
-                    }
-                    else if (balls[i]->x + balls[i]->radius * 2 >= tableWidth + 210)
-                    {
-                        balls[i]->vx *= -1;
-                    }
-                    if (balls[i]->y <= 210)
-                    { //if the ball hits the top or bottom cushions
-                        balls[i]->vy *= -1;
-                    }
-                    else if (balls[i]->y + balls[i]->radius * 2 >= tableHeight + 210)
-                    {
-                        balls[i]->vy *= -1;
-                    }
+                    Physics::boxColision(balls[i]);
 
                     balls[i]->ax = (-balls[i]->vx); //setting an acceloration value (friction on the table)
                     balls[i]->ay = (-balls[i]->vy);
@@ -84,10 +70,6 @@ struct player {
                     balls[i]->vx += (balls[i]->ax*dt); //applying the friction to the velocity
                     balls[i]->vy += (balls[i]->ay*dt);
                     
-                    // balls[i]->vx *= dt;
-                    // balls[i]->vy *= dt;
-                    // cout << balls[i]-> vx << " " << i << " vx\n";
-                    // cout << balls[i]-> vy << " " << i << " vy\n";
                     balls[i]->x += (balls[i]->vx*dt); //moviving the ball with the velocity
                     balls[i]->y += (balls[i]->vy*dt);
 
@@ -95,7 +77,6 @@ struct player {
 
                     for (int otherBall = 0; otherBall < ballNumbers; otherBall++)
                     {
-
                         if (balls[i]->num != otherBall)
                         {
                             float distanceX = (balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x);
@@ -103,42 +84,11 @@ struct player {
 
                             if ((distanceX + distancey) <= 1600.f)
                             { //1600.f being radius^2
-
-                                float fDistance = sqrtf((balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y) * (balls[i]->y - balls[otherBall]->y));
-                                float distanceToMove = (balls[i]->radius + balls[otherBall]->radius) - fDistance;
-                                float angle = atan2(balls[otherBall]->y - balls[i]->y, balls[otherBall]->x- balls[i]->x);
-                                balls[otherBall]->y += cosf(angle) * distanceToMove;
-                                balls[otherBall]->x += cosf(angle) * distanceToMove;
-                                fDistance = sqrtf((balls[i]->x - balls[otherBall]->x) * (balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y) * (balls[i]->y - balls[otherBall]->y));
-                                // Normal
-                                float nx = (balls[otherBall]->x - balls[i]->x) / fDistance;
-                                float ny = (balls[otherBall]->y - balls[i]->y) / fDistance;
-
-                                // Tangent
-                                float tx = -ny;
-                                float ty = nx;
-
-                                // Dot Product Tangent
-                                float dpTan1 = balls[i]->vx * tx + balls[i]->vy * ty;
-                                float dpTan2 = balls[otherBall]->vx * tx + balls[otherBall]->vy * ty;
-
-                                // Dot Product Normal
-                                float dpNorm1 = balls[i]->vx * nx + balls[i]->vy * ny;
-                                float dpNorm2 = balls[otherBall]->vx * nx + balls[otherBall]->vy * ny;
-
-                                // Conservation of momentum in 1D
-                                float m1 = (dpNorm1 * (balls[i]->mass - balls[otherBall]->mass) + 2.0f * balls[otherBall]->mass * dpNorm2) / (balls[i]->mass + balls[otherBall]->mass);
-                                float m2 = (dpNorm2 * (balls[otherBall]->mass - balls[i]->mass) + 2.0f * balls[i]->mass * dpNorm1) / (balls[i]->mass + balls[otherBall]->mass);
-
-                                // Update ball velocities
-                                balls[i]->vx = tx * dpTan1 + nx * m1;
-                                balls[i]->vy = ty * dpTan1 + ny * m1;
-                                balls[otherBall]->vx = tx * dpTan2 + nx * m2;
-                                balls[otherBall]->vy = ty * dpTan2 + ny * m2;
+                                Physics::ballCollision(balls[i], balls[otherBall]);
                             }
                         }
                     }
-                    cout << "fabs: " << i << ": " << fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) << "\n";
+                    // cout << "fabs: " << i << ": " << fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) << "\n";
                     if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 1.f)
                     { //if the balls velociy gets to a certain point, stop it
                         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
@@ -240,7 +190,7 @@ void playerTurn() {
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            moveBall(*balls[0], poolCue.getPosition().x-poolCue.getRadius(), poolCue.getPosition().y-poolCue.getRadius());
+            moveBall(poolCue.getPosition().x-poolCue.getRadius(), poolCue.getPosition().y-poolCue.getRadius());
             return;
         }
 
