@@ -12,13 +12,11 @@ void MovementManager::ballMove(Ball *ball, sf::CircleShape *ballShape) {
 
     ballShape->setPosition(ball->x, ball->y);
 }
-
 void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
     for (int otherBall = 0; otherBall < ballNumbers; otherBall++) {
         if (ball->num != otherBall) {
             float distanceX = (ball->x - balls[otherBall]->x) * (ball->x - balls[otherBall]->x);
             float distancey = (ball->y - balls[otherBall]->y) * (ball->y - balls[otherBall]->y);
-
             if ((distanceX + distancey) <= 1600.f) { //1600.f being radius^2
                 if((ball->vx == 0 && ball->vy == 0) || balls[otherBall]->vx == 0 && balls[otherBall]->vy == 0) {
                     movingBalls++;
@@ -28,7 +26,6 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
         }
     }
 }
-
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
     if(movingBalls == 0) {//fires whiteBall
         balls[0]->vx = (balls[0]->x - velocityX);

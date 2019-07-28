@@ -1,6 +1,5 @@
 #include "Physics.h"
 
-
 void Physics::boxColision(Ball *ball) {
     if (ball->x <= 210)
     { //if the ball hits the left or right cushions

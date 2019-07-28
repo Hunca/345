@@ -2,6 +2,7 @@
 #include "Ball.h"
 #include "Physics.h"
 #include "MovementManager.h"
+#include "PlayerManager.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -29,6 +30,7 @@ struct player {
     Ball *balls[16];
     sf::CircleShape *ballShapes[16];
     sf::CircleShape poolCue(10);
+    sf::Vertex line[2];
     sf::Clock dtClock;
     float dt;
 
@@ -54,31 +56,14 @@ struct player {
         }
         
 }
-sf::Vertex line[2];
-sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
-    float delta_x = pos.x + poolCue.getRadius() - (balls[0]->x + balls[0]->radius);
-    float delta_y = pos.y + poolCue.getRadius() - (balls[0]->y + balls[0]->radius);
-    line[0] = sf::Vertex(sf::Vector2f(pos.x + poolCue.getRadius(), pos.y + poolCue.getRadius()), sf::Color::Black);
-    line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
-    float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
-    float xChange = (delta_x/dist)*(100*dt);
-    float yChange = (delta_y/dist)*(100*dt);
-    if(elevation) {
-        pos.x -=xChange;
-        pos.y -=yChange;
-    } else {
-        pos.x +=xChange;
-        pos.y +=yChange;
-    }
-    return pos;
-}
 
 void playerTurn() {
     sf::Transform transform;
     float angle = 4;
     while(true) {
-        sf::Event event;line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-            line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
+        sf::Event event;
+        line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+        line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
@@ -114,12 +99,12 @@ void playerTurn() {
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (distance <= 500) {
-                poolCue.setPosition(setPower(poolCue.getPosition(), false));
+                poolCue.setPosition(PlayerManager::setPower(balls[0], poolCue.getPosition(), false));
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             if (distance >= 40) {
-                poolCue.setPosition(setPower(poolCue.getPosition(), true));
+                poolCue.setPosition(PlayerManager::setPower(balls[0], poolCue.getPosition(), true));
             }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
@@ -138,6 +123,24 @@ void playerTurn() {
         window.display();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void swapPlayer(player player){
     if(player.player == 1){
