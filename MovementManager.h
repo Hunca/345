@@ -4,15 +4,14 @@
 #include "Physics.h"
 #include <SFML/Graphics.hpp>
 #include <math.h>
-bool noMovement;
 extern int ballNumbers;
+extern int movingBalls;
 class MovementManager {
-    public:
-        void moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY);
-    private:
-        float stopVelocity;
-        float movingBalls;
-        void ballMove(Ball *ball, sf::CircleShape *ballShape);
-        void collisionCheck(Ball *ball, Ball *balls[]);
+public:
+    static void moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY);
+
+private:
+    static void ballMove(Ball *ball, sf::CircleShape *ballShape);
+    static void collisionCheck(Ball *ball, Ball *balls[]);
 };
 #endif

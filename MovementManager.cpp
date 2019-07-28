@@ -1,8 +1,6 @@
 #include "MovementManager.h"
-bool noMovement = true;
-float stopVelocity = 1.f;
 int movingBalls = 0;
-void moveBall(Ball *ball, sf::CircleShape *ballShape) {
+void MovementManager::ballMove(Ball *ball, sf::CircleShape *ballShape) {
     ball->ax = (-ball->vx); //setting an acceloration value (friction on the table)
     ball->ay = (-ball->vy);
 
@@ -15,7 +13,7 @@ void moveBall(Ball *ball, sf::CircleShape *ballShape) {
     ballShape->setPosition(ball->x, ball->y);
 }
 
-void collisionCheck(Ball *ball, Ball *balls[]) {
+void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
     for (int otherBall = 0; otherBall < ballNumbers; otherBall++) {
         if (ball->num != otherBall) {
             float distanceX = (ball->x - balls[otherBall]->x) * (ball->x - balls[otherBall]->x);
@@ -32,8 +30,7 @@ void collisionCheck(Ball *ball, Ball *balls[]) {
 }
 
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
-    if(noMovement) {//fires whiteBall
-        noMovement = false;
+    if(movingBalls == 0) {//fires whiteBall
         balls[0]->vx = (balls[0]->x - velocityX);
         balls[0]->vy = (balls[0]->y - velocityY);
         movingBalls++;
@@ -42,13 +39,16 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
     for (int i = 0; i < ballNumbers; i++) {
         if (balls[i]->vx != 0 && balls[i]->vy != 0) {
             Physics::boxColision(balls[i]);
-            moveBall(balls[i], ballShapes[i]);
+            ballMove(balls[i], ballShapes[i]);
             collisionCheck(balls[i], balls);
-            if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < stopVelocity) { //if the balls velociy gets to a certain point, stop it
+            if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 1.f) { //if the balls velociy gets to a certain point, stop it
                 ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
                 balls[i]->vx = 0;
                 balls[i]->vy = 0;
                 movingBalls--;
+            }
+            if (movingBalls == 0) {
+                return;
             }
         }
     }
