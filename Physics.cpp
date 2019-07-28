@@ -20,12 +20,16 @@ void Physics::boxColision(Ball *ball) {
     }
 }
 void Physics::ballCollision(Ball *ballA, Ball *ballB) {
+    
+    //ballPenetrationHandler
     float fDistance = sqrtf((ballA->x - ballB->x) * (ballA->x - ballB->x) + (ballA->y - ballB->y) * (ballA->y - ballB->y));
     float distanceToMove = (ballA->radius + ballB->radius) - fDistance;
     float angle = atan2(ballB->y - ballA->y, ballB->x - ballA->x);
     ballB->y += cosf(angle) * distanceToMove;
     ballB->x += cosf(angle) * distanceToMove;
+
     fDistance = sqrtf((ballA->x - ballB->x) * (ballA->x - ballB->x) + (ballA->y - ballB->y) * (ballA->y - ballB->y));
+    
     // Normal
     float nx = (ballB->x - ballA->x) / fDistance;
     float ny = (ballB->y - ballA->y) / fDistance;
