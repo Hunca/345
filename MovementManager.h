@@ -11,6 +11,7 @@ class MovementManager {
         void moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY);
     private:
         float stopVelocity;
+        float movingBalls;
         void ballMove(Ball *ball, sf::CircleShape *ballShape);
         void collisionCheck(Ball *ball, Ball *balls[]);
 };

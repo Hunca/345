@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Ball.h"
 #include "Physics.h"
-#include "MovementManager.h"
+// #include "MovementManager.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -26,6 +26,7 @@ struct player {
         sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f), sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
         sf::Vector2f(861.5f,480.5f),  sf::Vector2f(821.5f,340.5f), sf::Vector2f(781.5f,440.5f),  sf::Vector2f(821.5f,380.5f), //12, 13, 14, 15
     };
+    int movingBalls = 0;
     Ball *balls[16];
     sf::CircleShape *ballShapes[16];
     sf::CircleShape poolCue(10);
@@ -46,6 +47,7 @@ struct player {
             noMovement = false;
             balls[0]->vx = (balls[0]->x - velocityX);
             balls[0]->vy = (balls[0]->y - velocityY);
+            movingBalls++;
         }
 
         while (!noMovement)
@@ -84,6 +86,9 @@ struct player {
 
                             if ((distanceX + distancey) <= 1600.f)
                             { //1600.f being radius^2
+                                if((balls[i]->vx == 0 && balls[i]->vy == 0) || balls[otherBall]->vx == 0 && balls[otherBall]->vy == 0) {
+                                    movingBalls++;
+                                }
                                 Physics::ballCollision(balls[i], balls[otherBall]);
                             }
                         }
@@ -94,18 +99,10 @@ struct player {
                         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
                         balls[i]->vx = 0;
                         balls[i]->vy = 0;
+                        movingBalls--;
                     }
-
-                    bool currentCheck = false;
-                    for (int i = 0; i < ballNumbers; i++)
-                    {
-                        if (balls[i]->vx != 0 && balls[i]->vy != 0 && !currentCheck)
-                        {
-                            currentCheck = true;
-                            break;
-                        }
-                    }
-                    if (!currentCheck)
+                    
+                    if (movingBalls == 0)
                     {
                         noMovement = true;
                     }

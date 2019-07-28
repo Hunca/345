@@ -1,7 +1,7 @@
 #include "MovementManager.h"
 bool noMovement = true;
 float stopVelocity = 1.f;
-
+int movingBalls = 0;
 void moveBall(Ball *ball, sf::CircleShape *ballShape) {
     ball->ax = (-ball->vx); //setting an acceloration value (friction on the table)
     ball->ay = (-ball->vy);
@@ -22,6 +22,9 @@ void collisionCheck(Ball *ball, Ball *balls[]) {
             float distancey = (ball->y - balls[otherBall]->y) * (ball->y - balls[otherBall]->y);
 
             if ((distanceX + distancey) <= 1600.f) { //1600.f being radius^2
+                if((ball->vx == 0 && ball->vy == 0) || balls[otherBall]->vx == 0 && balls[otherBall]->vy == 0) {
+                    movingBalls++;
+                }
                 Physics::ballCollision(ball, balls[otherBall]);
             }
         }
@@ -33,6 +36,7 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
         noMovement = false;
         balls[0]->vx = (balls[0]->x - velocityX);
         balls[0]->vy = (balls[0]->y - velocityY);
+        movingBalls++;
     }
     dt = dtClock.restart().asSeconds();
     for (int i = 0; i < ballNumbers; i++) {
@@ -44,6 +48,7 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
                 ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
                 balls[i]->vx = 0;
                 balls[i]->vy = 0;
+                movingBalls--;
             }
         }
     }
