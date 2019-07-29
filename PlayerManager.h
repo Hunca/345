@@ -2,11 +2,12 @@
 #define PLAYERMANAGER_H
 #include "Physics.h"
 #include "Ball.h"
+#include "GameManager.h"
 #include <SFML/Graphics.hpp>
 #include <math.h>
 extern sf::CircleShape poolCue;
 extern sf::Vertex line[];
-extern bool yeeted;
+extern bool endTurn;
 class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall);

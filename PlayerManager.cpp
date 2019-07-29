@@ -42,7 +42,6 @@ void PlayerManager::left(Ball *whiteBall) {
     float x2 = x1 * cos(-speed * dt) - y1 * sin(-speed * dt);
     float y2 = x1 * sin(-speed * dt) + y1 * cos(-speed * dt);
 
-    std::cout << poolCue.getPosition().x << "\n";
     poolCue.setPosition(x2 + (whiteBall->x + (whiteBall->radius / 2)), y2 + (whiteBall->y + (whiteBall->radius / 2)));
 
     line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
@@ -86,7 +85,6 @@ void PlayerManager::playerTurn(Ball *whiteBall) {
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        yeeted = false;
-        // moveBall(poolCue.getPosition().x-poolCue.getRadius(), poolCue.getPosition().y-poolCue.getRadius());
+        state = MOVEMENT;
     }
 }

@@ -1,7 +1,9 @@
 #ifndef MOVEMENTMANAGER_H
 #define MOVEMENTMANAGER_H
 #include "Ball.h"
-#include "Physics.h"
+#include "Physics.h" 
+#include "PlayerManager.h"
+#include "GameManager.h"
 #include <SFML/Graphics.hpp>
 #include <math.h>
 extern int ballNumbers;
