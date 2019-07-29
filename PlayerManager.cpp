@@ -36,7 +36,7 @@ void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
 
 
 void PlayerManager::left(Ball *whiteBall) {
-    float speed = 4;
+    float speed = 2; //speed of rotation
     float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
     float y1 = poolCue.getPosition().y - (whiteBall->y + (whiteBall->radius / 2));
     float x2 = x1 * cos(-speed * dt) - y1 * sin(-speed * dt);
@@ -49,7 +49,7 @@ void PlayerManager::left(Ball *whiteBall) {
 }
 
 void PlayerManager::right(Ball *whiteBall) {
-    float angle = 4;
+    float angle = 2; //speed of rotation
     float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
     float y1 = poolCue.getPosition().y - (whiteBall->y + (whiteBall->radius / 2));
 
@@ -75,7 +75,7 @@ void PlayerManager::playerTurn(Ball *whiteBall) {
         left(whiteBall);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        if (distance <= 500) {
+        if (distance <= 200) { //alter distance of cue
             setPower(whiteBall, false);
         }
     }
