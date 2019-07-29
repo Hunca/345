@@ -3,18 +3,22 @@
 void Physics::boxColision(Ball *ball) {
     if (ball->x <= 210)
     { //if the ball hits the left or right cushions
+        ball->x=211;
         ball->vx *= -1;
     }
     else if (ball->x + ball->radius * 2 >= tableWidth + 210)
     {
+        ball->x = 971 - (ball->radius * 2);
         ball->vx *= -1;
     }
     if (ball->y <= 210)
     { //if the ball hits the top or bottom cushions
+        ball->y = 211;
         ball->vy *= -1;
     }
     else if (ball->y + ball->radius * 2 >= tableHeight + 210)
     {
+        ball->y = 590 - (ball->radius * 2);
         ball->vy *= -1;
     }
 }
