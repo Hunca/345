@@ -28,8 +28,8 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
 }
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
     if(movingBalls == 0) {//fires whiteBall
-        balls[0]->vx = (balls[0]->x - velocityX);
-        balls[0]->vy = (balls[0]->y - velocityY);
+        balls[0]->vx = (balls[0]->x - velocityX) * 4; //times constant to alter power
+        balls[0]->vy = (balls[0]->y - velocityY) * 4; // "" ""
         movingBalls++;
     }
     dt = dtClock.restart().asSeconds();
