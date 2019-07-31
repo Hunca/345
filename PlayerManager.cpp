@@ -43,6 +43,7 @@ void PlayerManager::right(Ball *whiteBall) {
 }
 
 void PlayerManager::playerTurn(Ball *whiteBall) {
+    if(screenSelected == false) return;
     dt = dtClock.restart().asSeconds();
     float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
         ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
