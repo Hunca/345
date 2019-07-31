@@ -15,26 +15,6 @@ void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
         poolCue.setPosition(poolCue.getPosition().x + xChange, poolCue.getPosition().y + yChange);
     }
 }
-// void PlayerManager::aim(Ball *whiteBall, bool direction) {
-//     float speed = 4;
-//     float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
-//     float y1 = poolCue.getPosition().y - (whiteBall->y + (whiteBall->radius / 2));
-//     float x2, y2;
-//     if(direction) {//right
-//         float x2 = x1 * cos(speed * dt) - y1 * sin(speed * dt);
-//         float y2 = x1 * sin(speed * dt) + y1 * cos(speed * dt);
-//     } else {//left
-//         float x2 = x1 * cos(-speed * dt) - y1 * sin(-speed * dt);
-//         float y2 = x1 * sin(-speed * dt) + y1 * cos(-speed * dt);
-//     }
-//     std::cout << (whiteBall->x + (whiteBall->radius / 2)) << "\n";
-//     poolCue.setPosition(x2 + (whiteBall->x + (whiteBall->radius / 2)), y2 + (whiteBall->y + (whiteBall->radius / 2)));
-
-//     line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-//     line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
-// }
-
-
 void PlayerManager::left(Ball *whiteBall) {
     float speed = 2; //speed of rotation
     float x1 = poolCue.getPosition().x - (whiteBall->x + (whiteBall->radius / 2));
