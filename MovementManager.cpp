@@ -46,6 +46,7 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
             }
             if (movingBalls == 0) {
                 state = PLAYERTURN;
+                GameManager::swapPlayer();
                 poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
                 return;
             }

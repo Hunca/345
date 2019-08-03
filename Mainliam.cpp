@@ -10,11 +10,7 @@
 
 using namespace std;
 
-struct player {
-    int ballSuit;
-    int playersBallsLeft;
-    int player;
-};
+
 int ballNumbers = 16;
 int ballsLeft = 15;
 int windowWidth = 1182, windowHeight = 801;
@@ -31,7 +27,7 @@ float dt;
 bool endTurn = false;
 gameState state = PLAYERTURN;
 bool screenSelected = true;
-
+playerStruct player;
 void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
@@ -67,12 +63,3 @@ int main() {
 	}
     return 0;
 }
-// void swapPlayer(player player){
-//     if(player.player == 1){
-//         player.player = 2;
-//     }
-//     if(player.ballSuit < 8){
-//         player.ballSuit = 9;
-//     }
-//     player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
-// }

@@ -1,4 +1,6 @@
 #include "GameManager.h"
+#include <String>
+#include <iostream>
 sf::Vector2f initialPositions[] = { //array of the balls positions
     sf::Vector2f(600.5f, 381.f),  sf::Vector2f(701.5f,400.5f), sf::Vector2f(861.5f,360.5f),  sf::Vector2f(741.5f,420.5f), //0, 1, 2, 3
     sf::Vector2f(821.5f,420.5f),  sf::Vector2f(861.5f,440.5f), sf::Vector2f(781.5f,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
@@ -25,6 +27,28 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
             ballShapes[i]->setFillColor(sf::Color::Black);
         }
     }
+    player.ballSuit = 0;
+    player.playerNum = 1;
+    player.playersBallsLeft = 7;
+
     poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
     poolCue.setFillColor(sf::Color::Black);
+}
+void GameManager::swapPlayer() {
+    if(player.playerNum == 1){
+        player.playerNum = 2;
+        poolCue.setFillColor(sf::Color::Magenta);
+    } else {
+        player.playerNum = 1;
+        poolCue.setFillColor(sf::Color::Black);
+    }
+    if(player.ballSuit == 1){
+        player.ballSuit = 9;
+    } else if(player.ballSuit == 9) {
+        player.ballSuit = 1;
+    }
+    player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
+    std::cout << "Player: " << player.playerNum << "\n";
+    std::cout << "Suit: " << player.ballSuit << "\n";
+    std::cout << "Balls left: " << player.playersBallsLeft << "\n";
 }
