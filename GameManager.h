@@ -10,6 +10,8 @@ struct playerStruct {
     int ballSuit;
     int playersBallsLeft;
     int playerNum;
+    bool ballSunk;
+    bool fouled;
 };
 extern int ballsLeft;
 extern playerStruct player;
@@ -18,7 +20,8 @@ extern sf::RectangleShape cushions[];
 extern sf::Vector2f cushionPositions[];
 class GameManager {
     public:
-        static void swapPlayer();
         static void tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers);
+        static void ballSunk(Ball ball);
+        static void swapPlayer();
 };
 #endif

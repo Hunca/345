@@ -36,10 +36,31 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     player.ballSuit = 0;
     player.playerNum = 1;
     player.playersBallsLeft = 7;
+    player.ballSunk = false;
+    player.fouled = false;
 
     poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
     poolCue.setFillColor(sf::Color::Black);
 }
+
+void GameManager::ballSunk(Ball ball) {
+    if(ball.num == 0) {
+        player.fouled = true;
+        player.ballSunk = false;
+    } else if(ball.num == 8) {
+        
+    } else if(!player.fouled) {
+        if(ball.num < 8 && player.ballSuit == 1) {
+            if(!ballSunk) player.ballSunk = true;
+            player.playersBallsLeft--;
+        } else if(ball.num > 8 && player.ballSuit == 9) {
+            if(!ballSunk) player.ballSunk = true;
+            player.playersBallsLeft--;
+        }
+        ballsLeft--;
+    }
+}
+
 void GameManager::swapPlayer() {
     if(player.playerNum == 1){
         player.playerNum = 2;
@@ -53,6 +74,8 @@ void GameManager::swapPlayer() {
     } else if(player.ballSuit == 9) {
         player.ballSuit = 1;
     }
+    player.ballSunk = false;
+    player.fouled = false;
     player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
     std::cout << "Player: " << player.playerNum << "\n";
     std::cout << "Suit: " << player.ballSuit << "\n";
