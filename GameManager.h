@@ -14,6 +14,8 @@ struct playerStruct {
 extern int ballsLeft;
 extern playerStruct player;
 
+extern sf::RectangleShape cushions[];
+extern sf::Vector2f cushionPositions[];
 class GameManager {
     public:
         static void swapPlayer();
