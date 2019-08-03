@@ -20,20 +20,14 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
         balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-        if (balls[i]->num < 8)
-        {
+        if (balls[i]->num < 8) {
             ballShapes[i]->setFillColor(sf::Color::Blue);
-        }
-        else if (balls[i]->num > 8)
-        {
+        } else if (balls[i]->num > 8) {
             ballShapes[i]->setFillColor(sf::Color::Red);
         }
-        if (balls[i]->num == 0)
-        {
+        if (balls[i]->num == 0) {
             ballShapes[i]->setFillColor(sf::Color::White);
-        }
-        if (balls[i]->num == 8)
-        {
+        } if (balls[i]->num == 8) {
             ballShapes[i]->setFillColor(sf::Color::Black);
         }
     }

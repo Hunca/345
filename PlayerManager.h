@@ -8,6 +8,7 @@
 extern sf::CircleShape poolCue;
 extern sf::Vertex line[];
 extern bool endTurn;
+extern bool screenSelected;
 class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall);

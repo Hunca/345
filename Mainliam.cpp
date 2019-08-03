@@ -36,6 +36,7 @@ sf::Clock dtClock;
 float dt;
 bool endTurn = false;
 gameState state = PLAYERTURN;
+bool screenSelected = true;
 
 void draw(gameState state) {
     window.clear();
@@ -60,6 +61,9 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+        if(event.type == sf::Event::GainedFocus) screenSelected = true;
+        if(event.type == sf::Event::LostFocus) screenSelected = false;
+        
         if(state == PLAYERTURN) {
             line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
             line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
