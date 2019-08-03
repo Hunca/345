@@ -6,6 +6,8 @@
 enum gameState{PLAYERTURN, MOVEMENT};
 extern gameState state;
 extern sf::RectangleShape innerTable;
+extern sf::RectangleShape cushions[];
+extern sf::Vector2f cushionPositions[];
 class GameManager {
     public:
         static void tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers);

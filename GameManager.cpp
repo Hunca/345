@@ -9,7 +9,13 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     innerTable.setPosition(210.f, 210.f);
     innerTable.setFillColor(sf::Color::Green);
     innerTable.setOutlineThickness(59.f);
-    innerTable.setOutlineColor(sf::Color::Blue);
+    innerTable.setOutlineColor(sf::Color::Yellow);
+    for(int i = 0; i < 6; i++){
+        cushions[i].setPosition(cushionPositions[i]);
+        cushions[i].setFillColor(sf::Color::Blue);
+        cushions[i].setOutlineThickness(0.f);
+        cushions[i].setOutlineColor(sf::Color::Blue);
+    }
     for (int i = 0; i < ballNumbers; i++) {
         balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
