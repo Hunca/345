@@ -22,12 +22,16 @@ int tableWidth = 762, tableHeight = 381;
 bool noMovement = true; //boolean for moving balls
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "8BallPool");
 sf::RectangleShape innerTable(sf::Vector2f(tableWidth, tableHeight));
-sf::RectangleShape cushions[] = {sf::RectangleShape(sf::Vector2f(336.f, 59.f)), sf::RectangleShape(sf::Vector2f(336.f, 59.f)),  // Top 2
-                                 sf::RectangleShape(sf::Vector2f(59.f, 336.f)), sf::RectangleShape(sf::Vector2f(59.f, 336.f)),  // Left and right
-                                 sf::RectangleShape(sf::Vector2f(336.f, 59.f)), sf::RectangleShape(sf::Vector2f(336.f, 59.f))}; // Bottom 2
-sf::Vector2f cushionPositions[] = {sf::Vector2f(235.f, 151.f), sf::Vector2f(611.f, 151.f),  // Top 2
-                                   sf::Vector2f(151.f, 235.f), sf::Vector2f(972.f, 235.f),  // Left and right
-                                   sf::Vector2f(235.f, 591.f), sf::Vector2f(611.f, 591.f)}; // Bottom 2
+sf::RectangleShape cushions[] = {sf::RectangleShape(sf::Vector2f(336.f, 44.25f)), sf::RectangleShape(sf::Vector2f(336.f, 44.25f)),  // Top 2
+                                 sf::RectangleShape(sf::Vector2f(44.25f, 336.f)), sf::RectangleShape(sf::Vector2f(44.25f, 336.f)),  // Left and right
+                                 sf::RectangleShape(sf::Vector2f(336.f, 44.25f)), sf::RectangleShape(sf::Vector2f(336.f, 44.25f))}; // Bottom 2
+sf::Vector2f cushionPositions[] = {sf::Vector2f(235.f, 165.75f), sf::Vector2f(611.f, 165.75f), // Top 2
+                                   sf::Vector2f(165.75f, 235.f), sf::Vector2f(972.f, 235.f),   // Left and right
+                                   sf::Vector2f(235.f, 591.f), sf::Vector2f(611.f, 591.f)};    // Bottom 2
+sf::CircleShape sockets[] = {sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f),  // Top row
+                             sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottomw row
+sf::Vector2f socketPositions[] = {sf::Vector2f(164.9f, 164.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(997.1f, 124.9f),  // Top row
+                                  sf::Vector2f(164.9f, 636.1f), sf::Vector2f(571.f, 636.1f), sf::Vector2f(997.1f, 636.1f)}; // Bottom row
 Ball *balls[16];
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(10);
@@ -42,6 +46,7 @@ void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
     for(int i = 0; i < 6; i++){
+        window.draw(sockets[i]);
         window.draw(cushions[i]);
     }
     for(int i = 0; i < ballNumbers; i++){

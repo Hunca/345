@@ -17,7 +17,7 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
         if (ball->num != otherBall) {
             float distanceX = (ball->x - balls[otherBall]->x) * (ball->x - balls[otherBall]->x);
             float distancey = (ball->y - balls[otherBall]->y) * (ball->y - balls[otherBall]->y);
-            if ((distanceX + distancey) <= 1600.f) { //1600.f being radius^2
+            if ((distanceX + distancey) <= (ball->radius*2)*(ball->radius*2)) { //1600.f being radius^2
                 if((ball->vx == 0 && ball->vy == 0) || balls[otherBall]->vx == 0 && balls[otherBall]->vy == 0) {
                     movingBalls++;
                 }

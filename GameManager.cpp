@@ -8,16 +8,18 @@ sf::Vector2f initialPositions[] = { //array of the balls positions
 void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers) {
     innerTable.setPosition(210.f, 210.f);
     innerTable.setFillColor(sf::Color::Green);
-    innerTable.setOutlineThickness(59.f);
+    innerTable.setOutlineThickness(44.25f);
     innerTable.setOutlineColor(sf::Color::Yellow);
     for(int i = 0; i < 6; i++){
+        sockets[i].setPosition(socketPositions[i]);
+        sockets[i].setFillColor(sf::Color::Black);
         cushions[i].setPosition(cushionPositions[i]);
         cushions[i].setFillColor(sf::Color::Blue);
         cushions[i].setOutlineThickness(0.f);
         cushions[i].setOutlineColor(sf::Color::Blue);
     }
     for (int i = 0; i < ballNumbers; i++) {
-        balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
+        balls[i] = new Ball(i, 8.55f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
         if (balls[i]->num < 8) {
