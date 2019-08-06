@@ -57,6 +57,7 @@ void GameManager::ballSunk(Ball ball) {
             if(!ballSunk) player.ballSunk = true;
             player.playersBallsLeft--;
         }
+        ball.isSunk = true;
         ballsLeft--;
     }
 }
