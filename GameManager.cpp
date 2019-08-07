@@ -49,7 +49,11 @@ void GameManager::ballSunk(Ball *ball) {
         // player.ballSunk = false;
     } else if(ball->num == 8) {
         
-    } else if(!player.fouled) {
+    } else {
+        if(player.ballSuit == 0) {
+            if(ball->num > 8) player.ballSuit = 9;
+            else player.ballSuit = 1;
+        }
         if(ball->num < 8 && player.ballSuit == 1) {
             if(!ballSunk) player.ballSunk = true;
             player.playersBallsLeft--;
@@ -83,4 +87,5 @@ void GameManager::swapPlayer() {
     std::cout << "Player: " << player.playerNum << "\n";
     std::cout << "Suit: " << player.ballSuit << "\n";
     std::cout << "Balls left: " << player.playersBallsLeft << "\n";
+    std::cout << ballsLeft << "\n";
 }
