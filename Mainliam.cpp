@@ -42,9 +42,10 @@ void draw(gameState state) {
     for(int i = 0; i < 6; i++){
         window.draw(cushions[i]);
     }
-    for(int i = 0; i < ballNumbers; i++) {
+    for(int i = 1; i < ballNumbers; i++) {
         if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
     }
+    window.draw(*ballShapes[0]);
     if(state == PLAYERTURN) {
         window.draw(poolCue);
         window.draw(line, 2, sf::Lines);
@@ -63,7 +64,7 @@ int main() {
         if(event.type == sf::Event::LostFocus) screenSelected = false;
         
         if(state == WHITEPLACEMENT) {
-
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0]);
         }
 
         if(state == PLAYERTURN) {

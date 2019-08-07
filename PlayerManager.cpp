@@ -1,6 +1,4 @@
 #include "PlayerManager.h"
-#include <iostream>
-#include <string>
 void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
     float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
@@ -67,5 +65,28 @@ void PlayerManager::playerTurn(Ball *whiteBall) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         state = MOVEMENT;
+    }
+}
+void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape) {
+    float speed = 100;
+    dt = dtClock.restart().asSeconds();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        ball->x += speed*dt;
+        ballShape->setPosition(ball->x, ball->y);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        ball->x -= speed*dt;
+        ballShape->setPosition(ball->x, ball->y);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        ball->y -= speed*dt;
+        ballShape->setPosition(ball->x, ball->y);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        ball->y += speed*dt;
+        ballShape->setPosition(ball->x, ball->y);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        
     }
 }

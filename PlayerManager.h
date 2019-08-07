@@ -13,6 +13,7 @@ class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall);
 
+        static void placeWhiteBall(Ball *ball, sf::CircleShape *ballShape);
         static void setPower(Ball *whiteBall, bool elevation);
 
     private:
