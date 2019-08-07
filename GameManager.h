@@ -1,21 +1,15 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 #include "Ball.h"
+#include "Player.h"
 #include "PlayerManager.h"
 #include <SFML/Graphics.hpp>
-enum gameState{PLAYERTURN, MOVEMENT};
+enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT};
 extern gameState state;
 extern sf::RectangleShape innerTable;
-struct playerStruct {
-    int ballSuit;
-    int playersBallsLeft;
-    int playerNum;
-    bool ballSunk;
-    bool fouled;
-};
 extern int ballsLeft;
-extern playerStruct player;
-
+extern Player *player1;
+extern Player *player2;
 extern sf::RectangleShape cushions[];
 extern sf::Vector2f cushionPositions[];
 class GameManager {

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Ball.h"
+#include "Player.h"
 #include "Physics.h"
 #include "MovementManager.h"
 #include "PlayerManager.h"
@@ -31,9 +32,10 @@ sf::Vertex line[2];
 sf::Clock dtClock;
 float dt;
 bool endTurn = false;
-gameState state = PLAYERTURN;
+gameState state = WHITEPLACEMENT;
 bool screenSelected = true;
-playerStruct player;
+Player *player1;
+Player *player2;
 void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
@@ -60,6 +62,10 @@ int main() {
         if(event.type == sf::Event::GainedFocus) screenSelected = true;
         if(event.type == sf::Event::LostFocus) screenSelected = false;
         
+        if(state == WHITEPLACEMENT) {
+
+        }
+
         if(state == PLAYERTURN) {
             line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
             line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);

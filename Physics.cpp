@@ -12,15 +12,11 @@ void Physics::boxColision(Ball *ball) {
         ball->x = 971 - (ball->radius * 2);
         ball->vx *= -1;
         GameManager::ballSunk(ball);
-    }
-    if (ball->y <= 210)
-    { //if the ball hits the top or bottom cushions
+    } else if (ball->y <= 210) { //if the ball hits the top or bottom cushions
         ball->y = 211;
         ball->vy *= -1;
         GameManager::ballSunk(ball);
-    }
-    else if (ball->y + ball->radius * 2 >= tableHeight + 210)
-    {
+    } else if (ball->y + ball->radius * 2 >= tableHeight + 210) {
         ball->y = 590 - (ball->radius * 2);
         ball->vy *= -1;
         GameManager::ballSunk(ball);

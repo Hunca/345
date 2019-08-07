@@ -7,6 +7,8 @@ sf::Vector2f initialPositions[] = { //array of the balls positions
     sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f), sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
     sf::Vector2f(861.5f,480.5f),  sf::Vector2f(821.5f,340.5f), sf::Vector2f(781.5f,440.5f),  sf::Vector2f(821.5f,380.5f), //12, 13, 14, 15
 };
+int playerGoing = 0;
+Player *players[2];
 void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers) {
     innerTable.setPosition(210.f, 210.f);
     innerTable.setFillColor(sf::Color::Green);
@@ -33,59 +35,84 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
             ballShapes[i]->setFillColor(sf::Color::Black);
         }
     }
-    player.ballSuit = 0;
-    player.playerNum = 1;
-    player.playersBallsLeft = 7;
-    player.ballSunk = false;
-    player.fouled = false;
-
+    
+    players[0] = new Player(0);
+    players[1] = new Player(1);
     poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
     poolCue.setFillColor(sf::Color::Black);
 }
 
 void GameManager::ballSunk(Ball *ball) {
     if(ball->num == 0) {
+        return;
         // player.fouled = true;
         // player.ballSunk = false;
     } else if(ball->num == 8) {
         
     } else {
-        if(player.ballSuit == 0) {
-            if(ball->num > 8) player.ballSuit = 9;
-            else player.ballSuit = 1;
+        if(players[playerGoing]->ballSuit == 0) {
+            if(ball->num > 8) {
+                players[playerGoing]->ballSuit = 9;
+                if(playerGoing == 0) {
+                    players[1]->ballSuit = 1;
+                } else {
+                    players[0]->ballSuit = 1;
+                }
+            }
+            else {
+                players[playerGoing]->ballSuit = 1;
+                if(playerGoing == 0) {
+                    players[1]->ballSuit = 9;
+                } else {
+                    players[0]->ballSuit = 9;
+                }
+            }
         }
-        if(ball->num < 8 && player.ballSuit == 1) {
-            if(!ballSunk) player.ballSunk = true;
-            player.playersBallsLeft--;
-        } else if(ball->num > 8 && player.ballSuit == 9) {
-            if(!ballSunk) player.ballSunk = true;
-            player.playersBallsLeft--;
+        if(ball->num < 8) {
+            if(players[playerGoing]->ballSuit == 1) {
+                if(!ballSunk) players[playerGoing]->ballSunk = true;
+                players[playerGoing]->playersBallsLeft--;
+            } else {
+                if(playerGoing == 0) {
+                    players[1]->playersBallsLeft--;
+                } else {
+                    players[0]->playersBallsLeft--;
+                }
+            }
+        } else if(ball->num > 8) {
+            if(players[playerGoing]->ballSuit == 9) {
+                if(!ballSunk) players[playerGoing]->ballSunk = true;
+                players[playerGoing]->playersBallsLeft--;
+            } else {
+                if(playerGoing == 0) {
+                    players[1]->playersBallsLeft--;
+                } else {
+                    players[0]->playersBallsLeft--;
+                }
+            }
         }
         ball->isSunk = true;
         ball->x = -100;
         ball->y = -100;
+        ball->ax = 0;
+        ball->ay = 0;
+        ball->vx = 0;
+        ball->vy = 0;
+        std::cout << "Ball sunk: " << ball->num << "\n";
         ballsLeft--;
     }
 }
 
 void GameManager::swapPlayer() {
-    if(player.playerNum == 1){
-        player.playerNum = 2;
+    std::cout << "Player: " << players[playerGoing]->playerNum << "\n";
+    std::cout << "Suit: " << players[playerGoing]->ballSuit << "\n";
+    std::cout << "Balls left: " << players[playerGoing]->playersBallsLeft << "\n";
+    std::cout << ballsLeft << "\n";
+    if(playerGoing == 0){
+        playerGoing = 1;
         poolCue.setFillColor(sf::Color::Magenta);
     } else {
-        player.playerNum = 1;
+        playerGoing = 0;
         poolCue.setFillColor(sf::Color::Black);
     }
-    if(player.ballSuit == 1){
-        player.ballSuit = 9;
-    } else if(player.ballSuit == 9) {
-        player.ballSuit = 1;
-    }
-    player.ballSunk = false;
-    player.fouled = false;
-    player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
-    std::cout << "Player: " << player.playerNum << "\n";
-    std::cout << "Suit: " << player.ballSuit << "\n";
-    std::cout << "Balls left: " << player.playersBallsLeft << "\n";
-    std::cout << ballsLeft << "\n";
 }
