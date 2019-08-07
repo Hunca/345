@@ -1,6 +1,7 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 #include "Ball.h"
+#include "GameManager.h"
 #include <math.h>
 #include <SFML/System.hpp>
 

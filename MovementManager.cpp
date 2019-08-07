@@ -35,7 +35,12 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
     dt = dtClock.restart().asSeconds();
     for (int i = 0; i < ballNumbers; i++) {
         if (balls[i]->vx != 0 && balls[i]->vy != 0) {
-            if(balls[i]->isSunk == true) continue;
+            if(balls[i]->isSunk == true) {
+                balls[i]->vx = 0;
+                balls[i]->vy = 0;
+                movingBalls--;
+                continue;
+            }
             Physics::boxColision(balls[i]);
             ballMove(balls[i], ballShapes[i]);
             collisionCheck(balls[i], balls);

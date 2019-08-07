@@ -43,21 +43,23 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     poolCue.setFillColor(sf::Color::Black);
 }
 
-void GameManager::ballSunk(Ball ball) {
-    if(ball.num == 0) {
-        player.fouled = true;
-        player.ballSunk = false;
-    } else if(ball.num == 8) {
+void GameManager::ballSunk(Ball *ball) {
+    if(ball->num == 0) {
+        // player.fouled = true;
+        // player.ballSunk = false;
+    } else if(ball->num == 8) {
         
     } else if(!player.fouled) {
-        if(ball.num < 8 && player.ballSuit == 1) {
+        if(ball->num < 8 && player.ballSuit == 1) {
             if(!ballSunk) player.ballSunk = true;
             player.playersBallsLeft--;
-        } else if(ball.num > 8 && player.ballSuit == 9) {
+        } else if(ball->num > 8 && player.ballSuit == 9) {
             if(!ballSunk) player.ballSunk = true;
             player.playersBallsLeft--;
         }
-        ball.isSunk = true;
+        ball->isSunk = true;
+        ball->x = -100;
+        ball->y = -100;
         ballsLeft--;
     }
 }

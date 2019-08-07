@@ -40,8 +40,8 @@ void draw(gameState state) {
     for(int i = 0; i < 6; i++){
         window.draw(cushions[i]);
     }
-    for(int i = 0; i < ballNumbers; i++){
-        window.draw(*ballShapes[i]);
+    for(int i = 0; i < ballNumbers; i++) {
+        if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
     }
     if(state == PLAYERTURN) {
         window.draw(poolCue);

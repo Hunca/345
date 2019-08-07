@@ -21,7 +21,7 @@ extern sf::Vector2f cushionPositions[];
 class GameManager {
     public:
         static void tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers);
-        static void ballSunk(Ball ball);
+        static void ballSunk(Ball *ball);
         static void swapPlayer();
 };
 #endif
