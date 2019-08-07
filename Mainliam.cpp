@@ -30,8 +30,20 @@ sf::Vector2f cushionPositions[] = {sf::Vector2f(235.f, 165.75f), sf::Vector2f(61
                                    sf::Vector2f(235.f, 591.f), sf::Vector2f(611.f, 591.f)};    // Bottom 2
 sf::CircleShape sockets[] = {sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f),  // Top row
                              sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottomw row
-sf::Vector2f socketPositions[] = {sf::Vector2f(164.9f, 164.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(997.1f, 124.9f),  // Top row
-                                  sf::Vector2f(164.9f, 636.1f), sf::Vector2f(571.f, 636.1f), sf::Vector2f(997.1f, 636.1f)}; // Bottom row
+sf::Vector2f socketPositions[] = {sf::Vector2f(174.9f, 174.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(967.1f, 174.9f),  // Top row
+                                  sf::Vector2f(174.9f, 587.1f), sf::Vector2f(571.f, 595.25f), sf::Vector2f(967.1f, 587.1f)}; // Bottom row
+sf::Vertex socketEdges[12][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(235.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 180.f), sf::Color::Black)},   // TL Right
+                                 {sf::Vertex(sf::Vector2f(571.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(586.f, 180.f), sf::Color::Black)},   // TM Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 180.f), sf::Color::Black)},   // TM Right
+                                 {sf::Vertex(sf::Vector2f(947.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(977.f, 180.f), sf::Color::Black)},   // TR Left
+                                 {sf::Vertex(sf::Vector2f(972.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 205.f), sf::Color::Black)},   // TR Right
+                                 {sf::Vertex(sf::Vector2f(210.f, 571.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 601.f), sf::Color::Black)},   // BL Left
+                                 {sf::Vertex(sf::Vector2f(235.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 621.f), sf::Color::Black)},   // BL Right
+                                 {sf::Vertex(sf::Vector2f(571.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(586.f, 621.f), sf::Color::Black)},   // BM Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // BM Right
+                                 {sf::Vertex(sf::Vector2f(947.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black)},   // BR Left
+                                 {sf::Vertex(sf::Vector2f(972.f, 571.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}}; // BR Right
 Ball *balls[16];
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(10);
@@ -50,6 +62,9 @@ void draw(gameState state) {
         window.draw(cushions[i]);
     }
     for(int i = 0; i < ballNumbers; i++){
+        if(i < 12){
+            window.draw(socketEdges[i], 2, sf::Lines);
+        }
         window.draw(*ballShapes[i]);
     }
     if(state == PLAYERTURN) {
