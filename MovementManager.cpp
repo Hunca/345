@@ -28,20 +28,20 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
     }
 }
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
+
     if(movingBalls == 0) {//fires whiteBall
         // movingBalls = 0;
         balls[0]->vx = (balls[0]->x - velocityX) * 5; //times constant to alter power
-        balls[0]->vy = (balls[0]->y - velocityY) * 5; // "" ""
+        balls[0]->vy = (balls[0]->y - velocityY) * 5;
         movingBalls++;
         
     }
     dt = dtClock.restart().asSeconds();
     for (int i = 0; i < ballNumbers; i++) {
-        // std::cout << balls[i]->num << " cunt " << movingBalls << "\n";
-        if (balls[i]->vx != 0 && balls[i]->vy != 0) {
-            if(balls[i]->isSunk == true) {
 
-                // std::cout << "SHit\n";
+        if (balls[i]->vx != 0 || balls[i]->vy != 0) {
+
+            if(balls[i]->isSunk == true) {
                 balls[i]->x = -100;
                 balls[i]->y = -100;
                 balls[i]->ax = 0;
@@ -62,16 +62,14 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
             }
             
         }
-        // std::cout << movingBalls << " yeetus\n";
         if (movingBalls < 1) {
-            // std::cout << "yeetus\n";
             if(balls[0]->isSunk) {
                 state = WHITEPLACEMENT;
                 balls[0]->x = 591.f;
                 balls[0]->y = 400.5f;
                 ballShapes[0]->setPosition(balls[0]->x, balls[0]->y);
                 balls[0]->isSunk = false;
-                    // GameManager::swapPlayer();
+                GameManager::swapPlayer();
                 return;
             }
             state = PLAYERTURN;

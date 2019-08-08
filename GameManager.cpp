@@ -44,13 +44,7 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
 
 void GameManager::ballSunk(Ball *ball) {
     if(ball->num == 0) {
-        // ball->isSunk = true;
-        // ball->x = -100;
-        // ball->y = -100;
-        // ball->ax = 0;
-        // ball->ay = 0;
-        // ball->vx = 0;
-        // ball->vy = 0;
+        ball->isSunk = true;
         // std::cout << "balls sunk white: " << ball->num << "\n";
     } else if(ball->num == 8) {
         
