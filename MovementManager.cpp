@@ -1,5 +1,6 @@
 #include "MovementManager.h"
-int movingBalls = 0;
+#include <String>
+#include <iostream>
 void MovementManager::ballMove(Ball *ball, sf::CircleShape *ballShape) {
     ball->ax = (-ball->vx) * 0.5f; //setting an acceloration value (friction on the table)
     ball->ay = (-ball->vy) * 0.5f;
@@ -28,34 +29,55 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
 }
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
     if(movingBalls == 0) {//fires whiteBall
+        // movingBalls = 0;
         balls[0]->vx = (balls[0]->x - velocityX) * 5; //times constant to alter power
         balls[0]->vy = (balls[0]->y - velocityY) * 5; // "" ""
         movingBalls++;
+        
     }
     dt = dtClock.restart().asSeconds();
     for (int i = 0; i < ballNumbers; i++) {
+        // std::cout << balls[i]->num << " cunt " << movingBalls << "\n";
         if (balls[i]->vx != 0 && balls[i]->vy != 0) {
             if(balls[i]->isSunk == true) {
+
+                // std::cout << "SHit\n";
+                balls[i]->x = -100;
+                balls[i]->y = -100;
+                balls[i]->ax = 0;
+                balls[i]->ay = 0;
                 balls[i]->vx = 0;
                 balls[i]->vy = 0;
                 movingBalls--;
-                continue;
+            } else {
+                Physics::boxColision(balls[i]);
+                ballMove(balls[i], ballShapes[i]);
+                collisionCheck(balls[i], balls);
+                if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 50.f) { //if the balls velociy gets to a certain point, stop it
+                    ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
+                    balls[i]->vx = 0;
+                    balls[i]->vy = 0;
+                    movingBalls--;
+                }
             }
-            Physics::boxColision(balls[i]);
-            ballMove(balls[i], ballShapes[i]);
-            collisionCheck(balls[i], balls);
-            if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 50.f) { //if the balls velociy gets to a certain point, stop it
-                ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-                balls[i]->vx = 0;
-                balls[i]->vy = 0;
-                movingBalls--;
-            }
-            if (movingBalls == 0) {
-                state = PLAYERTURN;
-                GameManager::swapPlayer();
-                poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
+            
+        }
+        // std::cout << movingBalls << " yeetus\n";
+        if (movingBalls < 1) {
+            // std::cout << "yeetus\n";
+            if(balls[0]->isSunk) {
+                state = WHITEPLACEMENT;
+                balls[0]->x = 591.f;
+                balls[0]->y = 400.5f;
+                ballShapes[0]->setPosition(balls[0]->x, balls[0]->y);
+                balls[0]->isSunk = false;
+                    // GameManager::swapPlayer();
                 return;
             }
+            state = PLAYERTURN;
+            GameManager::swapPlayer();
+            poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
+            return;
         }
     }
 }

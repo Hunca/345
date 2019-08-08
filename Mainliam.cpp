@@ -11,7 +11,7 @@
 
 using namespace std;
 
-
+int movingBalls = 0;
 int ballNumbers = 16;
 int ballsLeft = 15;
 int windowWidth = 1182, windowHeight = 801;
@@ -26,6 +26,7 @@ sf::Vector2f cushionPositions[] = {sf::Vector2f(235.f, 151.f), sf::Vector2f(611.
                                    sf::Vector2f(151.f, 235.f), sf::Vector2f(972.f, 235.f),  // Left and right
                                    sf::Vector2f(235.f, 591.f), sf::Vector2f(611.f, 591.f)}; // Bottom 2
 Ball *balls[16];
+bool placing = false;
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(10);
 sf::Vertex line[2];
@@ -62,15 +63,21 @@ int main() {
 		}
         if(event.type == sf::Event::GainedFocus) screenSelected = true;
         if(event.type == sf::Event::LostFocus) screenSelected = false;
-        
-        if(state == WHITEPLACEMENT) {
-            PlayerManager::placeWhiteBall(balls[0], ballShapes[0]);
+        if(event.type == sf::Event::KeyReleased) {
+            if(event.key.code == sf::Keyboard::Space) {
+                // cout << "Cunt\n";
+                placing = false;
+            }
         }
 
-        if(state == PLAYERTURN) {
+        if(placing == false && state == PLAYERTURN) {
             line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
             line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
             PlayerManager::playerTurn(balls[0]);
+        }
+        if(state == WHITEPLACEMENT) {
+            placing = true;
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0]);
         }
         if(state == MOVEMENT) {
             MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x - poolCue.getRadius(), poolCue.getPosition().y - poolCue.getRadius());

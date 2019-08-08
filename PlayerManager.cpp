@@ -1,4 +1,6 @@
 #include "PlayerManager.h"
+#include <String>
+#include <iostream>
 void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
     float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
@@ -87,6 +89,10 @@ void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape) {
         ballShape->setPosition(ball->x, ball->y);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        
+        poolCue.setPosition(sf::Vector2f(ball->x + ball->radius - 10, ball->y - ball->radius - 10));
+        line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+        line[1] = sf::Vertex(sf::Vector2f(ball->x + ball->radius, ball->y + ball->radius), sf::Color::Black);
+        ball->isSunk = false;
+        state = PLAYERTURN;
     }
 }
