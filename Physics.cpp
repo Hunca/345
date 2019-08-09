@@ -58,3 +58,13 @@ void Physics::ballCollision(Ball *ballA, Ball *ballB) {
     ballB->vx = tx * dpTan2 + nx * m2;
     ballB->vy = ty * dpTan2 + ny * m2;
 }
+bool Physics::overLapDetection(Ball *whiteBall, Ball *ball) {
+    float x1 = whiteBall->x + whiteBall->radius, x2 = ball->x + ball->radius;
+    float y1 = whiteBall->y + whiteBall->radius, y2 = ball->y + ball->radius;
+    float sumOfRadii = whiteBall->radius + ball->radius;
+    float distanceSquared = ((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2));
+    if(distanceSquared  < sumOfRadii * sumOfRadii) {
+        return true;
+    }
+    return false;
+}

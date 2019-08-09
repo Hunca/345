@@ -18,7 +18,7 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
         if (ball->num != otherBall) {
             float distanceX = (ball->x - balls[otherBall]->x) * (ball->x - balls[otherBall]->x);
             float distancey = (ball->y - balls[otherBall]->y) * (ball->y - balls[otherBall]->y);
-            if ((distanceX + distancey) <= 1600.f) { //1600.f being radius^2
+            if ((distanceX + distancey) <= (ball->radius*2)*(ball->radius*2)) { //diameter^2
                 if((ball->vx == 0 && ball->vy == 0) || balls[otherBall]->vx == 0 && balls[otherBall]->vy == 0) {
                     movingBalls++;
                 }
@@ -28,13 +28,11 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
     }
 }
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
-
     if(movingBalls == 0) {//fires whiteBall
         // movingBalls = 0;
         balls[0]->vx = (balls[0]->x - velocityX) * 5; //times constant to alter power
         balls[0]->vy = (balls[0]->y - velocityY) * 5;
         movingBalls++;
-        
     }
     dt = dtClock.restart().asSeconds();
     for (int i = 0; i < ballNumbers; i++) {

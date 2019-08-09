@@ -21,7 +21,7 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
         cushions[i].setOutlineColor(sf::Color::Blue);
     }
     for (int i = 0; i < ballNumbers; i++) {
-        balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
+        balls[i] = new Ball(i, 8.55f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
         if (balls[i]->num < 8) {
@@ -45,7 +45,6 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
 void GameManager::ballSunk(Ball *ball) {
     if(ball->num == 0) {
         ball->isSunk = true;
-        // std::cout << "balls sunk white: " << ball->num << "\n";
     } else if(ball->num == 8) {
         
     } else {

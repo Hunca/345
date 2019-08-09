@@ -77,10 +77,10 @@ int main() {
         }
         if(state == WHITEPLACEMENT) {
             placing = true;
-            PlayerManager::placeWhiteBall(balls[0], ballShapes[0]);
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
         }
         if(state == MOVEMENT) {
-            MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x - poolCue.getRadius(), poolCue.getPosition().y - poolCue.getRadius());
+            MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x, poolCue.getPosition().y);
         }
         draw(state);
 	}

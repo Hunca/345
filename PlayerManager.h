@@ -2,6 +2,7 @@
 #define PLAYERMANAGER_H
 #include "Physics.h"
 #include "Ball.h"
+#include "MovementManager.h"
 #include "GameManager.h"
 #include <SFML/Graphics.hpp>
 #include <math.h>
@@ -13,7 +14,7 @@ class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall);
 
-        static void placeWhiteBall(Ball *balls, sf::CircleShape *ballShape);
+        static void placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]);
         static void setPower(Ball *whiteBall, bool elevation);
 
     private:
