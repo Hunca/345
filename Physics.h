@@ -2,6 +2,7 @@
 #define PHYSICS_H
 #include "Ball.h"
 #include "MovementManager.h"
+#include "GameManager.h"
 #include <math.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,5 +19,6 @@ class Physics{
         static void boxColision(Ball *ball);
         static void ballCollision(Ball *ballA, Ball *ballB);
         static void cushionCollision(Ball *ballA, Ball *ballB);
+        static bool overLapDetection(Ball *whiteBall, Ball *ball);
 };
 #endif

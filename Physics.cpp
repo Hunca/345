@@ -41,7 +41,26 @@ void Physics::boxColision(Ball *ball) {
                 ball->vy *= -1;
             }
         }
-    }
+    // if (ball->x <= 210)
+    // { //if the ball hits the left or right cushions
+    //     ball->x=211;
+    //     ball->vx *= -1;
+    //     GameManager::ballSunk(ball);
+    // }
+    // else if (ball->x + ball->radius * 2 >= tableWidth + 210)
+    // {
+    //     ball->x = 971 - (ball->radius * 2);
+    //     ball->vx *= -1;
+    //     GameManager::ballSunk(ball);
+    // } else if (ball->y <= 210) { //if the ball hits the top or bottom cushions
+    //     ball->y = 211;
+    //     ball->vy *= -1;
+    //     GameManager::ballSunk(ball);
+    // } else if (ball->y + ball->radius * 2 >= tableHeight + 210) {
+    //     ball->y = 590 - (ball->radius * 2);
+    //     ball->vy *= -1;
+    //     GameManager::ballSunk(ball);
+    // }
 
     // if (ball->x <= 210)
     // { //if the ball hits the left or right cushions
@@ -63,6 +82,7 @@ void Physics::boxColision(Ball *ball) {
     //     ball->y = 590 - (ball->radius * 2);
     //     ball->vy *= -1;
     // }
+    }
 }
 void Physics::ballCollision(Ball *ballA, Ball *ballB) {
     
@@ -132,4 +152,15 @@ void Physics::cushionCollision(Ball *ballA, Ball *ballB) {
     // Update ball velocities
     ballA->vx = tx * dpTan1 + nx * m1;
     ballA->vy = ty * dpTan1 + ny * m1;
+
+}
+bool Physics::overLapDetection(Ball *whiteBall, Ball *ball) {
+    float x1 = whiteBall->x + whiteBall->radius, x2 = ball->x + ball->radius;
+    float y1 = whiteBall->y + whiteBall->radius, y2 = ball->y + ball->radius;
+    float sumOfRadii = whiteBall->radius + ball->radius;
+    float distanceSquared = ((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2));
+    if(distanceSquared  < sumOfRadii * sumOfRadii) {
+        return true;
+    }
+    return false;
 }

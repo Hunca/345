@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Ball.h"
+#include "Player.h"
 #include "Physics.h"
 #include "MovementManager.h"
 #include "PlayerManager.h"
@@ -10,11 +11,7 @@
 
 using namespace std;
 
-struct player {
-    int ballSuit;
-    int playersBallsLeft;
-    int player;
-};
+int movingBalls = 0;
 int ballNumbers = 16;
 int ballsLeft = 15;
 int windowWidth = 1182, windowHeight = 801;
@@ -64,31 +61,36 @@ sf::Vector2f cornerPositions[] = { //array of the balls positions
 Ball *cornerObjects[12];
 Ball *balls[16];
 sf::CircleShape* cornerShapes[12];
+bool placing = false;
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(10);
 sf::Vertex line[2];
+sf::Vertex dLine[2];
 sf::Clock dtClock;
 float dt;
 bool endTurn = false;
-gameState state = PLAYERTURN;
+gameState state = BREAKING;
 bool screenSelected = true;
-
+Player *player1;
+Player *player2;
 void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
+    window.draw(dLine, 2, sf::Lines);
     for(int i = 0; i < 6; i++){
         window.draw(sockets[i]);
         window.draw(cushions[i]);
     }
-    for(int i = 0; i < ballNumbers; i++){
-        //if(i < 12){
-            window.draw(socketEdges[i], 2, sf::Lines);
-        //}
-        window.draw(*ballShapes[i]);
+    for(int i = 0; i < 18; i++){
+        window.draw(socketEdges[i], 2, sf::Lines);
+        if(i < 12){
+            window.draw(*cornerShapes[i]);
+        }
     }
-    for(int i = 0; i < 12; i++){
-        window.draw(*cornerShapes[i]);
+    for(int i = 1; i < ballNumbers; i++) {
+        if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
     }
+    if(balls[0]->isSunk == false) window.draw(*ballShapes[0]);
     if(state == PLAYERTURN) {
         window.draw(poolCue);
         window.draw(line, 2, sf::Lines);
@@ -105,11 +107,30 @@ int main() {
 		}
         if(event.type == sf::Event::GainedFocus) screenSelected = true;
         if(event.type == sf::Event::LostFocus) screenSelected = false;
-        
-        if(state == PLAYERTURN) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT) {//reset
+            GameManager::tableSetup(balls, ballShapes, ballNumbers);
+            ballsLeft = 15;
+            playerGoing = 0;
+            state = BREAKING;
+        }
+        if(event.type == sf::Event::KeyReleased) {
+            if(event.key.code == sf::Keyboard::Space) {
+                placing = false;
+            }
+        }
+
+        if(placing == false && state == PLAYERTURN) {
             line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
             line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
             PlayerManager::playerTurn(balls[0]);
+        }
+        if(state == WHITEPLACEMENT) {
+            placing = true;
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
+        }
+        if(state == BREAKING) {
+            placing = true;
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
         }
         if(state == MOVEMENT) {
             MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x, poolCue.getPosition().y);
@@ -118,12 +139,3 @@ int main() {
 	}
     return 0;
 }
-// void swapPlayer(player player){
-//     if(player.player == 1){
-//         player.player = 2;
-//     }
-//     if(player.ballSuit < 8){
-//         player.ballSuit = 9;
-//     }
-//     player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
-// }

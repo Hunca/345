@@ -1,6 +1,6 @@
 #include "PlayerManager.h"
+#include <String>
 #include <iostream>
-#include <string>
 void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
     float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
@@ -67,5 +67,51 @@ void PlayerManager::playerTurn(Ball *whiteBall) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         state = MOVEMENT;
+    }
+}
+void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]) {
+    float speed = 100;
+    dt = dtClock.restart().asSeconds();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        if(ball->x + (ball->radius*2) < 210+tableWidth && state == WHITEPLACEMENT) {
+            ball->x += speed * dt;
+            ballShape->setPosition(ball->x, ball->y);
+        } else if(ball->x + (ball->radius*2) < (400.5+ball->radius) && state == BREAKING){
+            ball->x += speed * dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        if(ball->x > 210) {
+            ball->x -= speed*dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+       if(ball->y > 210.f) {
+            ball->y -= speed*dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        if(ball->y + (ball->radius*2) < 210+tableHeight) {
+            ball->y += speed * dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        bool overlapCheck = false;
+        for (int i = 1; i < ballNumbers; i++) {
+            if(Physics::overLapDetection(ball, balls[i])) {
+                overlapCheck = true;
+            }
+        }
+        if(overlapCheck == false) {
+            poolCue.setPosition(sf::Vector2f(ball->x + ball->radius - 10, ball->y - ball->radius - 10));
+            line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
+            line[1] = sf::Vertex(sf::Vector2f(ball->x + ball->radius, ball->y + ball->radius), sf::Color::Black);
+            ball->isSunk = false;
+            state = PLAYERTURN;
+        }
     }
 }
