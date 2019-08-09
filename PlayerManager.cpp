@@ -73,20 +73,31 @@ void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball 
     float speed = 100;
     dt = dtClock.restart().asSeconds();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        ball->x += speed*dt;
-        ballShape->setPosition(ball->x, ball->y);
+        if(ball->x + (ball->radius*2) < 210+tableWidth && state == WHITEPLACEMENT) {
+            ball->x += speed * dt;
+            ballShape->setPosition(ball->x, ball->y);
+        } else if(ball->x + (ball->radius*2) < (400.5+ball->radius) && state == BREAKING){
+            ball->x += speed * dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        ball->x -= speed*dt;
-        ballShape->setPosition(ball->x, ball->y);
+        if(ball->x > 210) {
+            ball->x -= speed*dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        ball->y -= speed*dt;
-        ballShape->setPosition(ball->x, ball->y);
+       if(ball->y > 210.f) {
+            ball->y -= speed*dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        ball->y += speed*dt;
-        ballShape->setPosition(ball->x, ball->y);
+        if(ball->y + (ball->radius*2) < 210+tableHeight) {
+            ball->y += speed * dt;
+            ballShape->setPosition(ball->x, ball->y);
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         bool overlapCheck = false;

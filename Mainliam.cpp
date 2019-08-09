@@ -30,16 +30,18 @@ bool placing = false;
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(10);
 sf::Vertex line[2];
+sf::Vertex dLine[2];
 sf::Clock dtClock;
 float dt;
 bool endTurn = false;
-gameState state = WHITEPLACEMENT;
+gameState state = BREAKING;
 bool screenSelected = true;
 Player *player1;
 Player *player2;
 void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
+    window.draw(dLine, 2, sf::Lines);
     for(int i = 0; i < 6; i++){
         window.draw(cushions[i]);
     }
@@ -63,9 +65,14 @@ int main() {
 		}
         if(event.type == sf::Event::GainedFocus) screenSelected = true;
         if(event.type == sf::Event::LostFocus) screenSelected = false;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT) {//reset
+            GameManager::tableSetup(balls, ballShapes, ballNumbers);
+            ballsLeft = 15;
+            playerGoing = 0;
+            state = BREAKING;
+        }
         if(event.type == sf::Event::KeyReleased) {
             if(event.key.code == sf::Keyboard::Space) {
-                // cout << "Cunt\n";
                 placing = false;
             }
         }
@@ -76,6 +83,10 @@ int main() {
             PlayerManager::playerTurn(balls[0]);
         }
         if(state == WHITEPLACEMENT) {
+            placing = true;
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
+        }
+        if(state == BREAKING) {
             placing = true;
             PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
         }
