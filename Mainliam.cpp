@@ -66,7 +66,7 @@ int main() {
             PlayerManager::playerTurn(balls[0]);
         }
         if(state == MOVEMENT) {
-            MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x - poolCue.getRadius(), poolCue.getPosition().y - poolCue.getRadius());
+            MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x, poolCue.getPosition().y);
         }
         draw(state);
 	}

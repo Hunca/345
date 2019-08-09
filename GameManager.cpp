@@ -2,10 +2,10 @@
 #include <String>
 #include <iostream>
 sf::Vector2f initialPositions[] = { //array of the balls positions
-    sf::Vector2f(600.5f, 381.f),  sf::Vector2f(701.5f,400.5f), sf::Vector2f(861.5f,360.5f),  sf::Vector2f(741.5f,420.5f), //0, 1, 2, 3
-    sf::Vector2f(821.5f,420.5f),  sf::Vector2f(861.5f,440.5f), sf::Vector2f(781.5f,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
-    sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f), sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
-    sf::Vector2f(861.5f,480.5f),  sf::Vector2f(821.5f,340.5f), sf::Vector2f(781.5f,440.5f),  sf::Vector2f(821.5f,380.5f), //12, 13, 14, 15
+    sf::Vector2f(391.95f, 391.95f),  sf::Vector2f(741.83f,391.95f), sf::Vector2f(804.07f,373.85f),  sf::Vector2f(757.64f,400.5), //0, 1, 2, 3
+    sf::Vector2f(788.26f,400.5f),  sf::Vector2f(804.07f,410.05f), sf::Vector2f(772.95f,373.85f),  sf::Vector2f(804.07f,355.75f), //4, 5, 6, 7
+    sf::Vector2f(772.95f,391.95f),  sf::Vector2f(788.26f,418.6f), sf::Vector2f(804.07f,391.95f),  sf::Vector2f(757.64f,383.4f), //8, 9, 10, 11
+    sf::Vector2f(804.07f,428.15f),  sf::Vector2f(788.26f,365.3f), sf::Vector2f(772.95f,410.05f),  sf::Vector2f(788.26f,383.4f), //12, 13, 14, 15
 };
 void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers) {
     innerTable.setPosition(210.f, 210.f);
@@ -19,7 +19,7 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
         cushions[i].setOutlineColor(sf::Color::Blue);
     }
     for (int i = 0; i < ballNumbers; i++) {
-        balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
+        balls[i] = new Ball(i, 8.55f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
         if (balls[i]->num < 8) {
