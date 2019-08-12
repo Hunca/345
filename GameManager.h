@@ -11,6 +11,13 @@ extern int ballsLeft;
 extern sf::Vertex dLine[];
 extern sf::RectangleShape cushions[];
 extern sf::Vector2f cushionPositions[];
+extern sf::CircleShape sockets[];
+extern sf::Vector2f socketPositions[];
+extern sf::Vertex socketEdges[24][2];
+extern sf::Vector2f cornerPositions[12];
+extern Ball* cornerObjects[12];
+extern sf::CircleShape* cornerShapes[12];
+
 extern int playerGoing;
 extern sf::Text playerText;
 extern sf::Text suitText;
