@@ -6,64 +6,6 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>46BFCBA5-6F25-448C-8159-5CE5905860F8</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>46BFCBA5-6F25-448C-8159-5CE5905860F8.xcactivitylog</string>
-			<key>highLevelStatus</key>
-			<string>S</string>
-			<key>schemeIdentifier-containerName</key>
-			<string>Apple_Build project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Apple_Build</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Debug Apple_Build</string>
-			<key>timeStartedRecording</key>
-			<real>587286051.54533601</real>
-			<key>timeStoppedRecording</key>
-			<real>587286225.05220497</real>
-			<key>title</key>
-			<string>Debug Apple_Build</string>
-			<key>uniqueIdentifier</key>
-			<string>46BFCBA5-6F25-448C-8159-5CE5905860F8</string>
-		</dict>
-		<key>8520C8E2-8B62-438E-841F-5F2E09E3D0AD</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>8520C8E2-8B62-438E-841F-5F2E09E3D0AD.xcactivitylog</string>
-			<key>highLevelStatus</key>
-			<string>S</string>
-			<key>schemeIdentifier-containerName</key>
-			<string>Apple_Build project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Apple_Build</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Debug Apple_Build</string>
-			<key>timeStartedRecording</key>
-			<real>587286229.36255801</real>
-			<key>timeStoppedRecording</key>
-			<real>587286398.55626595</real>
-			<key>title</key>
-			<string>Debug Apple_Build</string>
-			<key>uniqueIdentifier</key>
-			<string>8520C8E2-8B62-438E-841F-5F2E09E3D0AD</string>
-		</dict>
 		<key>8BDA5792-B250-4B4D-A295-D0CE44091420</key>
 		<dict>
 			<key>className</key>
@@ -93,7 +35,7 @@
 			<key>uniqueIdentifier</key>
 			<string>8BDA5792-B250-4B4D-A295-D0CE44091420</string>
 		</dict>
-		<key>94B4E111-651C-4A55-B8F9-8CCBF0E800B1</key>
+		<key>A39CA8C1-7BB1-4BC1-B5F8-3142E1A80A11</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -102,7 +44,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>94B4E111-651C-4A55-B8F9-8CCBF0E800B1.xcactivitylog</string>
+			<string>A39CA8C1-7BB1-4BC1-B5F8-3142E1A80A11.xcactivitylog</string>
 			<key>highLevelStatus</key>
 			<string>S</string>
 			<key>schemeIdentifier-containerName</key>
@@ -114,42 +56,13 @@
 			<key>signature</key>
 			<string>Debug Apple_Build</string>
 			<key>timeStartedRecording</key>
-			<real>587285306.06461</real>
+			<real>587294476.71519101</real>
 			<key>timeStoppedRecording</key>
-			<real>587285340.41921198</real>
+			<real>587294504.74992096</real>
 			<key>title</key>
 			<string>Debug Apple_Build</string>
 			<key>uniqueIdentifier</key>
-			<string>94B4E111-651C-4A55-B8F9-8CCBF0E800B1</string>
-		</dict>
-		<key>A836EC08-61B7-4ADB-8798-1FBD75019DE0</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>A836EC08-61B7-4ADB-8798-1FBD75019DE0.xcactivitylog</string>
-			<key>highLevelStatus</key>
-			<string>S</string>
-			<key>schemeIdentifier-containerName</key>
-			<string>Apple_Build project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Apple_Build</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Debug Apple_Build</string>
-			<key>timeStartedRecording</key>
-			<real>587285808.93357396</real>
-			<key>timeStoppedRecording</key>
-			<real>587285814.97230101</real>
-			<key>title</key>
-			<string>Debug Apple_Build</string>
-			<key>uniqueIdentifier</key>
-			<string>A836EC08-61B7-4ADB-8798-1FBD75019DE0</string>
+			<string>A39CA8C1-7BB1-4BC1-B5F8-3142E1A80A11</string>
 		</dict>
 	</dict>
 </dict>

@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49732A6E2301441200B81153 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A672301441200B81153 /* Player.cpp */; };
-		49732A6F2301441200B81153 /* MovementManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A682301441200B81153 /* MovementManager.cpp */; };
-		49732A702301441200B81153 /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A692301441200B81153 /* Physics.cpp */; };
-		49732A712301441200B81153 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A6A2301441200B81153 /* GameManager.cpp */; };
-		49732A722301441200B81153 /* Mainliam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A6B2301441200B81153 /* Mainliam.cpp */; };
-		49732A732301441200B81153 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A6C2301441200B81153 /* Ball.cpp */; };
-		49732A742301441200B81153 /* PlayerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A6D2301441200B81153 /* PlayerManager.cpp */; };
+		49732A7C230166CE00B81153 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A75230166CE00B81153 /* Player.cpp */; };
+		49732A7D230166CE00B81153 /* MovementManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A76230166CE00B81153 /* MovementManager.cpp */; };
+		49732A7E230166CE00B81153 /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A77230166CE00B81153 /* Physics.cpp */; };
+		49732A7F230166CE00B81153 /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A78230166CE00B81153 /* GameManager.cpp */; };
+		49732A80230166CE00B81153 /* Mainliam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A79230166CE00B81153 /* Mainliam.cpp */; };
+		49732A81230166CE00B81153 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A7A230166CE00B81153 /* Ball.cpp */; };
+		49732A82230166CE00B81153 /* PlayerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49732A7B230166CE00B81153 /* PlayerManager.cpp */; };
 		499F766A229A58DF00E0F9C4 /* FLAC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF122993BF300F8E166 /* FLAC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		499F766B229A58DF00E0F9C4 /* freetype.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF022993BF300F8E166 /* freetype.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		499F766C229A58DF00E0F9C4 /* ogg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DEF22993BF300F8E166 /* ogg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -62,6 +62,13 @@
 		49732A6B2301441200B81153 /* Mainliam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mainliam.cpp; path = Apple_Build/Mainliam.cpp; sourceTree = "<group>"; };
 		49732A6C2301441200B81153 /* Ball.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ball.cpp; path = Apple_Build/Ball.cpp; sourceTree = "<group>"; };
 		49732A6D2301441200B81153 /* PlayerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerManager.cpp; path = Apple_Build/PlayerManager.cpp; sourceTree = "<group>"; };
+		49732A75230166CE00B81153 /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = Apple_Build/Player.cpp; sourceTree = "<group>"; };
+		49732A76230166CE00B81153 /* MovementManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MovementManager.cpp; path = Apple_Build/MovementManager.cpp; sourceTree = "<group>"; };
+		49732A77230166CE00B81153 /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Physics.cpp; path = Apple_Build/Physics.cpp; sourceTree = "<group>"; };
+		49732A78230166CE00B81153 /* GameManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GameManager.cpp; path = Apple_Build/GameManager.cpp; sourceTree = "<group>"; };
+		49732A79230166CE00B81153 /* Mainliam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mainliam.cpp; path = Apple_Build/Mainliam.cpp; sourceTree = "<group>"; };
+		49732A7A230166CE00B81153 /* Ball.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ball.cpp; path = Apple_Build/Ball.cpp; sourceTree = "<group>"; };
+		49732A7B230166CE00B81153 /* PlayerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerManager.cpp; path = Apple_Build/PlayerManager.cpp; sourceTree = "<group>"; };
 		49F10D82229931FD00F8E166 /* Apple_Build */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Apple_Build; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F10D88229931FD00F8E166 /* cute_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cute_image.jpg; sourceTree = "<group>"; };
 		49F10D89229931FD00F8E166 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
@@ -102,12 +109,19 @@
 			isa = PBXGroup;
 			children = (
 				49732A6C2301441200B81153 /* Ball.cpp */,
+				49732A7A230166CE00B81153 /* Ball.cpp */,
 				49732A6A2301441200B81153 /* GameManager.cpp */,
 				49732A6B2301441200B81153 /* Mainliam.cpp */,
+				49732A78230166CE00B81153 /* GameManager.cpp */,
+				49732A79230166CE00B81153 /* Mainliam.cpp */,
 				49732A682301441200B81153 /* MovementManager.cpp */,
 				49732A692301441200B81153 /* Physics.cpp */,
+				49732A76230166CE00B81153 /* MovementManager.cpp */,
+				49732A77230166CE00B81153 /* Physics.cpp */,
 				49732A672301441200B81153 /* Player.cpp */,
 				49732A6D2301441200B81153 /* PlayerManager.cpp */,
+				49732A75230166CE00B81153 /* Player.cpp */,
+				49732A7B230166CE00B81153 /* PlayerManager.cpp */,
 				49F10D84229931FD00F8E166 /* Apple_Build */,
 				49F10D83229931FD00F8E166 /* Products */,
 				49F10DB42299353800F8E166 /* Frameworks */,
@@ -222,13 +236,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49732A6E2301441200B81153 /* Player.cpp in Sources */,
-				49732A6F2301441200B81153 /* MovementManager.cpp in Sources */,
-				49732A702301441200B81153 /* Physics.cpp in Sources */,
-				49732A712301441200B81153 /* GameManager.cpp in Sources */,
-				49732A722301441200B81153 /* Mainliam.cpp in Sources */,
-				49732A732301441200B81153 /* Ball.cpp in Sources */,
-				49732A742301441200B81153 /* PlayerManager.cpp in Sources */,
+				49732A7C230166CE00B81153 /* Player.cpp in Sources */,
+				49732A7D230166CE00B81153 /* MovementManager.cpp in Sources */,
+				49732A7E230166CE00B81153 /* Physics.cpp in Sources */,
+				49732A7F230166CE00B81153 /* GameManager.cpp in Sources */,
+				49732A80230166CE00B81153 /* Mainliam.cpp in Sources */,
+				49732A81230166CE00B81153 /* Ball.cpp in Sources */,
+				49732A82230166CE00B81153 /* PlayerManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

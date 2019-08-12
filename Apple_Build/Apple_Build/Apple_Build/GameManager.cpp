@@ -23,13 +23,21 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     dLine[1] = sf::Vertex(sf::Vector2f(400.5f, 211.f+tableHeight), sf::Color::Black);
     innerTable.setPosition(210.f, 210.f);
     innerTable.setFillColor(sf::Color::Green);
-    innerTable.setOutlineThickness(59.f);
+    innerTable.setOutlineThickness(44.25f);
     innerTable.setOutlineColor(sf::Color::Yellow);
     for(int i = 0; i < 6; i++){
+        sockets[i].setPosition(socketPositions[i]);
+        sockets[i].setFillColor(sf::Color::Black);
         cushions[i].setPosition(cushionPositions[i]);
         cushions[i].setFillColor(sf::Color::Blue);
         cushions[i].setOutlineThickness(0.f);
         cushions[i].setOutlineColor(sf::Color::Blue);
+    }
+    for(int i = 0; i < 12; i++){
+        cornerObjects[i] = new Ball(i, 8.55f, cornerPositions[i].x, cornerPositions[i].y);
+        cornerShapes[i] = new sf::CircleShape(cornerObjects[i]->radius);
+        cornerShapes[i]->setPosition(cornerPositions[i].x, cornerPositions[i].y);
+        cornerShapes[i]->setFillColor(sf::Color::Black);
     }
     for (int i = 0; i < ballNumbers; i++) {
         balls[i] = new Ball(i, 8.55f, initialPositions[i].x, initialPositions[i].y);
