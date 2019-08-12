@@ -36,8 +36,6 @@ float dt;
 bool endTurn = false;
 gameState state = BREAKING;
 bool screenSelected = true;
-Player *player1;
-Player *player2;
 void draw(gameState state) {
     window.clear();
     window.draw(innerTable);

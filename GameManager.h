@@ -16,6 +16,7 @@ extern sf::Text playerText;
 extern sf::Text suitText;
 extern sf::Text remainingText;
 extern sf::Text controlPrompText;
+
 extern Player *players[];
 class GameManager {
     public:
