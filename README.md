@@ -87,21 +87,52 @@ app
 ### Running the program:
 
 The program takes inputs from the keyboard and will not require the use of a mouse.
+
+Player one  | depicted as a black circle when aiming.
+
+Player two  | depicted as a magenta circle when aiming.
+
 #### Here is a list of input keys for our program:
 ```
 Left/Right Arrow Keys   | Changes direction of the cue on the cue ball.
 Up/Down Arrow Keys      | Changes the power input of the shot.
 Spacebar                | Initiates the shot to be made.
+R                       | Resets the game state to the start state.
 ```
-Exiting the program can be done by pressing:
-#### On Windows:
+#### Exiting the program can be done by pressing:
+###### On Windows:
 ```
 alt + f4
 ```
-#### On Mac:
+###### On Mac:
 ```
 Pressing the stop button on the Xcode project window.
 ```
+
+---
+### Game functionality:
+###### The game window currently displays:
+```
+Player      | Which player turn it is.
+Suit        | The players suit.
+Remaining   | How many balls are remaining.
+```
+*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__* 
+
+###### Currently implemented game rules:
+- Player one initiates the break.
+- Sinking a coloured ball will initialise their suit (currently either: red or blue balls).
+- If two balls of different colours are sunk:
+    - The colour of the first ball sunk will be chosen as the players suit.
+    - Player ones turn ends.
+- Each player turn ends if they sink an opponents ball or the cue ball.
+- Each player turn continues if they sink a ball of their own suit.
+- If the black ball is sunk prior to sinking the remain players balls, then 'Loser' is printed to the console.
+- If the black ball is sunk after sinking the reamining players balls, then 'Winner' is printed to the console.
+- While the table has the cue ball and black ball remaining, if the white ball is sunk, then 'Loser' is printed to the console.
+
+*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*    
+
 ---
 ## Testing:
 
@@ -167,11 +198,19 @@ Using SFML a program window and a rectangle table shape is created.
 ---
 ## Version:
 
-Alpha release.
+Beta release.
 
 ---
 ## Project Changes:
+**__ Beta release changes: __**
+* Refactoring of code
+    - The code in our Alpha release was very primitive and lacked proper structure.
+    - We have refactored it to provide code that is easier to read.
+    - Refactoring of the code has also improved the performance of our program due to improvements on the execution of our methods.
+* Delayed trickshot levels
+    - We have had to delay implementation of our trickshot levels due to major bugs when attempting to implement physics with our environments.
 
+**__ Alpha release changes: __**
 * Removal of AI
     - We decided to remove the AI feature as it was too ambitious for us to implement into our project while remaining under our limit of 1000 lines of code.
 
@@ -190,6 +229,7 @@ Current there is no license, but if required we will use the MIT License.
 ---
 ## Acknowledgments:
 * Used javidx9's [youtube tutorial](https://www.youtube.com/watch?v=LPzyNOHY3A4) as a reference in creating circle collisions.
+* [Arial font](https://github.com/JotJunior/PHP-Boleto-ZF2/blob/master/public/assets/fonts/arial.ttf) from JotJunior's github
 * COSC 345 Lecture slides
 * *Many thanks to Google.*
 * *Shout out to caffeine.*
