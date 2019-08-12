@@ -30,7 +30,7 @@ sf::CircleShape sockets[] = {sf::CircleShape(20.f), sf::CircleShape(20.f), sf::C
                              sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottomw row
 sf::Vector2f socketPositions[] = {sf::Vector2f(174.9f, 174.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(967.1f, 174.9f),  // Top row
                                   sf::Vector2f(174.9f, 587.1f), sf::Vector2f(571.f, 595.25f), sf::Vector2f(967.1f, 587.1f)}; // Bottom row
-sf::Vertex socketEdges[18][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black)},   // TL Left
+sf::Vertex socketEdges[24][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black)},   // TL Left
                                  {sf::Vertex(sf::Vector2f(235.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 180.f), sf::Color::Black)},   // TL Right
                                  {sf::Vertex(sf::Vector2f(571.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(586.f, 180.f), sf::Color::Black)},   // TM Left
                                  {sf::Vertex(sf::Vector2f(611.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 180.f), sf::Color::Black)},   // TM Right
@@ -42,19 +42,24 @@ sf::Vertex socketEdges[18][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Col
                                  {sf::Vertex(sf::Vector2f(611.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // BM Right
                                  {sf::Vertex(sf::Vector2f(947.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black)},   // BR Left
                                  {sf::Vertex(sf::Vector2f(972.f, 571.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}, // BR Right
-                                 {sf::Vertex(sf::Vector2f(235.f, 210.f)), sf::Vertex(sf::Vector2f(571.f, 210.f))},
-                                 {sf::Vertex(sf::Vector2f(611.f, 210.f)), sf::Vertex(sf::Vector2f(947.f, 210.f))},
-                                 {sf::Vertex(sf::Vector2f(210.f, 235.f)), sf::Vertex(sf::Vector2f(210.f, 571.f))},
-                                 {sf::Vertex(sf::Vector2f(972.f, 235.f)), sf::Vertex(sf::Vector2f(972.f, 571.f))},
-                                 {sf::Vertex(sf::Vector2f(235.f, 591.f)), sf::Vertex(sf::Vector2f(571.f, 591.f))},
-                                 {sf::Vertex(sf::Vector2f(611.f, 591.f)), sf::Vertex(sf::Vector2f(947.f, 591.f))}
-                                 };
+                                 {sf::Vertex(sf::Vector2f(235.f, 210.f)), sf::Vertex(sf::Vector2f(571.f, 210.f))}, // Top Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 210.f)), sf::Vertex(sf::Vector2f(947.f, 210.f))}, // Top Right
+                                 {sf::Vertex(sf::Vector2f(210.f, 235.f)), sf::Vertex(sf::Vector2f(210.f, 571.f))}, // Left
+                                 {sf::Vertex(sf::Vector2f(972.f, 235.f)), sf::Vertex(sf::Vector2f(972.f, 571.f))}, // Right
+                                 {sf::Vertex(sf::Vector2f(235.f, 591.f)), sf::Vertex(sf::Vector2f(571.f, 591.f))}, // Bottom Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 591.f)), sf::Vertex(sf::Vector2f(947.f, 591.f))}, // Bottom Right
+                                 {sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 180.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(586.f, 180.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 180.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(977.f, 180.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 205.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(180.f, 601.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 621.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(586.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}};   // TL Left
 float trig = (cornerRadius/tan(45));
 sf::Vector2f cornerPositions[] = { //array of the balls positions
     sf::Vector2f(210.f-(2*cornerRadius), 235.f-trig), sf::Vector2f(235.f-trig, 210.f-(2*cornerRadius)), // top Left
     sf::Vector2f(571.f-(2*cornerRadius)+trig, 210.f-(2*cornerRadius)), sf::Vector2f(611.f-trig, 210.f-(2*cornerRadius)), // Top Middle
     sf::Vector2f(947.f-(2*cornerRadius)+trig, 210.f-(2*cornerRadius)),  sf::Vector2f(972.f, 235.f-trig), // Top Right
-    sf::Vector2f(220.f ,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
+    sf::Vector2f(320.f ,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
     sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f),
     sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
 };
@@ -84,7 +89,7 @@ void draw(gameState state) {
     for(int i = 0; i < 18; i++){
         window.draw(socketEdges[i], 2, sf::Lines);
         if(i < 12){
-            window.draw(*cornerShapes[i]);
+            //window.draw(*cornerShapes[i]);
         }
     }
     for(int i = 1; i < ballNumbers; i++) {
