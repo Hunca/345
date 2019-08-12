@@ -53,6 +53,17 @@ void draw(gameState state) {
         window.draw(poolCue);
         window.draw(line, 2, sf::Lines);
     }
+    if(players[playerGoing]->ballSuit == 1) {
+        suitText.setString("Suit: blue");
+    } else if (players[playerGoing]->ballSuit == 9) {
+        suitText.setString("Suit: red");
+    }
+    playerText.setString("Player " + std::to_string(players[playerGoing]->playerNum+1));
+    remainingText.setString("Remaining: " + std::to_string(players[playerGoing]->playersBallsLeft));
+    window.draw(playerText);
+    window.draw(remainingText);
+    window.draw(suitText);
+    if (state == BREAKING || state == WHITEPLACEMENT) window.draw(controlPrompText);
     window.display();
 }
 int main() {

@@ -1,14 +1,23 @@
 #include "GameManager.h"
 #include <String>
 #include <iostream>
-sf::Vector2f initialPositions[] = { //array of the balls positions
-    sf::Vector2f(391.95f, 391.95f),  sf::Vector2f(741.83f,391.95f), sf::Vector2f(804.07f,373.85f),  sf::Vector2f(757.64f,400.5), //0, 1, 2, 3
-    sf::Vector2f(788.26f,400.5f),  sf::Vector2f(804.07f,410.05f), sf::Vector2f(772.95f,373.85f),  sf::Vector2f(804.07f,355.75f), //4, 5, 6, 7
-    sf::Vector2f(772.95f,391.95f),  sf::Vector2f(788.26f,418.6f), sf::Vector2f(804.07f,391.95f),  sf::Vector2f(757.64f,383.4f), //8, 9, 10, 11
-    sf::Vector2f(804.07f,428.15f),  sf::Vector2f(788.26f,365.3f), sf::Vector2f(772.95f,410.05f),  sf::Vector2f(788.26f,383.4f), //12, 13, 14, 15
+sf::Vector2f initialPositions[] = {
+    //array of the balls positions
+    sf::Vector2f(391.95f, 391.95f), sf::Vector2f(741.83f, 391.95f), sf::Vector2f(804.07f, 373.85f), sf::Vector2f(757.64f, 400.5),  //0, 1, 2, 3
+    sf::Vector2f(788.26f, 400.5f), sf::Vector2f(804.07f, 410.05f), sf::Vector2f(772.95f, 373.85f), sf::Vector2f(804.07f, 355.75f), //4, 5, 6, 7
+    sf::Vector2f(772.95f, 391.95f), sf::Vector2f(788.26f, 418.6f), sf::Vector2f(804.07f, 391.95f), sf::Vector2f(757.64f, 383.4f),  //8, 9, 10, 11
+    sf::Vector2f(804.07f, 428.15f), sf::Vector2f(788.26f, 365.3f), sf::Vector2f(772.95f, 410.05f), sf::Vector2f(788.26f, 383.4f),  //12, 13, 14, 15
 };
+sf::Font font;
+sf::Text playerText("Player1", font);
+sf::Text remainingText("Remaining: 7", font);
+sf::Text suitText("Suit: ", font);
+sf::Text controlPrompText("Use the arrow keys to move the white ball and space to place it!", font);
+
 int playerGoing = 0;
 Player *players[2];
+bool sunkBall = false;
+bool fouled = false;
 void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers) {
     dLine[0] = sf::Vertex(sf::Vector2f(400.5f, 210.f), sf::Color::Black);
     dLine[1] = sf::Vertex(sf::Vector2f(400.5f, 211.f+tableHeight), sf::Color::Black);
@@ -40,6 +49,29 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     
     players[0] = new Player(0);
     players[1] = new Player(1);
+    font.loadFromFile("arial.ttf");
+    playerText.setString("Player1");
+    playerText.setCharacterSize(20);
+    playerText.setStyle(sf::Text::Bold);
+    playerText.setFillColor(sf::Color::White);
+    playerText.setPosition(10.f, 10.f);
+
+    remainingText.setString("Remaining: 7");
+    remainingText.setCharacterSize(20);
+    remainingText.setStyle(sf::Text::Bold);
+    remainingText.setFillColor(sf::Color::White);
+    remainingText.setPosition(10.f, 50.f);
+
+    controlPrompText.setCharacterSize(20);
+    controlPrompText.setStyle(sf::Text::Bold);
+    controlPrompText.setFillColor(sf::Color::Red);
+    controlPrompText.setPosition(280.f, 100.f);
+    
+    suitText.setCharacterSize(20);
+    suitText.setStyle(sf::Text::Bold);
+    suitText.setFillColor(sf::Color::White);
+    suitText.setPosition(10.f, 30.f);
+    suitText.setString("Suit: none");
     poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
     poolCue.setFillColor(sf::Color::Black);
 }
@@ -70,6 +102,7 @@ void GameManager::ballSunk(Ball *ball) {
                     players[1]->ballSuit = 1;
                 } else {
                     players[0]->ballSuit = 1;
+                    sunkBall = true;
                 }
             }
             else {
@@ -78,6 +111,7 @@ void GameManager::ballSunk(Ball *ball) {
                     players[1]->ballSuit = 9;
                 } else {
                     players[0]->ballSuit = 9;
+                    sunkBall = true;
                 }
             }
         }
@@ -85,6 +119,7 @@ void GameManager::ballSunk(Ball *ball) {
             if(players[playerGoing]->ballSuit == 1) {
                 if(!ballSunk) players[playerGoing]->ballSunk = true;
                 players[playerGoing]->playersBallsLeft--;
+                sunkBall = true;
             } else {
                 if(playerGoing == 0) {
                     players[1]->playersBallsLeft--;
@@ -96,6 +131,7 @@ void GameManager::ballSunk(Ball *ball) {
             if(players[playerGoing]->ballSuit == 9) {
                 if(!ballSunk) players[playerGoing]->ballSunk = true;
                 players[playerGoing]->playersBallsLeft--;
+                sunkBall = true;
             } else {
                 if(playerGoing == 0) {
                     players[1]->playersBallsLeft--;
@@ -105,22 +141,17 @@ void GameManager::ballSunk(Ball *ball) {
             }
         }
         ball->isSunk = true;
-        std::cout << "Ball sunk: " << ball->num << "\n";
         ballsLeft--;
     }
 }
 
 void GameManager::swapPlayer() {
-    std::cout << "Player: " << players[playerGoing]->playerNum << "\n";
-    if(players[playerGoing]->ballSuit == 1) {
-        std::cout << "Suit: " << "blue" << "\n";
-    } else if (players[playerGoing]->ballSuit == 9) {
-        std::cout << "Suit: " << "red" << "\n";
-    } else {
-        std::cout << "Suit: " << "none" << "\n";
+    if(sunkBall) {
+        sunkBall = false;
+        return;
     }
-    std::cout << "Balls left: " << players[playerGoing]->playersBallsLeft << "\n";
-    std::cout << "total left: " << ballsLeft << "\n";
+    std::cout << "Player: " << players[playerGoing]->playerNum << "\n";
+    
     if(playerGoing == 0){
         playerGoing = 1;
         poolCue.setFillColor(sf::Color::Magenta);
