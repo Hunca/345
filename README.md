@@ -99,15 +99,40 @@ Up/Down Arrow Keys      | Changes the power input of the shot.
 Spacebar                | Initiates the shot to be made.
 R                       | Resets the game state to the start state.
 ```
-Exiting the program can be done by pressing:
-#### On Windows:
+#### Exiting the program can be done by pressing:
+###### On Windows:
 ```
 alt + f4
 ```
-#### On Mac:
+###### On Mac:
 ```
 Pressing the stop button on the Xcode project window.
 ```
+
+---
+### Game functionality:
+###### The game window currently displays:
+```
+Player      | Which player turn it is.
+Suit        | The players suit.
+Remaining   | How many balls are remaining.
+```
+*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__* 
+
+###### Currently implemented game rules:
+- Player one initiates the break.
+- Sinking a coloured ball will initialise their suit (currently either: red or blue balls).
+- If two balls of different colours are sunk:
+    - The colour of the first ball sunk will be chosen as the players suit.
+    - Player ones turn ends.
+- Each player turn ends if they sink an opponents ball or the cue ball.
+- Each player turn continues if they sink a ball of their own suit.
+- If the black ball is sunk prior to sinking the remain players balls, then 'Loser' is printed to the console.
+- If the black ball is sunk after sinking the reamining players balls, then 'Winner' is printed to the console.
+- While the table has the cue ball and black ball remaining, if the white ball is sunk, then 'Loser' is printed to the console.
+
+*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*    
+
 ---
 ## Testing:
 
