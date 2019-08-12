@@ -183,36 +183,36 @@ Using SFML a program window, a rectangle table shape, sockets, and cushions are 
             - Whether a correct ball has been sunk or not.
 
 * MovementManager()
-    moveTick():
+    - moveTick():
         - Sets the velocity of the cue ball (The distance between the cue and the cue ball).
         - Loops through all of the balls remaining on the table.
             - If balls are moving, calls collisionCheck() and ballMove() methods.
         - Keeps track of the current moving balls.
         - Ends turn when all balls are stationary.
        
-    ballMove():
+    - ballMove():
         - Calculates movement of ball based on acceleration and velocity.
         - Uses DeltaTime for synchronous movement speed.
           
-    collisionCheck():
+    - collisionCheck():
         - Check a given ball against all other balls for collision.
           
 * Ball() & Player()
     - Classes used for holding data.
     
 * Physics()
-    boxCollision():
+    - boxCollision():
         - Loops through an array of lines (edges of the cushions).
         - Calculates whether a ball is colliding with the line.
         - Changes the balls velocity appropriately.
-    ballCollisions():
+    - ballCollisions():
         - Handles collisions between balls.
         - Displaces each colliding ball by the amount of overlap which they collide with.
         - Changes the balls velocity appropriately.
         
-    cushionCollision():
+    - cushionCollision():
         - Currently unused.
-    overLapDetection():
+    - overLapDetection():
         - Places the cue ball (checks whether if it has collided with another ball)
     
         
