@@ -115,14 +115,14 @@ Pressing the stop button on the Xcode project window.
 ```
 Player      | Which player turn it is.
 Suit        | The players suit.
-Remaining   | How many balls are remaining.
+Remaining   | Number of player balls remaining on table.
 ```
 *__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__* 
 
 ###### Currently implemented game rules:
 - Player one initiates the break.
-- Sinking a coloured ball will initialise their suit (currently either: red or blue balls).
-- If two balls of different colours are sunk:
+- Sinking a coloured ball will initialise the players suit (red or blue balls).
+- If two balls of different colours are sunk in one turn:
     - The colour of the first ball sunk will be chosen as the players suit.
     - Player ones turn ends.
 - Each player turn ends if they sink an opponents ball or the cue ball.
@@ -154,38 +154,68 @@ void checknegative(x) {
 ---
 ## Source Code Breakdown:
 
-Using SFML a program window and a rectangle table shape is created.
-* main()
-    - Draws the table shape onto the window.
-    - Creates an array of ball objects.
-        - The ball constructor initialises each object with an ID number, radius, and initial positions.
-            - Gets positions of the ball objects through a preset array of vector positions.
-            - The cue ball and 8 ball are coloured white and black
-            - Ball objects with ID value that are not the cue ball and 8 ball are coloured accordingly 
-    - Sets up the cue (aimer) around the cue ball.
-    - Begins the game loop
-    - Runs playerTurn():
-        - Takes in keyboard input (arrow keys) to set direction and power of the cue ball.
-        - If spacebar is pressed, takes the vector value of the cue and then runs the moveBall() method.
-    - moveBall():
-        - Takes in the ball ID, the velocity of the cue ball. 
-        - Sets the velocity of the cue ball (The distance between the cue and the cue ball).
-        - Method loops through while balls are moving.
-        - Loops through every ball, ignoring those with 0 velocity (Balls that dont move).
-        - Checks to see if any balls hits a wall, if so, bounce off at the opposite angle.
-        - Changes the speed of the balls with given friction (drag).
-        - Checks against all other balls to see if there is collision.
-            - If so, updates both collided balls' velocities.
-        - When balls slows down to a certain velocity, stop the ball movement.
-* main()
-    - Once all the balls stop moving, resets the cue at the cue balls new position.
-    - Sets up again for player input.
-    - Repeats.
+Using SFML a program window, a rectangle table shape, sockets, and cushions are created.
+* Main()
+    - Contains the main game loop which performs different functions depending on the game state.
+    - After a single tick of the game loop, the method draws the graphical components.
+        - Certain SFML graphical objects will be drawn dependant on the game state.
+   
+* PlayerManager()
+    - Handles user inputs.
+        - Aiming input for the cue ball.
+        - Input for placement of the cue ball.
 
-* switchPlayer()
-        - Used to swap players, currently not implemented for use.
+* GameManager()
+    - Initialises all the objects to the game screen at their default positions and initialises UI elements.
+    - Contains placeholder methods for winning and losing states.
+    
+    ballSunk():
+    - Function which handles the game state when a ball is sunk.
+        - Assigning suits to the players.
+        - Issuing fouls if a player makes an illegal move.
+        - Removes balls from the table if sunk.
+        - Decrements counter for how many balls each player has remaining.
         
+    swapPlayer():
+    - Called to determine which player will have the next shot.
+        - Dependant on the ballSunk():
+            - Whether there has been a foul or not.
+            - Whether a correct ball has been sunk or not.
 
+* MovementManager()
+    moveTick():
+        - Sets the velocity of the cue ball (The distance between the cue and the cue ball).
+        - Loops through all of the balls remaining on the table.
+            - If balls are moving, calls collisionCheck() and ballMove() methods.
+        - Keeps track of the current moving balls.
+        - Ends turn when all balls are stationary.
+       
+    ballMove():
+        - Calculates movement of ball based on acceleration and velocity.
+        - Uses DeltaTime for synchronous movement speed.
+          
+    collisionCheck():
+        - Check a given ball against all other balls for collision.
+          
+* Ball() & Player()
+    - Classes used for holding data.
+    
+* Physics()
+    boxCollision():
+        - Loops through an array of lines (edges of the cushions).
+        - Calculates whether a ball is colliding with the line.
+        - Changes the balls velocity appropriately.
+    ballCollisions():
+        - Handles collisions between balls.
+        - Displaces each colliding ball by the amount of overlap which they collide with.
+        - Changes the balls velocity appropriately.
+        
+    cushionCollision():
+        - Currently unused.
+    overLapDetection():
+        - Places the cue ball (checks whether if it has collided with another ball)
+    
+        
 ---
 ## Built With:
 
