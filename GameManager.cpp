@@ -87,6 +87,7 @@ void GameManager::ballSunk(Ball *ball) {
             lose();
         }
         ball->isSunk = true;
+        fouled = true;
     } else if(ball->num == 8) {
         ball->isSunk = true;
         if(players[playerGoing]->playersBallsLeft == 0) {
@@ -126,6 +127,7 @@ void GameManager::ballSunk(Ball *ball) {
                 } else {
                     players[0]->playersBallsLeft--;
                 }
+                fouled = true;
             }
         } else if(ball->num > 8) {
             if(players[playerGoing]->ballSuit == 9) {
@@ -138,6 +140,7 @@ void GameManager::ballSunk(Ball *ball) {
                 } else {
                     players[0]->playersBallsLeft--;
                 }
+                fouled = true;
             }
         }
         ball->isSunk = true;
@@ -146,12 +149,11 @@ void GameManager::ballSunk(Ball *ball) {
 }
 
 void GameManager::swapPlayer() {
-    if(sunkBall) {
+    if(sunkBall && fouled == false) {
         sunkBall = false;
         return;
     }
-    std::cout << "Player: " << players[playerGoing]->playerNum << "\n";
-    
+    fouled = false;
     if(playerGoing == 0){
         playerGoing = 1;
         poolCue.setFillColor(sf::Color::Magenta);

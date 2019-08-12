@@ -59,7 +59,11 @@ void draw(gameState state) {
         suitText.setString("Suit: red");
     }
     playerText.setString("Player " + std::to_string(players[playerGoing]->playerNum+1));
-    remainingText.setString("Remaining: " + std::to_string(players[playerGoing]->playersBallsLeft));
+    if(players[playerGoing]->playersBallsLeft != 0) {
+        remainingText.setString("Remaining: " + std::to_string(players[playerGoing]->playersBallsLeft));
+    } else {
+        remainingText.setString("Remaining: Black");
+    }
     window.draw(playerText);
     window.draw(remainingText);
     window.draw(suitText);
