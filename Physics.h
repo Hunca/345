@@ -18,7 +18,7 @@ class Physics{
     public:
         static void boxColision(Ball *ball);
         static void ballCollision(Ball *ballA, Ball *ballB);
-        static void cushionCollision(Ball *ballA, Ball *ballB);
+        static void cushionCollision(Ball *ballA, float x, float y);
         static bool overLapDetection(Ball *whiteBall, Ball *ball);
 };
 #endif

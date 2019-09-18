@@ -26,6 +26,24 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
             }
         }
     }
+    for(int i = 0; i < 24; i++){ // 24 being the length of socketEdges.
+        float edgeX = socketEdges[i][0].position.x - socketEdges[i][1].position.x;
+        float edgeY = socketEdges[i][0].position.y - socketEdges[i][1].position.y;
+        float edgeLength = edgeX*edgeX + edgeY*edgeY;
+
+        float ballToLineX = ball->x+ball->radius - socketEdges[i][1].position.x;
+        float ballToLineY = ball->y+ball->radius - socketEdges[i][1].position.y;
+
+        float ballToLine = std::max((float)0, std::min(edgeLength, (edgeX * ballToLineX + edgeY * ballToLineY))) / edgeLength;
+        
+        float closestX = socketEdges[i][1].position.x + ballToLine * edgeX;
+        float closestY = socketEdges[i][1].position.y + ballToLine * edgeY;
+
+        float distance = sqrt((ball->x+ball->radius - closestX) * (ball->x+ball->radius - closestX) + (ball->y+ball->radius - closestY) * (ball->y+ball->radius - closestY));
+        if(distance <= ball->radius){
+            Physics::cushionCollision(ball, closestX, closestY);
+        }
+    }
 }
 void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY) {
     if(movingBalls == 0) {//fires whiteBall
@@ -48,7 +66,7 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
                 balls[i]->vy = 0;
                 movingBalls--;
             } else {
-                Physics::boxColision(balls[i]);
+                //Physics::boxColision(balls[i]);
                 ballMove(balls[i], ballShapes[i]);
                 collisionCheck(balls[i], balls);
                 if (fabs(balls[i]->vx * balls[i]->vx + balls[i]->vy * balls[i]->vy) < 50.f) { //if the balls velociy gets to a certain point, stop it
