@@ -52,6 +52,10 @@ void Physics::ballCollision(Ball *ballA, Ball *ballB) {
     ballA->vy = ty * dpTan1 + ny * m1;
     ballB->vx = tx * dpTan2 + nx * m2;
     ballB->vy = ty * dpTan2 + ny * m2;
+    if(ballB->num < 0){
+        ballA->x -= (distanceToMove*0.1f) * (ballA->x - ballB->x) / fDistance;
+        ballA->y -= (distanceToMove*0.1f) * (ballA->y - ballB->y) / fDistance;
+    }
 }
 
 void Physics::cushionCollision(Ball *ballA, float x, float y) {
