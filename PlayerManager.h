@@ -22,5 +22,6 @@ class PlayerManager {
         static void left(Ball *whiteBall);
         static void right(Ball *whiteBall);
         static void mouseAim(Ball *whiteBall, sf::Event event, float r);
+        static sf::Vector2f PlayerManager::guidelineVector(Ball *whiteBall, sf::Vector2f poolCue);
 };
 #endif
