@@ -33,12 +33,6 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
         cushions[i].setOutlineThickness(0.f);
         cushions[i].setOutlineColor(sf::Color::Blue);
     }
-    for(int i = 0; i < 12; i++){
-        cornerObjects[i] = new Ball(i, 8.55f, cornerPositions[i].x, cornerPositions[i].y);
-        cornerShapes[i] = new sf::CircleShape(cornerObjects[i]->radius);
-        cornerShapes[i]->setPosition(cornerPositions[i].x, cornerPositions[i].y);
-        cornerShapes[i]->setFillColor(sf::Color::Black);
-    }
     for (int i = 0; i < ballNumbers; i++) {
         balls[i] = new Ball(i, 8.55f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);

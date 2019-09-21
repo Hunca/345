@@ -2,25 +2,6 @@
 #include "iostream"
 using namespace std;
 
-void Physics::boxColision(Ball *ball) {
-
-    if(ball->x+ball->radius < 230.f || ball->x+ball->radius > 952.f || ball->y+ball->radius < 230.f || ball->y+ball->radius > 571.f)
-    {
-        // For corners when they get added back in.
-        // for (int checkCorner = 0; checkCorner < 12; checkCorner++) {
-        //     float distanceX = (ball->x - cornerObjects[checkCorner]->x) * (ball->x - cornerObjects[checkCorner]->x);
-        //     float distancey = (ball->y - cornerObjects[checkCorner]->y) * (ball->y - cornerObjects[checkCorner]->y);
-        //     if (fabs(distanceX + distancey) <= (ball->radius + cornerObjects[checkCorner]->radius)*(ball->radius + cornerObjects[checkCorner]->radius)) {
-        //         cornerObjects[checkCorner]->vx = -ball->vx;
-        //         cornerObjects[checkCorner]->vy = -ball->vy;
-        //         cushionCollision(ball, cornerObjects[checkCorner]);
-        //         cornerObjects[checkCorner]->vx = 0;
-        //         cornerObjects[checkCorner]->vy = 0;
-        //     }
-        // }
-
-    }
-}
 void Physics::ballCollision(Ball *ballA, Ball *ballB) {
     
     //ballPenetrationHandler

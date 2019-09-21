@@ -54,18 +54,7 @@ sf::Vertex socketEdges[24][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Col
                                  {sf::Vertex(sf::Vector2f(180.f, 601.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 621.f), sf::Color::Black)},   // TL Left
                                  {sf::Vertex(sf::Vector2f(586.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // TL Left
                                  {sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}};   // TL Left
-float trig = (cornerRadius/tan(45));
-sf::Vector2f cornerPositions[] = { //array of the balls positions
-    sf::Vector2f(210.f-(2*cornerRadius), 235.f-trig), sf::Vector2f(235.f-trig, 210.f-(2*cornerRadius)), // top Left
-    sf::Vector2f(571.f-(2*cornerRadius)+trig, 210.f-(2*cornerRadius)), sf::Vector2f(611.f-trig, 210.f-(2*cornerRadius)), // Top Middle
-    sf::Vector2f(947.f-(2*cornerRadius)+trig, 210.f-(2*cornerRadius)),  sf::Vector2f(972.f, 235.f-trig), // Top Right
-    sf::Vector2f(320.f ,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
-    sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f),
-    sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
-};
-Ball *cornerObjects[12];
 Ball *balls[16];
-sf::CircleShape* cornerShapes[12];
 bool placing = false;
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(10);
@@ -86,9 +75,6 @@ void draw(gameState state) {
     }
     for(int i = 0; i < 18; i++){
         window.draw(socketEdges[i], 2, sf::Lines);
-        if(i < 12){
-            //window.draw(*cornerShapes[i]);
-        }
     }
     for(int i = 1; i < ballNumbers; i++) {
         if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
