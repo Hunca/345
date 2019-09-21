@@ -140,7 +140,7 @@ int main() {
         if(placing == false && state == PLAYERTURN) {
             line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
             line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
-            PlayerManager::playerTurn(balls[0]);
+            PlayerManager::playerTurn(balls[0], event);
         }
         if(state == WHITEPLACEMENT) {
             placing = true;

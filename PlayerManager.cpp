@@ -42,13 +42,29 @@ void PlayerManager::right(Ball *whiteBall) {
     line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
 }
 
-void PlayerManager::playerTurn(Ball *whiteBall) {
+void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event) {
+    float distance = sqrtf(((event.mouseMove.x - poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
+        ((event.mouseMove.x - poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
+        ((event.mouseMove.y - poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
+        ((event.mouseMove.y - poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
+    if (event.type == sf::Event::MouseMoved){
+        if(distance < 100) {
+
+            poolCue.setPosition(event.mouseMove.x - poolCue.getRadius(), event.mouseMove.y - poolCue.getRadius());
+        }
+    }
+}
+
+void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
     if(screenSelected == false) return;
     dt = dtClock.restart().asSeconds();
     float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
         ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
+    
+    mouseAim(whiteBall, event);
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         right(whiteBall);
     }
