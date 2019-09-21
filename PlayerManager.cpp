@@ -54,6 +54,7 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         state = MOVEMENT;
+        rad = whiteBall->radius + 10;
     }
 }
 void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]) {
