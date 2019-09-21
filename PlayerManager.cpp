@@ -29,6 +29,8 @@ void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event, float r) {
         float aX = (whiteBall->x) + vX / magV * R;
         float aY = (whiteBall->y) + vY / magV * R;
         poolCue.setPosition(aX, aY);
+        guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x, whiteBall->y));
+        guideLine[1] = sf::Vertex(sf::Vector2f(guideLineVector(whiteBall, poolCue.getPosition())), sf::Color::Black);
     }
 }
 void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
