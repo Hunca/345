@@ -47,11 +47,16 @@ void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event) {
         ((event.mouseMove.x - poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
         ((event.mouseMove.y - poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
         ((event.mouseMove.y - poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
+    
     if (event.type == sf::Event::MouseMoved){
-        if(distance < 100) {
-
-            poolCue.setPosition(event.mouseMove.x - poolCue.getRadius(), event.mouseMove.y - poolCue.getRadius());
-        }
+        float R = whiteBall->radius + 10;
+        float vX = (event.mouseMove.x - poolCue.getRadius()) - (whiteBall->x);
+        float vY = (event.mouseMove.y - poolCue.getRadius()) - (whiteBall->y);
+        float magV = sqrt(vX * vX + vY * vY);
+        float aX = (whiteBall->x) + vX / magV * R;
+        float aY = (whiteBall->y) + vY / magV * R;
+        poolCue.setPosition(aX, aY);
+        
     }
 }
 
