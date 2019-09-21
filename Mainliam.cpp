@@ -54,6 +54,7 @@ sf::Vertex socketEdges[24][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Col
                                  {sf::Vertex(sf::Vector2f(180.f, 601.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 621.f), sf::Color::Black)},   // TL Left
                                  {sf::Vertex(sf::Vector2f(586.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // TL Left
                                  {sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}};   // TL Left
+sf::Vertex guideLine[2];
 Ball *balls[16];
 bool placing = false;
 sf::CircleShape *ballShapes[16];
@@ -81,6 +82,7 @@ void draw(gameState state) {
     }
     if(balls[0]->isSunk == false) window.draw(*ballShapes[0]);
     if(state == PLAYERTURN) {
+        window.draw(guideLine, 2, sf::Lines);
         window.draw(poolCue);
         window.draw(line, 2, sf::Lines);
     }
