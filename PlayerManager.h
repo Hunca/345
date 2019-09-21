@@ -12,7 +12,7 @@ extern bool endTurn;
 extern bool screenSelected;
 class PlayerManager {
     public:
-        static void playerTurn(Ball *whiteBall);
+        static void playerTurn(Ball *whiteBall, sf::Event event);
 
         static void placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]);
         static void setPower(Ball *whiteBall, bool elevation);
@@ -21,5 +21,6 @@ class PlayerManager {
         static void aim(Ball *whiteBall, bool direction);
         static void left(Ball *whiteBall);
         static void right(Ball *whiteBall);
+        static void mouseAim(Ball *whiteBall, sf::Event event);
 };
 #endif
