@@ -27,7 +27,7 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
         }
     }
     if(ball->x+ball->radius < 230.f || ball->x+ball->radius > 952.f || ball->y+ball->radius < 230.f || ball->y+ball->radius > 571.f){
-        for(int i = 0; i < 24; i++){ // 24 being the length of socketEdges.
+        for(int i = 0; i < 24; i++){ // 24 being the length of socketEdges. (Will always be 24)
             float edgeX = socketEdges[i][0].position.x - socketEdges[i][1].position.x;
             float edgeY = socketEdges[i][0].position.y - socketEdges[i][1].position.y;
             float edgeLength = edgeX*edgeX + edgeY*edgeY;
@@ -43,6 +43,14 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
             float distance = sqrt((ball->x+ball->radius - closestX) * (ball->x+ball->radius - closestX) + (ball->y+ball->radius - closestY) * (ball->y+ball->radius - closestY));
             if(distance <= ball->radius){
                 Physics::cushionCollision(ball, closestX, closestY);
+            }
+        }
+    }
+    if(ball->x+ball->radius < 210.f || ball->x+ball->radius > 972.f || ball->y+ball->radius < 210.f || ball->y+ball->radius > 591.f){
+        for(int i = 0; i < 6; i++){ // 6 being the number of sockets. (Will always be 6)
+            float socketX = socketPositions[i].x + 20.f, socketY = socketPositions[i].y + 20.f; //20.f being the radius of the socket (Will always be 20)
+            if((ball->x+ball->radius-socketX)*(ball->x+ball->radius-socketX) + (ball->y+ball->radius-socketY)*(ball->y+ball->radius-socketY) <= 20*20){
+                GameManager::ballSunk(ball);
             }
         }
     }
