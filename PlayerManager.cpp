@@ -1,6 +1,7 @@
 #include "PlayerManager.h"
 #include <String>
 #include <iostream>
+float rad = 0;
 void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
     float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
@@ -14,10 +15,14 @@ void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     } else {
         poolCue.setPosition(poolCue.getPosition().x + xChange, poolCue.getPosition().y + yChange);
     }
+    rad = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
+        ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
+        ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
+        ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
 }
-void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event) {
+void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event, float r) {
     if(event.type == sf::Event::MouseMoved){
-        float R = whiteBall->radius + 10;
+        float R = r;
         float vX = (event.mouseMove.x - poolCue.getRadius()) - (whiteBall->x);
         float vY = (event.mouseMove.y - poolCue.getRadius()) - (whiteBall->y);
         float magV = sqrt(vX * vX + vY * vY);
@@ -34,7 +39,8 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-        mouseAim(whiteBall, event);
+        if(rad == 0) rad = whiteBall->radius + 10;
+        mouseAim(whiteBall, event, rad);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if (distance <= 200) { //alter distance of cue
@@ -42,7 +48,7 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        if (distance >= 40) {
+        if (distance >= whiteBall->radius + 10) {
             setPower(whiteBall, true);
         }
     }
