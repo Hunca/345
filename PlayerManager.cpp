@@ -2,8 +2,8 @@
 #include <String>
 #include <iostream>
 float rad = 0;
-sf::Vector2f PlayerManager::guidelineVector(Ball *whiteBall, sf::Vector2f poolCue){
-    float x0 = whiteBall->x, y0 = whiteBall->y, x1 = poolCue.x, y1 = poolCue.y;
+sf::Vector2f PlayerManager::guidelineVector(Ball *whiteBall, sf::CircleShape poolCue){
+    float x0 = whiteBall->x+whiteBall->radius, y0 = whiteBall->y+whiteBall->radius, x1 = poolCue.getPosition().x+poolCue.getRadius(), y1 = poolCue.getPosition().y+poolCue.getRadius();
     sf::Vector2f newPoint = sf::Vector2f(0.f, 0.f);
     if(x1==x0){
         if(y1>y0){
@@ -20,23 +20,23 @@ sf::Vector2f PlayerManager::guidelineVector(Ball *whiteBall, sf::Vector2f poolCu
     } else {
         if(x1>x0){
             float yWithX = ((y1-y0)/(x1-x0))*(210-x0)+y0;
-            if(210 < yWithX && yWithX < 591){
+            if(210 <= yWithX && yWithX <= 591){
                 newPoint = sf::Vector2f(210.f, yWithX);
             }
         } else if(x1<x0){
             float yWithX = ((y1-y0)/(x1-x0))*(974-x0)+y0;
-            if(210 < yWithX && yWithX < 591){
+            if(210 <= yWithX && yWithX <= 591){
                 newPoint = sf::Vector2f(974.f, yWithX);
             }
         }
         if(y1>y0){
-            float xWithY = ((y1-y0)/(x1-x0))*(210-y0)+x0;
-            if(210 < xWithY && xWithY < 974){
+            float xWithY = ((x1-x0)/(y1-y0))*(210-y0)+x0;
+            if(210 <= xWithY && xWithY <= 974){
                 newPoint = sf::Vector2f(xWithY, 210.f);
             }
         } else if(y1<y0){
-            float xWithY = ((y1-y0)/(x1-x0))*(591-y0)+x0;
-            if(210 < xWithY && xWithY < 974){
+            float xWithY = ((x1-x0)/(y1-y0))*(591-y0)+x0;
+            if(210 <= xWithY && xWithY <= 974){
                 newPoint = sf::Vector2f(xWithY, 591.f);
             }
         }
@@ -70,8 +70,8 @@ void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event, float r) {
         float aX = (whiteBall->x) + vX / magV * R;
         float aY = (whiteBall->y) + vY / magV * R;
         poolCue.setPosition(aX, aY);
-        guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x, whiteBall->y));
-        guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(whiteBall, poolCue.getPosition())), sf::Color::Black);
+        guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x+whiteBall->radius, whiteBall->y+whiteBall->radius));
+        guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(whiteBall, poolCue)), sf::Color::Black);
     }
 }
 void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
