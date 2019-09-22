@@ -138,7 +138,7 @@ void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball 
             }
         }
         if(overlapCheck == false) {
-            poolCue.setPosition(sf::Vector2f(ball->x + ball->radius - 10, ball->y - ball->radius - 10));
+            poolCue.setPosition(sf::Vector2f(ball->x, ball->y - poolCue.getRadius()));
             line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
             line[1] = sf::Vertex(sf::Vector2f(ball->x + ball->radius, ball->y + ball->radius), sf::Color::Black);
             ball->isSunk = false;

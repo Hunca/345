@@ -74,7 +74,7 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     suitText.setFillColor(sf::Color::White);
     suitText.setPosition(10.f, 30.f);
     suitText.setString("Suit: none");
-    poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
+    poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
     poolCue.setFillColor(sf::Color::Black);
 }
 void GameManager::lose() {

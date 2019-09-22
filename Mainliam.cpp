@@ -58,7 +58,7 @@ sf::Vertex guideLine[2];
 Ball *balls[16];
 bool placing = false;
 sf::CircleShape *ballShapes[16];
-sf::CircleShape poolCue(10);
+sf::CircleShape poolCue(8.55f);
 sf::Vertex line[2];
 sf::Vertex dLine[2];
 sf::Clock dtClock;
