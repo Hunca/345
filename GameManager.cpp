@@ -17,7 +17,7 @@ sf::Text controlPrompText("Use the arrow keys to move the white ball and space t
 int playerGoing = 0;
 Player *players[2];
 bool sunkBall = false;
-bool fouled = false;
+bool foulSunk = false;
 void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers) {
     dLine[0] = sf::Vertex(sf::Vector2f(400.5f, 210.f), sf::Color::Black);
     dLine[1] = sf::Vertex(sf::Vector2f(400.5f, 211.f+tableHeight), sf::Color::Black);
@@ -89,7 +89,7 @@ void GameManager::ballSunk(Ball *ball) {
             lose();
         }
         ball->isSunk = true;
-        fouled = true;
+        foulSunk = true;
     } else if(ball->num == 8) {
         ball->isSunk = true;
         if(players[playerGoing]->playersBallsLeft == 0) {
@@ -129,7 +129,7 @@ void GameManager::ballSunk(Ball *ball) {
                 } else {
                     players[0]->playersBallsLeft--;
                 }
-                fouled = true;
+                foulSunk = true;
             }
         } else if(ball->num > 8) {
             if(players[playerGoing]->ballSuit == 9) {
@@ -142,7 +142,7 @@ void GameManager::ballSunk(Ball *ball) {
                 } else {
                     players[0]->playersBallsLeft--;
                 }
-                fouled = true;
+                foulSunk = true;
             }
         }
         ball->isSunk = true;
@@ -151,11 +151,13 @@ void GameManager::ballSunk(Ball *ball) {
 }
 
 void GameManager::swapPlayer() {
-    if(sunkBall && fouled == false) {
+    if(sunkBall && foulSunk == false && players[playerGoing]->fouled == false) {
         sunkBall = false;
         return;
     }
-    fouled = false;
+    if(players[playerGoing]->fouled) state = WHITEPLACEMENT;
+    foulSunk = false;
+    players[playerGoing]->fouled = false;
     if(playerGoing == 0){
         playerGoing = 1;
         poolCue.setFillColor(sf::Color::Magenta);
