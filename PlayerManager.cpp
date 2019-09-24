@@ -70,12 +70,13 @@ void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event, float r) {
         float aX = (whiteBall->x) + vX / magV * R;
         float aY = (whiteBall->y) + vY / magV * R;
         poolCue.setPosition(aX, aY);
-        guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x+whiteBall->radius, whiteBall->y+whiteBall->radius));
-        guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(whiteBall, poolCue)), sf::Color::Black);
+        
     }
 }
 void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
     if(screenSelected == false) return;
+    guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x+whiteBall->radius, whiteBall->y+whiteBall->radius));
+    guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(whiteBall, poolCue)), sf::Color::Black);
     dt = dtClock.restart().asSeconds();
     float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
         ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
