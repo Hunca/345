@@ -11,6 +11,7 @@ extern sf::Vertex line[];
 extern sf::Vertex guideLine[];
 extern bool endTurn;
 extern bool screenSelected;
+extern sf::Sprite cueSprite;
 class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall, sf::Event event);

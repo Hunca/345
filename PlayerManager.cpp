@@ -70,7 +70,9 @@ void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event, float r) {
         float aX = (whiteBall->x) + vX / magV * R;
         float aY = (whiteBall->y) + vY / magV * R;
         poolCue.setPosition(aX, aY);
-        
+        float cueAngleRad = atan2((aY - whiteBall->y + whiteBall->radius), (aX - whiteBall->x + whiteBall->radius));
+        cueSprite.setRotation(cueAngleRad*(180/(atan(1)*4)));
+        std::cout << cueAngleRad << "\n";
     }
 }
 void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
@@ -92,7 +94,7 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        if (distance >= whiteBall->radius + 10) {
+        if (distance >= whiteBall->radius + 1) {
             setPower(whiteBall, true);
         }
     }

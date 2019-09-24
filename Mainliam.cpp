@@ -62,6 +62,7 @@ sf::CircleShape poolCue(8.55f);
 sf::Vertex line[2];
 sf::Vertex dLine[2];
 sf::Clock dtClock;
+sf::Sprite cueSprite;
 float dt;
 bool endTurn = false;
 gameState state = BREAKING;
@@ -70,6 +71,7 @@ void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
     window.draw(dLine, 2, sf::Lines);
+
     for(int i = 0; i < 6; i++){
         window.draw(sockets[i]);
         window.draw(cushions[i]);
@@ -77,13 +79,26 @@ void draw(gameState state) {
     for(int i = 0; i < 18; i++){
         window.draw(socketEdges[i], 2, sf::Lines);
     }
-    for(int i = 1; i < ballNumbers; i++) {
-        if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
+    for(int i = 0; i < ballNumbers; i++) {
+        if(balls[i]->isSunk == false) {
+            sf::Texture ballTexture;
+            string fileName = "sprites/" + to_string(i);
+            ballTexture.loadFromFile(fileName + "_ball.png");
+            ballTexture.setSmooth(true);
+            sf::Sprite ballSprite;
+            ballSprite.setTexture(ballTexture);
+            ballSprite.setPosition(ballShapes[i]->getPosition());
+            window.draw(ballSprite);
+        }
     }
-    if(balls[0]->isSunk == false) window.draw(*ballShapes[0]);
     if(state == PLAYERTURN) {
+        sf::Texture cueTexture;
+        cueTexture.loadFromFile("sprites/1_cue.png");
+        cueSprite.setTexture(cueTexture);
+        cueSprite.setOrigin(sf::Vector2f(7,291));
+        cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
         window.draw(guideLine, 2, sf::Lines);
-        window.draw(poolCue);
+        window.draw(cueSprite);
         window.draw(line, 2, sf::Lines);
     }
     if(players[playerGoing]->ballSuit == 1) {
