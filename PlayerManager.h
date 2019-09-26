@@ -11,10 +11,11 @@ extern sf::Vertex guideLine[];
 extern bool endTurn;
 extern bool screenSelected;
 extern sf::Sprite cueSprite;
+extern sf::Vector2f originalPower;
 class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall, sf::Event event);
-
+        static void moveCue(Ball *whiteBall);
         static void placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]);
         static void setPower(Ball *whiteBall, bool elevation);
 
