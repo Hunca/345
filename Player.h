@@ -6,6 +6,7 @@ class Player {
         int playersBallsLeft;
         int playerNum;
         bool ballSunk;
+        bool fouled;
         Player(int playerNumer);
 };
 #endif

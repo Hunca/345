@@ -13,6 +13,7 @@ void MovementManager::ballMove(Ball *ball, sf::CircleShape *ballShape) {
 
     ballShape->setPosition(ball->x, ball->y);
 }
+bool firstCollision = true;
 void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
     for (int otherBall = 0; otherBall < ballNumbers; otherBall++) {
         if (ball->num != otherBall) {
@@ -23,6 +24,16 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
                     movingBalls++;
                 }
                 Physics::ballCollision(ball, balls[otherBall]);
+                if(firstCollision && ball->num == 0) {
+                    firstCollision = false;
+                    if(players[playerGoing]->ballSuit != 0) {
+                        if(players[playerGoing]->ballSuit > 8 && balls[otherBall]->num < 8) {
+                            players[playerGoing]->fouled = true;
+                        } else if(players[playerGoing]->ballSuit < 8 && balls[otherBall]->num > 8) {
+                            players[playerGoing]->fouled = true;
+                        }
+                    }
+                }
             }
         }
     }
@@ -66,7 +77,6 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
     for (int i = 0; i < ballNumbers; i++) {
 
         if (balls[i]->vx != 0 || balls[i]->vy != 0) {
-
             if(balls[i]->isSunk == true) {
                 balls[i]->x = -100;
                 balls[i]->y = -100;
@@ -86,7 +96,6 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
                     movingBalls--;
                 }
             }
-            
         }
         if (movingBalls < 1) {
             if(balls[0]->isSunk) {
@@ -98,6 +107,10 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
                 GameManager::swapPlayer();
                 return;
             }
+            if(firstCollision == true) {
+                players[playerGoing]->fouled = true;
+            }
+            firstCollision = true;
             state = PLAYERTURN;
             GameManager::swapPlayer();
             cueSprite.setRotation(0);
