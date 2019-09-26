@@ -59,7 +59,6 @@ Ball *balls[16];
 bool placing = false;
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(8.55f);
-sf::Vertex line[2];
 sf::Vertex dLine[2];
 sf::Clock dtClock;
 sf::Sprite cueSprite;
@@ -94,12 +93,12 @@ void draw(gameState state) {
     if(state == PLAYERTURN) {
         sf::Texture cueTexture;
         cueTexture.loadFromFile("sprites/1_cue.png");
+        cueTexture.setSmooth(true);
         cueSprite.setTexture(cueTexture);
         cueSprite.setOrigin(sf::Vector2f(7,291));
         cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
         window.draw(guideLine, 2, sf::Lines);
         window.draw(cueSprite);
-        window.draw(line, 2, sf::Lines);
     }
     if(players[playerGoing]->ballSuit == 1) {
         suitText.setString("Suit: blue");
@@ -126,8 +125,8 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-        if(event.type == sf::Event::GainedFocus) screenSelected = true;
-        if(event.type == sf::Event::LostFocus) screenSelected = false;
+        // if(event.type == sf::Event::GainedFocus) screenSelected = true;
+        // if(event.type == sf::Event::LostFocus) screenSelected = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT) {//reset
             GameManager::tableSetup(balls, ballShapes, ballNumbers);
             ballsLeft = 15;
@@ -141,8 +140,6 @@ int main() {
         }
 
         if(placing == false && state == PLAYERTURN) {
-            line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-            line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
             PlayerManager::playerTurn(balls[0], event);
         }
         if(state == WHITEPLACEMENT) {

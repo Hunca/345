@@ -7,7 +7,6 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 extern sf::CircleShape poolCue;
-extern sf::Vertex line[];
 extern sf::Vertex guideLine[];
 extern bool endTurn;
 extern bool screenSelected;
