@@ -60,9 +60,10 @@ Ball *balls[16];
 bool placing = false;
 sf::CircleShape *ballShapes[16];
 sf::CircleShape poolCue(8.55f);
-sf::Vertex line[2];
 sf::Vertex dLine[2];
 sf::Clock dtClock;
+sf::Sprite cueSprite;
+sf::Vector2f originalPower;
 float dt;
 bool endTurn = false;
 gameState state = MENU;
@@ -73,10 +74,11 @@ sf::Text playButtonText("Play", font);
 
 sf::RectangleShape exitButton(sf::Vector2f(160, 40));
 sf::Text exitButtonText("Exit", font);
-void draw(gameState state) {
+void draw() {
     window.clear();
     window.draw(innerTable);
     window.draw(dLine, 2, sf::Lines);
+
     for(int i = 0; i < 6; i++){
         window.draw(sockets[i]);
         window.draw(cushions[i]);
@@ -85,15 +87,30 @@ void draw(gameState state) {
         window.draw(socketEdges[i], 2, sf::Lines);
     }
     if(state != MENU) {
-        for(int i = 1; i < ballNumbers; i++) {
-            if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
+        for(int i = 0; i < ballNumbers; i++) {
+            if(balls[i]->isSunk == false) {
+                sf::Texture ballTexture;
+                string fileName = "sprites/" + to_string(i);
+                ballTexture.loadFromFile(fileName + "_ball.png");
+                ballTexture.setSmooth(true);
+                sf::Sprite ballSprite;
+                ballSprite.setTexture(ballTexture);
+                ballSprite.setPosition(ballShapes[i]->getPosition());
+                window.draw(ballSprite);
+            }
         }
     }
     if(balls[0]->isSunk == false && state != MENU) window.draw(*ballShapes[0]);
-    if(state == PLAYERTURN) {
+    
+    if(state == PLAYERTURN || state == MOVECUE) {
+        sf::Texture cueTexture;
+        cueTexture.loadFromFile("sprites/1_cue.png");
+        cueTexture.setSmooth(true);
+        cueSprite.setTexture(cueTexture);
+        cueSprite.setOrigin(sf::Vector2f(7,291));
+        cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
         window.draw(guideLine, 2, sf::Lines);
-        window.draw(poolCue);
-        window.draw(line, 2, sf::Lines);
+        window.draw(cueSprite);
     }
     if(players[playerGoing]->ballSuit == 1) {
         suitText.setString("Suit: blue");
@@ -134,8 +151,6 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-        if(event.type == sf::Event::GainedFocus) screenSelected = true;
-        if(event.type == sf::Event::LostFocus) screenSelected = false;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT) {//reset
             GameManager::tableSetup(balls, ballShapes, ballNumbers);
             ballsLeft = 15;
@@ -149,8 +164,6 @@ int main() {
         }
 
         if(placing == false && state == PLAYERTURN) {
-            line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-            line[1] = sf::Vertex(sf::Vector2f(balls[0]->x + balls[0]->radius, balls[0]->y + balls[0]->radius), sf::Color::Black);
             PlayerManager::playerTurn(balls[0], event);
         }
         if(state == WHITEPLACEMENT) {
@@ -162,7 +175,10 @@ int main() {
             PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
         }
         if(state == MOVEMENT) {
-            MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x, poolCue.getPosition().y);
+            MovementManager::moveTick(balls, ballShapes, originalPower.x, originalPower.y);
+        }
+        if(state == MOVECUE){
+            PlayerManager::moveCue(balls[0]);
         }
         if(state == MENU) {
             sf::Vector2i pos = sf::Mouse::getPosition(window);
@@ -187,7 +203,7 @@ int main() {
                 exitButton.setOutlineThickness(0);
             } 
         }
-        draw(state);
+        draw();
 	}
     return 0;
 }

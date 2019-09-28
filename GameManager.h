@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "PlayerManager.h"
 #include <SFML/Graphics.hpp>
-enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT, BREAKING, MENU};
+enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT, BREAKING, MENU, MOVECUE};
 extern gameState state;
 extern sf::RectangleShape innerTable;
 extern int ballsLeft;

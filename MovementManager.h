@@ -9,6 +9,7 @@
 extern int ballNumbers;
 extern int movingBalls;
 extern sf::Vector2f socketPositions[];
+extern sf::Sprite cueSprite;
 class MovementManager {
 public:
     static void moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int velocityX, int velocityY);

@@ -46,8 +46,6 @@ sf::Vector2f PlayerManager::guidelineVector(Ball *whiteBall, sf::CircleShape poo
 void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
     float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
-    line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-    line[1] = sf::Vertex(sf::Vector2f(whiteBall->x + whiteBall->radius, whiteBall->y + whiteBall->radius), sf::Color::Black);
     float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
     float xChange = (delta_x/dist)*(100*dt);
     float yChange = (delta_y/dist)*(100*dt);
@@ -70,35 +68,49 @@ void PlayerManager::mouseAim(Ball *whiteBall, sf::Event event, float r) {
         float aX = (whiteBall->x) + vX / magV * R;
         float aY = (whiteBall->y) + vY / magV * R;
         poolCue.setPosition(aX, aY);
-        
+        float cueAngleRad = atan2(((aY+poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)), ((aX+poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)));
+        cueSprite.setRotation(cueAngleRad*(180/(atan(1)*4)) + 90);
+    }
+}
+void PlayerManager::moveCue(Ball *whiteBall){
+    dt = dtClock.restart().asSeconds();
+    float delta_x = poolCue.getPosition().x + poolCue.getRadius() - (whiteBall->x + whiteBall->radius);
+    float delta_y = poolCue.getPosition().y + poolCue.getRadius() - (whiteBall->y + whiteBall->radius);
+    float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
+    float xChange = (delta_x/dist)*(1500*dt);
+    float yChange = (delta_y/dist)*(1500*dt);
+    poolCue.setPosition(poolCue.getPosition().x-xChange, poolCue.getPosition().y-yChange);
+    if(dist <= whiteBall->radius){
+        state = MOVEMENT;
     }
 }
 void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
     if(screenSelected == false) return;
-    guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x+whiteBall->radius, whiteBall->y+whiteBall->radius));
-    guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(whiteBall, poolCue)), sf::Color::Black);
+    guideLine[0] = sf::Vertex(sf::Vector2f(whiteBall->x+whiteBall->radius, whiteBall->y+whiteBall->radius), sf::Color::White);
+    guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(whiteBall, poolCue)), sf::Color::White);
     dt = dtClock.restart().asSeconds();
     float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
         ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) * 
         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-        if(rad == 0) rad = whiteBall->radius + 10;
+        if(rad == 0) rad = whiteBall->radius + poolCue.getRadius();
         mouseAim(whiteBall, event, rad);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        if (distance <= 200) { //alter distance of cue
+        if (distance <= 600) { //alter distance of cue
             setPower(whiteBall, false);
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        if (distance >= whiteBall->radius + 10) {
+        if (distance >= whiteBall->radius + 1) {
             setPower(whiteBall, true);
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        state = MOVEMENT;
-        rad = whiteBall->radius + 10;
+        originalPower = poolCue.getPosition();
+        state = MOVECUE;
+        rad = whiteBall->radius + poolCue.getRadius();
     }
 }
 void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]) {
@@ -140,8 +152,6 @@ void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball 
         }
         if(overlapCheck == false) {
             poolCue.setPosition(sf::Vector2f(ball->x, ball->y - poolCue.getRadius()));
-            line[0] = sf::Vertex(sf::Vector2f(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius()), sf::Color::Black);
-            line[1] = sf::Vertex(sf::Vector2f(ball->x + ball->radius, ball->y + ball->radius), sf::Color::Black);
             ball->isSunk = false;
             state = PLAYERTURN;
         }
