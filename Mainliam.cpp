@@ -20,6 +20,7 @@ bool noMovement = true; //boolean for moving balls
 float cornerRadius = 8.55f; //Radius of the circles on each cushion corner
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "8BallPool");
 sf::RectangleShape innerTable(sf::Vector2f(tableWidth, tableHeight));
+
 sf::RectangleShape cushions[] = {sf::RectangleShape(sf::Vector2f(336.f, 44.25f)), sf::RectangleShape(sf::Vector2f(336.f, 44.25f)),  // Top 2
                                  sf::RectangleShape(sf::Vector2f(44.25f, 336.f)), sf::RectangleShape(sf::Vector2f(44.25f, 336.f)),  // Left and right
                                  sf::RectangleShape(sf::Vector2f(336.f, 44.25f)), sf::RectangleShape(sf::Vector2f(336.f, 44.25f))}; // Bottom 2
@@ -64,8 +65,14 @@ sf::Vertex dLine[2];
 sf::Clock dtClock;
 float dt;
 bool endTurn = false;
-gameState state = BREAKING;
+gameState state = MENU;
 bool screenSelected = true;
+
+sf::RectangleShape playButton(sf::Vector2f(160, 40));
+sf::Text playButtonText("Play", font);
+
+sf::RectangleShape exitButton(sf::Vector2f(160, 40));
+sf::Text exitButtonText("Exit", font);
 void draw(gameState state) {
     window.clear();
     window.draw(innerTable);
@@ -77,10 +84,12 @@ void draw(gameState state) {
     for(int i = 0; i < 18; i++){
         window.draw(socketEdges[i], 2, sf::Lines);
     }
-    for(int i = 1; i < ballNumbers; i++) {
-        if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
+    if(state != MENU) {
+        for(int i = 1; i < ballNumbers; i++) {
+            if(balls[i]->isSunk == false) window.draw(*ballShapes[i]);
+        }
     }
-    if(balls[0]->isSunk == false) window.draw(*ballShapes[0]);
+    if(balls[0]->isSunk == false && state != MENU) window.draw(*ballShapes[0]);
     if(state == PLAYERTURN) {
         window.draw(guideLine, 2, sf::Lines);
         window.draw(poolCue);
@@ -97,10 +106,24 @@ void draw(gameState state) {
     } else {
         remainingText.setString("Remaining: Black");
     }
-    window.draw(playerText);
-    window.draw(remainingText);
-    window.draw(suitText);
+    if(state != MENU)  {
+        window.draw(playerText);
+        window.draw(remainingText);
+        window.draw(suitText);
+    }
     if (state == BREAKING || state == WHITEPLACEMENT) window.draw(controlPrompText);
+    if(state == MENU) {
+        playButton.setPosition(511, 300);
+        playButtonText.setPosition(561, 300);
+        playButtonText.setFillColor(sf::Color::Black);
+        exitButton.setPosition(511, 400);
+        exitButtonText.setFillColor(sf::Color::Black);
+        exitButtonText.setPosition(561, 400);
+        window.draw(playButton);
+        window.draw(playButtonText);
+        window.draw(exitButton);
+        window.draw(exitButtonText);
+    }
     window.display();
 }
 int main() {
@@ -140,6 +163,29 @@ int main() {
         }
         if(state == MOVEMENT) {
             MovementManager::moveTick(balls, ballShapes, poolCue.getPosition().x, poolCue.getPosition().y);
+        }
+        if(state == MENU) {
+            sf::Vector2i pos = sf::Mouse::getPosition(window);
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 300 && pos.y < 300 + 40)) {
+                playButton.setOutlineColor(sf::Color::Black);
+                playButton.setOutlineThickness(1);
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    state = BREAKING;
+                }
+            }else {
+                playButton.setOutlineThickness(0);
+            }
+
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 400 && pos.y < 400 + 40)) {
+                exitButton.setOutlineColor(sf::Color::Black);
+                exitButton.setOutlineThickness(1);
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    window.close();
+                    return 0;
+                }
+            }else {
+                exitButton.setOutlineThickness(0);
+            } 
         }
         draw(state);
 	}

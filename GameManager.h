@@ -4,10 +4,11 @@
 #include "Player.h"
 #include "PlayerManager.h"
 #include <SFML/Graphics.hpp>
-enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT, BREAKING};
+enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT, BREAKING, MENU};
 extern gameState state;
 extern sf::RectangleShape innerTable;
 extern int ballsLeft;
+extern sf::Font font;
 extern sf::Vertex dLine[];
 extern sf::RectangleShape cushions[];
 extern sf::Vector2f cushionPositions[];
