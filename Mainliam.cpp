@@ -56,6 +56,8 @@ sf::CircleShape poolCue(8.55f);
 sf::Vertex dLine[2];
 sf::Clock dtClock;
 sf::Vector2f originalPower;
+sf::RectangleShape powerBar;
+sf::RectangleShape powerBarBorder(sf::Vector2f(40, 400));
 float dt;
 bool endTurn = false;
 gameState state = MENU;
@@ -96,6 +98,9 @@ void draw() {
         cueSprite.setTexture(cueTexture);
         cueSprite.setOrigin(sf::Vector2f(7,291));
         cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
+        powerBarBorder.setPosition(20, 200);
+        window.draw(powerBarBorder);
+        window.draw(powerBar);
         window.draw(guideLine, 2, sf::Lines);
         window.draw(cueSprite);
     }
@@ -158,7 +163,7 @@ int main() {
         }
 
         if(placing == false && state == PLAYERTURN) {
-            PlayerManager::playerTurn(balls[0], event);
+            PlayerManager::playerTurn(balls[0], event, window);
         }
         if(state == WHITEPLACEMENT) {
             placing = true;
