@@ -12,7 +12,7 @@ extern sf::Font font;
 extern sf::Vertex dLine[];
 extern sf::CircleShape sockets[];
 extern sf::Vector2f socketPositions[];
-extern sf::Vertex socketEdges[24][2];
+extern sf::Vertex socketEdges[18][2];
 extern sf::Texture cueTexture;
 
 extern int playerGoing;
