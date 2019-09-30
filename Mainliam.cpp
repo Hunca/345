@@ -57,13 +57,13 @@ sf::Vertex dLine[2];
 sf::Clock dtClock;
 sf::Vector2f originalPower;
 sf::RectangleShape powerBar;
-sf::RectangleShape powerBarBorder(sf::Vector2f(40, 400));
+sf::RectangleShape powerBarBorder(sf::Vector2f(50, 400));
 float dt;
 bool endTurn = false;
 gameState state = MENU;
 bool screenSelected = true;
-sf::Sprite cueSprite, ballSprites[16], tableSprite;
-sf::Texture tableTexture, ballTexture[16], cueTexture;
+sf::Sprite cueSprite, ballSprites[16], tableSprite, powerBarSprite;
+sf::Texture tableTexture, ballTexture[16], cueTexture, powerBarTexture;
 void loadSprites(){
     tableTexture.loadFromFile("sprites/table.png");
     for(int i = 0; i < ballNumbers; i++) {
@@ -72,15 +72,17 @@ void loadSprites(){
         ballTexture[i].setSmooth(true);
     }
     cueTexture.loadFromFile("sprites/1_cue.png");
+    powerBarTexture.loadFromFile("sprites/power_bar.png");
 }
 
 void draw() {
     window.clear();
-    tableSprite.setTexture(tableTexture);
     tableTexture.setSmooth(true);
+    tableSprite.setTexture(tableTexture);
     tableSprite.setOrigin(56,56);
     tableSprite.setPosition(210,210);
     window.draw(tableSprite);
+    
 
     if(state != MENU && state != END) {
         for(int i = 0; i < ballNumbers; i++) {
@@ -98,9 +100,13 @@ void draw() {
         cueSprite.setTexture(cueTexture);
         cueSprite.setOrigin(sf::Vector2f(7,291));
         cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
+        powerBarTexture.setSmooth(true);
+        powerBarSprite.setTexture(powerBarTexture);
+        powerBarSprite.setPosition(20, 200);
         powerBarBorder.setPosition(20, 200);
         window.draw(powerBarBorder);
         window.draw(powerBar);
+        window.draw(powerBarSprite);
         window.draw(guideLine, 2, sf::Lines);
         window.draw(cueSprite);
     }
