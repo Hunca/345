@@ -86,7 +86,7 @@ void draw() {
     for(int i = 0; i < 18; i++){
         window.draw(socketEdges[i], 2, sf::Lines);
     }
-    if(state != MENU) {
+    if(state != MENU && state != END) {
         for(int i = 0; i < ballNumbers; i++) {
             if(balls[i]->isSunk == false) {
                 sf::Texture ballTexture;
@@ -100,7 +100,7 @@ void draw() {
             }
         }
     }
-    if(balls[0]->isSunk == false && state != MENU) window.draw(*ballShapes[0]);
+    if(balls[0]->isSunk == false && (state != MENU && state != END)) window.draw(*ballShapes[0]);
     
     if(state == PLAYERTURN || state == MOVECUE) {
         sf::Texture cueTexture;
@@ -123,7 +123,7 @@ void draw() {
     } else {
         remainingText.setString("Remaining: Black");
     }
-    if(state != MENU)  {
+    if(state != MENU && state != END)  {
         window.draw(playerText);
         window.draw(remainingText);
         window.draw(suitText);
