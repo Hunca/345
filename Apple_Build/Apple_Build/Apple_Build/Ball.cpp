@@ -10,7 +10,7 @@ Ball::Ball(int ballNum, float rad, float xPos, float yPos) {
 	ax = 0; ay = 0;
 	radius = rad;
 	isSunk = false;
-	mass = 10.f;
+	mass = radius * 10.f;
 }
 Ball::~Ball() {
 }

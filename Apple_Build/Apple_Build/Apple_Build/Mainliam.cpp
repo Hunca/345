@@ -1,272 +1,220 @@
 #include <SFML/Graphics.hpp>
 #include "Ball.h"
+#include "Player.h"
+#include "Physics.h"
+#include "MovementManager.h"
+#include "PlayerManager.h"
+#include "GameManager.h"
 #include <string>
 #include <iostream>
-#include <math.h>
 #include <vector>
 
 using namespace std;
 
-struct player {
-    int ballSuit;
-    int playersBallsLeft;
-    int player;
-};
-    int ballNumbers = 5;
-    int ballsLeft = 15;
-    int windowWidth = 1182, windowHeight = 801;
-    int tableWidth = 762, tableHeight = 381;
-    bool noMovement = true; //boolean for moving balls
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "SFML works!");
-    sf::RectangleShape innerTable(sf:: Vector2f(tableWidth, tableHeight));
-    sf::Vector2f initialPositions[] = { //array of the balls positions
-        sf::Vector2f(400.5f, 381.f),  sf::Vector2f(701.5f,400.5f), sf::Vector2f(861.5f,360.5f),  sf::Vector2f(741.5f,420.5f), //0, 1, 2, 3
-        sf::Vector2f(821.5f,420.5f),  sf::Vector2f(861.5f,440.5f), sf::Vector2f(781.5f,360.5f),  sf::Vector2f(861.5f,320.5f), //4, 5, 6, 7
-        sf::Vector2f(781.5f,400.5f),  sf::Vector2f(821.5f,460.5f), sf::Vector2f(861.5f,400.5f),  sf::Vector2f(741.5f,380.5f), //8, 9, 10, 11
-        sf::Vector2f(861.5f,480.5f),  sf::Vector2f(821.5f,340.5f), sf::Vector2f(781.5f,440.5f),  sf::Vector2f(821.5f,380.5f), //12, 13, 14, 15
-    };
-    Ball *balls[5];
-    sf::CircleShape *ballShapes[5];
-    sf::CircleShape poolCue(10);
-
-void moveBall(Ball ball, int velocityX, int velocityY){
-	sf::Event event;
-    while (window.pollEvent(event)){
-		if (event.type == sf::Event::Closed){
-			window.close();
-         }
-	}
-    noMovement = false;
-    balls[0]->vx = (balls[0]->x - velocityX) * 0.005f;
-    balls[0]->vy = (balls[0]->y - velocityY) * 0.005f;
-	
-    while(!noMovement){
-
-        for(int i = 0; i < ballNumbers; i++){
-            if(balls[i]->vx != 0 && balls[i]->vy != 0){
-                while (window.pollEvent(event)){
-                    if (event.type == sf::Event::Closed){
-                        window.close();
-                    }
-                }
-
-                if (balls[i]->x <= 210) { //if the ball hits the left or right cushions
-                    balls[i]->vx *= -1;
-                } else if (balls[i]->x + balls[i]->radius * 2 >= tableWidth + 210) {
-                    balls[i]->vx *= -1;
-                } 
-                if(balls[i]->y <= 210){ //if the ball hits the top or bottom cushions
-                    balls[i]->vy *= -1;
-                } else if(balls[i]->y + balls[i]->radius*2 >= tableHeight+210){
-                    balls[i]->vy *= -1;
-                }
-
-                balls[i]->ax = (-balls[i]->vx) * 0.00075f; //setting an acceloration value (friction on the table)
-                balls[i]->ay = (-balls[i]->vy) * 0.00075f;
-
-                balls[i]->vx += balls[i]->ax; //applying the friction to the velocity
-                balls[i]->vy += balls[i]->ay;
-
-                balls[i]->x += balls[i]->vx; //moviving the ball with the velocity
-                balls[i]->y += balls[i]->vy;
-                ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-
-                for(int otherBall = 0; otherBall < ballNumbers; otherBall++){
-
-                    if(balls[i]->num!=otherBall){
-                        float distanceX = (balls[i]->x - balls[otherBall]->x)*(balls[i]->x - balls[otherBall]->x);
-                        float distancey = (balls[i]->y - balls[otherBall]->y)*(balls[i]->y - balls[otherBall]->y);
-
-                        if((distanceX+distancey) <= 1600.f){ //1600.f being radius^2
-
-                            float fDistance = sqrtf((balls[i]->x - balls[otherBall]->x)*(balls[i]->x - balls[otherBall]->x) + (balls[i]->y - balls[otherBall]->y)*(balls[i]->y - balls[otherBall]->y));
-
-                            // Normal
-                            float nx = (balls[otherBall]->x - balls[i]->x) / fDistance;
-                            float ny = (balls[otherBall]->y - balls[i]->y) / fDistance;
-
-                            // Tangent
-                            float tx = -ny;
-                            float ty = nx;
-
-                            // Dot Product Tangent
-                            float dpTan1 = balls[i]->vx * tx + balls[i]->vy * ty;
-                            float dpTan2 = balls[otherBall]->vx * tx + balls[otherBall]->vy * ty;
-
-                            // Dot Product Normal
-                            float dpNorm1 = balls[i]->vx * nx + balls[i]->vy * ny;
-                            float dpNorm2 = balls[otherBall]->vx * nx + balls[otherBall]->vy * ny;
-
-                            // Conservation of momentum in 1D
-                            float m1 = (dpNorm1 * (balls[i]->mass - balls[otherBall]->mass) + 2.0f * balls[otherBall]->mass * dpNorm2) / (balls[i]->mass + balls[otherBall]->mass);
-                            float m2 = (dpNorm2 * (balls[otherBall]->mass - balls[i]->mass) + 2.0f * balls[i]->mass * dpNorm1) / (balls[i]->mass + balls[otherBall]->mass);
-
-                            // Update ball velocities
-                            balls[i]->vx = tx * dpTan1 + nx * m1;
-                            balls[i]->vy = ty * dpTan1 + ny * m1;
-                            balls[otherBall]->vx = tx * dpTan2 + nx * m2;
-                            balls[otherBall]->vy = ty * dpTan2 + ny * m2;
-                        }
-                    }
-                }
-
-                if(fabs(balls[i]->vx*balls[i]->vx + balls[i]->vy*balls[i]->vy) < 0.005f){ //if the balls velociy gets to a certain point, stop it
-                    ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-                    balls[i]->vx = 0;
-                    balls[i]->vy = 0;
-
-                }
-
-                bool currentCheck = false;
-                for(int i = 0; i < ballNumbers; i++){
-                    if(balls[i]->vx!=0 && balls[i]->vy!=0 && !currentCheck){
-                        currentCheck=true;
-                        break;
-                    }
-                }
-                if(!currentCheck){
-                    noMovement = true;
-                }
-                
-                window.clear();
-                window.draw(innerTable);
-                for(int i = 0; i < ballNumbers; i++){ //redraws the balls
-                    window.draw(*ballShapes[i]);
-                }
-                window.display();
-            }
-        }
+int movingBalls = 0;
+int ballNumbers = 16;
+int ballsLeft = 15;
+int windowWidth = 1182, windowHeight = 801;
+int tableWidth = 762, tableHeight = 381;
+bool noMovement = true; //boolean for moving balls
+float cornerRadius = 8.55f; //Radius of the circles on each cushion corner
+sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "8BallPool", sf::Style::Titlebar | sf::Style::Close);
+sf::RectangleShape innerTable(sf::Vector2f(tableWidth, tableHeight));
+sf::CircleShape sockets[] = {sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f),  // Top row
+                             sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottom row
+sf::Vector2f socketPositions[] = {sf::Vector2f(174.9f, 174.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(967.1f, 174.9f),  // Top row
+                                  sf::Vector2f(174.9f, 587.1f), sf::Vector2f(571.f, 595.25f), sf::Vector2f(967.1f, 587.1f)}; // Bottom row
+sf::Vertex socketEdges[18][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black)},   // TL Left
+                                 {sf::Vertex(sf::Vector2f(235.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 180.f), sf::Color::Black)},   // TL Right
+                                 {sf::Vertex(sf::Vector2f(571.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(586.f, 180.f), sf::Color::Black)},   // TM Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 180.f), sf::Color::Black)},   // TM Right
+                                 {sf::Vertex(sf::Vector2f(947.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(977.f, 180.f), sf::Color::Black)},   // TR Left
+                                 {sf::Vertex(sf::Vector2f(972.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 205.f), sf::Color::Black)},   // TR Right
+                                 {sf::Vertex(sf::Vector2f(210.f, 571.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 601.f), sf::Color::Black)},   // BL Left
+                                 {sf::Vertex(sf::Vector2f(235.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 621.f), sf::Color::Black)},   // BL Right
+                                 {sf::Vertex(sf::Vector2f(571.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(586.f, 621.f), sf::Color::Black)},   // BM Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // BM Right
+                                 {sf::Vertex(sf::Vector2f(947.f, 591.f), sf::Color::Black), sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black)},   // BR Left
+                                 {sf::Vertex(sf::Vector2f(972.f, 571.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}, // BR Right
+                                 {sf::Vertex(sf::Vector2f(235.f, 210.f)), sf::Vertex(sf::Vector2f(571.f, 210.f))}, // Top Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 210.f)), sf::Vertex(sf::Vector2f(947.f, 210.f))}, // Top Right
+                                 {sf::Vertex(sf::Vector2f(210.f, 235.f)), sf::Vertex(sf::Vector2f(210.f, 571.f))}, // Left
+                                 {sf::Vertex(sf::Vector2f(972.f, 235.f)), sf::Vertex(sf::Vector2f(972.f, 571.f))}, // Right
+                                 {sf::Vertex(sf::Vector2f(235.f, 591.f)), sf::Vertex(sf::Vector2f(571.f, 591.f))}, // Bottom Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 591.f)), sf::Vertex(sf::Vector2f(947.f, 591.f))}};// Bottom Right
+sf::Vertex guideLine[2];
+Ball *balls[16];
+bool placing = false;
+sf::CircleShape *ballShapes[16];
+sf::CircleShape poolCue(8.55f);
+sf::Vertex dLine[2];
+sf::Clock dtClock;
+sf::Vector2f originalPower;
+sf::RectangleShape powerBar;
+sf::RectangleShape powerBarBorder(sf::Vector2f(50, 400));
+float dt;
+bool endTurn = false;
+gameState state = MENU;
+bool screenSelected = true;
+sf::Sprite cueSprite, ballSprites[16], tableSprite, powerBarSprite;
+sf::Texture tableTexture, ballTexture[16], cueTexture, powerBarTexture;
+void loadSprites(){
+    tableTexture.loadFromFile("sprites/table.png");
+    for(int i = 0; i < ballNumbers; i++) {
+        string fileName = "sprites/" + to_string(i);
+        ballTexture[i].loadFromFile(fileName + "_ball.png");
+        ballTexture[i].setSmooth(true);
     }
+    cueTexture.loadFromFile("sprites/1_cue.png");
+    powerBarTexture.loadFromFile("sprites/power_bar.png");
 }
 
-sf::Vector2f setPower(sf::Vector2f pos, bool elevation) {
-    // float delta_x = pos.x - (ball.x);
-    // float delta_y = pos.y - (ball.x);
-    // float r = atan2(delta_y, delta_x);
-    if(elevation) {
-        pos.x += (balls[0]->x - (pos.x-10)) * 0.005;
-        pos.y += (balls[0]->y - (pos.y-10)) * 0.005;
-        // pos.x += sin(r) * 0.2;
-        // pos.y += cos(r) * 0.2;
-    } else {
-        pos.x -= (balls[0]->x - (pos.x - 10)) * 0.005;
-        pos.y -= (balls[0]->y - (pos.y - 10)) * 0.005;
-        // pos.x += sin(r) * -0.2;
-        // pos.y += cos(r) * -0.2;
-    }
+void draw() {
+    window.clear();
+    tableTexture.setSmooth(true);
+    tableSprite.setTexture(tableTexture);
+    tableSprite.setOrigin(56,56);
+    tableSprite.setPosition(210,210);
+    window.draw(tableSprite);
     
-    return pos;
-}
 
-void playerTurn() {
-    sf::Transform transform;
-    float angle = 0.005;
-    while(true) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-        float distance = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (balls[0]->x + balls[0]->radius)) *
-            ((poolCue.getPosition().x + poolCue.getRadius()) - (balls[0]->x + balls[0]->radius)) +
-            ((poolCue.getPosition().y + poolCue.getRadius()) - (balls[0]->y + balls[0]->radius)) * 
-            ((poolCue.getPosition().y + poolCue.getRadius()) - (balls[0]->y + balls[0]->radius)));    
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-            float x1 = poolCue.getPosition().x - (balls[0]->x + (balls[0]->radius/2));
-            float y1 = poolCue.getPosition().y - (balls[0]->y + (balls[0]->radius / 2));
-
-            float x2 = x1 * cos(angle) - y1 * sin(angle);
-            float y2 = x1 * sin(angle) + y1 * cos(angle);
-            
-            poolCue.setPosition(x2 + (balls[0]->x + (balls[0]->radius / 2)), y2 + (balls[0]->y + (balls[0]->radius / 2)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            float x1 = poolCue.getPosition().x - (balls[0]->x + (balls[0]->radius/2));
-            float y1 = poolCue.getPosition().y - (balls[0]->y + (balls[0]->radius / 2));
-
-            float x2 = x1 * cos(-angle) - y1 * sin(-angle);
-            float y2 = x1 * sin(-angle) + y1 * cos(-angle);
-            
-            poolCue.setPosition(x2 + (balls[0]->x + (balls[0]->radius / 2)), y2 + (balls[0]->y + (balls[0]->radius / 2)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            if (distance <= 140) {
-                poolCue.setPosition(setPower(poolCue.getPosition(), false));
+    if(state != MENU && state != END) {
+        for(int i = 0; i < ballNumbers; i++) {
+            if(balls[i]->isSunk == false) {
+                sf::Sprite ballSprite;
+                ballSprite.setTexture(ballTexture[i]);
+                ballSprite.setPosition(ballShapes[i]->getPosition());
+                ballSprites[i] = ballSprite;
+                window.draw(ballSprites[i]);
             }
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            if (distance >= 40) {
-                poolCue.setPosition(setPower(poolCue.getPosition(), true));
-            }
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-            moveBall(*balls[0], poolCue.getPosition().x-poolCue.getRadius(), poolCue.getPosition().y-poolCue.getRadius());
-            return;
-        }
-        window.clear();
-        window.draw(innerTable);
-        for(int i = 0; i < ballNumbers; i++){
-            window.draw(*ballShapes[i]);
-        }
-        window.draw(poolCue, transform);
-        window.display();
+    }  
+    if(state == PLAYERTURN || state == MOVECUE) {
+        cueTexture.setSmooth(true);
+        cueSprite.setTexture(cueTexture);
+        cueSprite.setOrigin(sf::Vector2f(7,291));
+        cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
+        powerBarTexture.setSmooth(true);
+        powerBarSprite.setTexture(powerBarTexture);
+        powerBarSprite.setPosition(20, 200);
+        powerBarBorder.setPosition(20, 200);
+        powerBar.setRotation(180);
+        powerBar.setPosition(sf::Vector2f(powerBarBorder.getPosition().x + powerBarBorder.getSize().x - 12, powerBarBorder.getPosition().y + 400));
+        powerBar.setFillColor(sf::Color::Red);
+        window.draw(powerBarBorder);
+        window.draw(powerBar);
+        window.draw(powerBarSprite);
+        window.draw(guideLine, 2, sf::Lines);
+        window.draw(cueSprite);
     }
+    if(players[playerGoing]->ballSuit == 1) {
+        suitText.setString("Suit: Solids");
+    } else if (players[playerGoing]->ballSuit == 9) {
+        suitText.setString("Suit: Stripes");
+    }
+    playerText.setString("Player " + std::to_string(players[playerGoing]->playerNum+1));
+    if(players[playerGoing]->playersBallsLeft != 0) {
+        remainingText.setString("Remaining: " + std::to_string(players[playerGoing]->playersBallsLeft));
+    } else {
+        remainingText.setString("Remaining: Black");
+    }
+    if(state != MENU && state != END)  {
+        window.draw(playerText);
+        window.draw(remainingText);
+        window.draw(suitText);
+    }
+    if (state == BREAKING || state == WHITEPLACEMENT) window.draw(controlPrompText);
+    if(state == MENU) {
+        sf::Texture exitTexture, playTexute;
+        sf::Sprite exitSprite, playSprite;
+        exitTexture.loadFromFile("sprites/exit_button.png");
+        playTexute.loadFromFile("sprites/play_button.png");
+        exitSprite.setTexture(exitTexture);
+        playSprite.setTexture(playTexute);
+        exitSprite.setPosition(511, 400);
+        playSprite.setPosition(511, 300);
+        window.draw(playSprite);
+        window.draw(exitSprite);
+    }
+    if(state == END) {
+        sf::Texture menuTexture;
+        sf::Sprite menuSprite;
+        menuTexture.loadFromFile("sprites/menu_button.png");
+        menuTexture.setSmooth(true);
+        menuSprite.setTexture(menuTexture);
+        menuSprite.setPosition(511, 360);
+        endGameText.setPosition(500, 300);
+        window.draw(menuSprite);
+        window.draw(endGameText);
+    }
+    window.display();
 }
-
-void swapPlayer(player player){
-    if(player.player == 1){
-        player.player = 2;
-    }
-    if(player.ballSuit < 8){
-        player.ballSuit = 9;
-    }
-    player.playersBallsLeft = ballsLeft - player.playersBallsLeft - 1;
-}
-
 int main() {
-	innerTable.setPosition(210.f,210.f);
-	innerTable.setFillColor(sf::Color::Green);
-	innerTable.setOutlineThickness(59.f);
-	innerTable.setOutlineColor(sf::Color::Blue);
-
-    for(int i = 0; i < ballNumbers; i++){
-        balls[i] = new Ball(i, 20.f, initialPositions[i].x, initialPositions[i].y);
-        ballShapes[i] = new sf::CircleShape(balls[i]->radius);
-        ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-        if(balls[i]->num<8){
-            ballShapes[i]->setFillColor(sf::Color::Blue);
-        } else if(balls[i]->num>8){
-            ballShapes[i]->setFillColor(sf::Color::Red);
-        }
-        if(balls[i]->num == 0){
-            ballShapes[i]->setFillColor(sf::Color::White);
-        }
-        if(balls[i]->num==8){
-            ballShapes[i]->setFillColor(sf::Color::Black);
-        }
-    }
-
-    poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10));
-    poolCue.setFillColor(sf::Color::Black);
-
-    while (window.isOpen())
-	{
+    GameManager::tableSetup(balls, ballShapes, ballNumbers);
+    loadSprites();
+    while (window.isOpen()) {
 		sf::Event event;
-		while (window.pollEvent(event))
-		{
+		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-        playerTurn();
-        poolCue.setPosition(sf::Vector2f(balls[0]->x + balls[0]->radius - 10, balls[0]->y - balls[0]->radius - 10)); //set the pool cue.
-        
-        
-        window.clear();
-        window.draw(innerTable);
-        for(int i = 0; i < ballNumbers; i++){
-            window.draw(*ballShapes[i]);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT && state != MENU) {//reset
+            cueTexture.loadFromFile("sprites/1_cue.png");
+            GameManager::tableSetup(balls, ballShapes, ballNumbers);
+            ballsLeft = 15;
+            playerGoing = 0;
+            state = BREAKING;
         }
-        window.display();
+        if(event.type == sf::Event::KeyReleased) {
+            if(event.key.code == sf::Keyboard::Space) {
+                placing = false;
+            }
+        }
+
+        if(placing == false && state == PLAYERTURN) {
+            PlayerManager::playerTurn(balls[0], event, window);
+        }
+        if(state == WHITEPLACEMENT) {
+            placing = true;
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
+        }
+        if(state == BREAKING) {
+            placing = true;
+            PlayerManager::placeWhiteBall(balls[0], ballShapes[0], balls);
+        }
+        if(state == MOVEMENT) {
+            MovementManager::moveTick(balls, ballShapes, originalPower.x, originalPower.y);
+        }
+        if(state == MOVECUE){
+            PlayerManager::moveCue(balls[0]);
+        }
+        if(state == MENU) {
+            sf::Vector2i pos = sf::Mouse::getPosition(window);
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 300 && pos.y < 300 + 40)) {
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    state = BREAKING;
+                }
+            }
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 400 && pos.y < 400 + 40)) {
+                if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    window.close();
+                    return 0;
+                }
+            }
+        }
+        if(state == END) {
+            sf::Vector2i pos = sf::Mouse::getPosition(window);
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 360 && pos.y < 360 + 40)) {cueTexture.loadFromFile("sprites/1_cue.png");
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    GameManager::tableSetup(balls, ballShapes, ballNumbers);
+                    ballsLeft = 15;
+                    playerGoing = 0;
+                    state = MENU;
+                }
+                    
+            }
+        }
+        draw();
 	}
     return 0;
 }

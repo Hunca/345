@@ -7,50 +7,85 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		499F766A229A58DF00E0F9C4 /* FLAC.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF122993BF300F8E166 /* FLAC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F766B229A58DF00E0F9C4 /* freetype.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF022993BF300F8E166 /* freetype.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F766C229A58DF00E0F9C4 /* ogg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DEF22993BF300F8E166 /* ogg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F766D229A58DF00E0F9C4 /* OpenAL.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF522993BF400F8E166 /* OpenAL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F766E229A58DF00E0F9C4 /* sfml-audio.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DEC22993BF300F8E166 /* sfml-audio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F766F229A58DF00E0F9C4 /* sfml-graphics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DED22993BF300F8E166 /* sfml-graphics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7670229A58DF00E0F9C4 /* sfml-network.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DEE22993BF300F8E166 /* sfml-network.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7671229A58DF00E0F9C4 /* sfml-system.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF322993BF300F8E166 /* sfml-system.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7672229A58DF00E0F9C4 /* sfml-window.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF722993BF400F8E166 /* sfml-window.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7673229A58DF00E0F9C4 /* SFML.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF422993BF400F8E166 /* SFML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7674229A58DF00E0F9C4 /* vorbis.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DEB22993BF300F8E166 /* vorbis.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7675229A58DF00E0F9C4 /* vorbisenc.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF222993BF300F8E166 /* vorbisenc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		499F7676229A58DF00E0F9C4 /* vorbisfile.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 49F10DF622993BF400F8E166 /* vorbisfile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		49F10DB12299342E00F8E166 /* Mainliam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F10DAC2299342D00F8E166 /* Mainliam.cpp */; };
-		49F10DB22299342E00F8E166 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F10DAF2299342E00F8E166 /* Ball.cpp */; };
-		49F10DB32299342E00F8E166 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 49F10DB02299342E00F8E166 /* Player.cpp */; };
+		496AE42F2341FD8F009FEB0B /* Mainliam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE4282341FD8F009FEB0B /* Mainliam.cpp */; };
+		496AE4302341FD8F009FEB0B /* MovementManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE4292341FD8F009FEB0B /* MovementManager.cpp */; };
+		496AE4312341FD8F009FEB0B /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE42A2341FD8F009FEB0B /* Physics.cpp */; };
+		496AE4322341FD8F009FEB0B /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE42B2341FD8F009FEB0B /* Ball.cpp */; };
+		496AE4332341FD8F009FEB0B /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE42C2341FD8F009FEB0B /* Player.cpp */; };
+		496AE4342341FD8F009FEB0B /* GameManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE42D2341FD8F009FEB0B /* GameManager.cpp */; };
+		496AE4352341FD8F009FEB0B /* PlayerManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 496AE42E2341FD8F009FEB0B /* PlayerManager.cpp */; };
+		499F766A229A58DF00E0F9C4 /* FLAC.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF122993BF300F8E166 /* FLAC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F766B229A58DF00E0F9C4 /* freetype.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF022993BF300F8E166 /* freetype.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F766C229A58DF00E0F9C4 /* ogg.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DEF22993BF300F8E166 /* ogg.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F766D229A58DF00E0F9C4 /* OpenAL.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF522993BF400F8E166 /* OpenAL.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F766E229A58DF00E0F9C4 /* sfml-audio.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DEC22993BF300F8E166 /* sfml-audio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F766F229A58DF00E0F9C4 /* sfml-graphics.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DED22993BF300F8E166 /* sfml-graphics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7670229A58DF00E0F9C4 /* sfml-network.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DEE22993BF300F8E166 /* sfml-network.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7671229A58DF00E0F9C4 /* sfml-system.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF322993BF300F8E166 /* sfml-system.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7672229A58DF00E0F9C4 /* sfml-window.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF722993BF400F8E166 /* sfml-window.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7673229A58DF00E0F9C4 /* SFML.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF422993BF400F8E166 /* SFML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7674229A58DF00E0F9C4 /* vorbis.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DEB22993BF300F8E166 /* vorbis.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7675229A58DF00E0F9C4 /* vorbisenc.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF222993BF300F8E166 /* vorbisenc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		499F7676229A58DF00E0F9C4 /* vorbisfile.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 49F10DF622993BF400F8E166 /* vorbisfile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		499F7669229A58AE00E0F9C4 /* CopyFiles */ = {
+		499F7669229A58AE00E0F9C4 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				499F766A229A58DF00E0F9C4 /* FLAC.framework in CopyFiles */,
-				499F766B229A58DF00E0F9C4 /* freetype.framework in CopyFiles */,
-				499F766C229A58DF00E0F9C4 /* ogg.framework in CopyFiles */,
-				499F766D229A58DF00E0F9C4 /* OpenAL.framework in CopyFiles */,
-				499F766E229A58DF00E0F9C4 /* sfml-audio.framework in CopyFiles */,
-				499F766F229A58DF00E0F9C4 /* sfml-graphics.framework in CopyFiles */,
-				499F7670229A58DF00E0F9C4 /* sfml-network.framework in CopyFiles */,
-				499F7671229A58DF00E0F9C4 /* sfml-system.framework in CopyFiles */,
-				499F7672229A58DF00E0F9C4 /* sfml-window.framework in CopyFiles */,
-				499F7673229A58DF00E0F9C4 /* SFML.framework in CopyFiles */,
-				499F7674229A58DF00E0F9C4 /* vorbis.framework in CopyFiles */,
-				499F7675229A58DF00E0F9C4 /* vorbisenc.framework in CopyFiles */,
-				499F7676229A58DF00E0F9C4 /* vorbisfile.framework in CopyFiles */,
+				499F766A229A58DF00E0F9C4 /* FLAC.framework in Copy Files */,
+				499F766B229A58DF00E0F9C4 /* freetype.framework in Copy Files */,
+				499F766C229A58DF00E0F9C4 /* ogg.framework in Copy Files */,
+				499F766D229A58DF00E0F9C4 /* OpenAL.framework in Copy Files */,
+				499F766E229A58DF00E0F9C4 /* sfml-audio.framework in Copy Files */,
+				499F766F229A58DF00E0F9C4 /* sfml-graphics.framework in Copy Files */,
+				499F7670229A58DF00E0F9C4 /* sfml-network.framework in Copy Files */,
+				499F7671229A58DF00E0F9C4 /* sfml-system.framework in Copy Files */,
+				499F7672229A58DF00E0F9C4 /* sfml-window.framework in Copy Files */,
+				499F7673229A58DF00E0F9C4 /* SFML.framework in Copy Files */,
+				499F7674229A58DF00E0F9C4 /* vorbis.framework in Copy Files */,
+				499F7675229A58DF00E0F9C4 /* vorbisenc.framework in Copy Files */,
+				499F7676229A58DF00E0F9C4 /* vorbisfile.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		496AE4282341FD8F009FEB0B /* Mainliam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mainliam.cpp; path = Apple_Build/Mainliam.cpp; sourceTree = "<group>"; };
+		496AE4292341FD8F009FEB0B /* MovementManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MovementManager.cpp; path = Apple_Build/MovementManager.cpp; sourceTree = "<group>"; };
+		496AE42A2341FD8F009FEB0B /* Physics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Physics.cpp; path = Apple_Build/Physics.cpp; sourceTree = "<group>"; };
+		496AE42B2341FD8F009FEB0B /* Ball.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Ball.cpp; path = Apple_Build/Ball.cpp; sourceTree = "<group>"; };
+		496AE42C2341FD8F009FEB0B /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = Apple_Build/Player.cpp; sourceTree = "<group>"; };
+		496AE42D2341FD8F009FEB0B /* GameManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GameManager.cpp; path = Apple_Build/GameManager.cpp; sourceTree = "<group>"; };
+		496AE42E2341FD8F009FEB0B /* PlayerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PlayerManager.cpp; path = Apple_Build/PlayerManager.cpp; sourceTree = "<group>"; };
+		496AE4362341FDD9009FEB0B /* 5_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 5_ball.png; path = Apple_Build/sprites/5_ball.png; sourceTree = "<group>"; };
+		496AE4372341FDD9009FEB0B /* 3_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 3_ball.png; path = Apple_Build/sprites/3_ball.png; sourceTree = "<group>"; };
+		496AE4382341FDD9009FEB0B /* 8_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 8_ball.png; path = Apple_Build/sprites/8_ball.png; sourceTree = "<group>"; };
+		496AE4392341FDD9009FEB0B /* 2_cue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2_cue.png; path = Apple_Build/sprites/2_cue.png; sourceTree = "<group>"; };
+		496AE43A2341FDD9009FEB0B /* 7_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 7_ball.png; path = Apple_Build/sprites/7_ball.png; sourceTree = "<group>"; };
+		496AE43B2341FDD9009FEB0B /* 9_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 9_ball.png; path = Apple_Build/sprites/9_ball.png; sourceTree = "<group>"; };
+		496AE43C2341FDD9009FEB0B /* 12_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 12_ball.png; path = Apple_Build/sprites/12_ball.png; sourceTree = "<group>"; };
+		496AE43D2341FDD9009FEB0B /* 15_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 15_ball.png; path = Apple_Build/sprites/15_ball.png; sourceTree = "<group>"; };
+		496AE43E2341FDD9009FEB0B /* menu_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_button.png; path = Apple_Build/sprites/menu_button.png; sourceTree = "<group>"; };
+		496AE43F2341FDD9009FEB0B /* 10_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 10_ball.png; path = Apple_Build/sprites/10_ball.png; sourceTree = "<group>"; };
+		496AE4402341FDDA009FEB0B /* 6_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 6_ball.png; path = Apple_Build/sprites/6_ball.png; sourceTree = "<group>"; };
+		496AE4412341FDDA009FEB0B /* 13_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 13_ball.png; path = Apple_Build/sprites/13_ball.png; sourceTree = "<group>"; };
+		496AE4422341FDDA009FEB0B /* 4_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 4_ball.png; path = Apple_Build/sprites/4_ball.png; sourceTree = "<group>"; };
+		496AE4432341FDDA009FEB0B /* 0_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 0_ball.png; path = Apple_Build/sprites/0_ball.png; sourceTree = "<group>"; };
+		496AE4442341FDDA009FEB0B /* play_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_button.png; path = Apple_Build/sprites/play_button.png; sourceTree = "<group>"; };
+		496AE4452341FDDA009FEB0B /* 2_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2_ball.png; path = Apple_Build/sprites/2_ball.png; sourceTree = "<group>"; };
+		496AE4462341FDDA009FEB0B /* 14_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 14_ball.png; path = Apple_Build/sprites/14_ball.png; sourceTree = "<group>"; };
+		496AE4472341FDDA009FEB0B /* exit_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exit_button.png; path = Apple_Build/sprites/exit_button.png; sourceTree = "<group>"; };
+		496AE4482341FDDA009FEB0B /* power_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = power_bar.png; path = Apple_Build/sprites/power_bar.png; sourceTree = "<group>"; };
+		496AE4492341FDDA009FEB0B /* table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table.png; path = Apple_Build/sprites/table.png; sourceTree = "<group>"; };
+		496AE44A2341FDDA009FEB0B /* 1_cue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1_cue.png; path = Apple_Build/sprites/1_cue.png; sourceTree = "<group>"; };
+		496AE44B2341FDDA009FEB0B /* 1_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1_ball.png; path = Apple_Build/sprites/1_ball.png; sourceTree = "<group>"; };
+		496AE44C2341FDDA009FEB0B /* 11_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 11_ball.png; path = Apple_Build/sprites/11_ball.png; sourceTree = "<group>"; };
 		49F10D82229931FD00F8E166 /* Apple_Build */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Apple_Build; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F10D88229931FD00F8E166 /* cute_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cute_image.jpg; sourceTree = "<group>"; };
 		49F10D89229931FD00F8E166 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
@@ -90,6 +125,36 @@
 		49F10D7A229931FD00F8E166 = {
 			isa = PBXGroup;
 			children = (
+				496AE4432341FDDA009FEB0B /* 0_ball.png */,
+				496AE44B2341FDDA009FEB0B /* 1_ball.png */,
+				496AE44A2341FDDA009FEB0B /* 1_cue.png */,
+				496AE4452341FDDA009FEB0B /* 2_ball.png */,
+				496AE4392341FDD9009FEB0B /* 2_cue.png */,
+				496AE4372341FDD9009FEB0B /* 3_ball.png */,
+				496AE4422341FDDA009FEB0B /* 4_ball.png */,
+				496AE4362341FDD9009FEB0B /* 5_ball.png */,
+				496AE4402341FDDA009FEB0B /* 6_ball.png */,
+				496AE43A2341FDD9009FEB0B /* 7_ball.png */,
+				496AE4382341FDD9009FEB0B /* 8_ball.png */,
+				496AE43B2341FDD9009FEB0B /* 9_ball.png */,
+				496AE43F2341FDD9009FEB0B /* 10_ball.png */,
+				496AE44C2341FDDA009FEB0B /* 11_ball.png */,
+				496AE43C2341FDD9009FEB0B /* 12_ball.png */,
+				496AE4412341FDDA009FEB0B /* 13_ball.png */,
+				496AE4462341FDDA009FEB0B /* 14_ball.png */,
+				496AE43D2341FDD9009FEB0B /* 15_ball.png */,
+				496AE4472341FDDA009FEB0B /* exit_button.png */,
+				496AE43E2341FDD9009FEB0B /* menu_button.png */,
+				496AE4442341FDDA009FEB0B /* play_button.png */,
+				496AE4482341FDDA009FEB0B /* power_bar.png */,
+				496AE4492341FDDA009FEB0B /* table.png */,
+				496AE42B2341FD8F009FEB0B /* Ball.cpp */,
+				496AE42D2341FD8F009FEB0B /* GameManager.cpp */,
+				496AE4282341FD8F009FEB0B /* Mainliam.cpp */,
+				496AE4292341FD8F009FEB0B /* MovementManager.cpp */,
+				496AE42A2341FD8F009FEB0B /* Physics.cpp */,
+				496AE42C2341FD8F009FEB0B /* Player.cpp */,
+				496AE42E2341FD8F009FEB0B /* PlayerManager.cpp */,
 				49F10D84229931FD00F8E166 /* Apple_Build */,
 				49F10D83229931FD00F8E166 /* Products */,
 				49F10DB42299353800F8E166 /* Frameworks */,
@@ -157,7 +222,7 @@
 			buildPhases = (
 				49F10D7F229931FD00F8E166 /* Sources */,
 				49F10D80229931FD00F8E166 /* Frameworks */,
-				499F7669229A58AE00E0F9C4 /* CopyFiles */,
+				499F7669229A58AE00E0F9C4 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -204,9 +269,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				49F10DB22299342E00F8E166 /* Ball.cpp in Sources */,
-				49F10DB12299342E00F8E166 /* Mainliam.cpp in Sources */,
-				49F10DB32299342E00F8E166 /* Player.cpp in Sources */,
+				496AE42F2341FD8F009FEB0B /* Mainliam.cpp in Sources */,
+				496AE4302341FD8F009FEB0B /* MovementManager.cpp in Sources */,
+				496AE4312341FD8F009FEB0B /* Physics.cpp in Sources */,
+				496AE4322341FD8F009FEB0B /* Ball.cpp in Sources */,
+				496AE4332341FD8F009FEB0B /* Player.cpp in Sources */,
+				496AE4342341FD8F009FEB0B /* GameManager.cpp in Sources */,
+				496AE4352341FD8F009FEB0B /* PlayerManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
