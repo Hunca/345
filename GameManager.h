@@ -10,11 +10,11 @@ extern sf::RectangleShape innerTable;
 extern int ballsLeft;
 extern sf::Font font;
 extern sf::Vertex dLine[];
-extern sf::RectangleShape cushions[];
-extern sf::Vector2f cushionPositions[];
 extern sf::CircleShape sockets[];
 extern sf::Vector2f socketPositions[];
 extern sf::Vertex socketEdges[24][2];
+extern sf::Sprite cueSprite;
+extern sf::Texture cueTexture1, cueTexture2;
 
 extern int playerGoing;
 extern sf::Text playerText;

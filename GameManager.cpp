@@ -24,32 +24,11 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     winner = -1;
     dLine[0] = sf::Vertex(sf::Vector2f(400.5f, 210.f), sf::Color::Black);
     dLine[1] = sf::Vertex(sf::Vector2f(400.5f, 211.f+tableHeight), sf::Color::Black);
-    innerTable.setPosition(210.f, 210.f);
-    innerTable.setFillColor(sf::Color::Green);
-    innerTable.setOutlineThickness(44.25f);
-    innerTable.setOutlineColor(sf::Color::Yellow);
-    for(int i = 0; i < 6; i++){
-        sockets[i].setPosition(socketPositions[i]);
-        sockets[i].setFillColor(sf::Color::Black);
-        cushions[i].setPosition(cushionPositions[i]);
-        cushions[i].setFillColor(sf::Color::Blue);
-        cushions[i].setOutlineThickness(0.f);
-        cushions[i].setOutlineColor(sf::Color::Blue);
-    }
     for (int i = 0; i < ballNumbers; i++) {
         balls[i] = new Ball(i, 8.55f, initialPositions[i].x, initialPositions[i].y);
         ballShapes[i] = new sf::CircleShape(balls[i]->radius);
         ballShapes[i]->setPosition(balls[i]->x, balls[i]->y);
-        if (balls[i]->num < 8) {
-            ballShapes[i]->setFillColor(sf::Color::Blue);
-        } else if (balls[i]->num > 8) {
-            ballShapes[i]->setFillColor(sf::Color::Red);
-        }
-        if (balls[i]->num == 0) {
-            ballShapes[i]->setFillColor(sf::Color::White);
-        } if (balls[i]->num == 8) {
-            ballShapes[i]->setFillColor(sf::Color::Black);
-        }
+
     }
     
     players[0] = new Player(0);
@@ -78,7 +57,6 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     suitText.setPosition(10.f, 30.f);
     suitText.setString("Suit: none");
     poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
-    poolCue.setFillColor(sf::Color::Black);
 }
 void GameManager::end(int endState) {
     if(winner == -1) {
@@ -184,9 +162,9 @@ void GameManager::swapPlayer() {
     players[playerGoing]->fouled = false;
     if(playerGoing == 0){
         playerGoing = 1;
-        poolCue.setFillColor(sf::Color::Magenta);
+        cueSprite.setTexture(cueTexture2);
     } else {
         playerGoing = 0;
-        poolCue.setFillColor(sf::Color::Black);
+        cueSprite.setTexture(cueTexture1);
     }
 }
