@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "PlayerManager.h"
 #include <SFML/Graphics.hpp>
-enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT, BREAKING, MENU, MOVECUE};
+enum gameState{PLAYERTURN, MOVEMENT, WHITEPLACEMENT, BREAKING, MENU, MOVECUE, END};
 extern gameState state;
 extern sf::RectangleShape innerTable;
 extern int ballsLeft;
@@ -28,7 +28,6 @@ class GameManager {
         static void tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers);
         static void ballSunk(Ball *ball);
         static void swapPlayer();
-        static void lose();
-        static void win();
+        static void end(int loser);
 };
 #endif

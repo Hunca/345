@@ -113,9 +113,9 @@ void draw() {
         window.draw(cueSprite);
     }
     if(players[playerGoing]->ballSuit == 1) {
-        suitText.setString("Suit: blue");
+        suitText.setString("Suit: Solids");
     } else if (players[playerGoing]->ballSuit == 9) {
-        suitText.setString("Suit: red");
+        suitText.setString("Suit: Stripes");
     }
     playerText.setString("Player " + std::to_string(players[playerGoing]->playerNum+1));
     if(players[playerGoing]->playersBallsLeft != 0) {
@@ -151,7 +151,7 @@ int main() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT) {//reset
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT && state != MENU) {//reset
             GameManager::tableSetup(balls, ballShapes, ballNumbers);
             ballsLeft = 15;
             playerGoing = 0;
