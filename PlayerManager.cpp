@@ -49,7 +49,7 @@ void PlayerManager::setPower(Ball *whiteBall, bool elevation) {
     float dist = sqrt((delta_x*delta_x)+(delta_y*delta_y));
     float xChange = (delta_x/dist)*(100*dt);
     float yChange = (delta_y/dist)*(100*dt);
-    std::cout << xChange << " " << yChange << "\n";
+    powerBar.setSize(sf::Vector2f(25, dist*2));
     if(elevation) {
         poolCue.setPosition(poolCue.getPosition().x-xChange, poolCue.getPosition().y-yChange);
     } else {
@@ -104,9 +104,6 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event, sf::RenderWindo
         if ((initialPos.x < powerBarBorder.getPosition().x + 50 && initialPos.x > powerBarBorder.getPosition().x) && (initialPos.y < powerBarBorder.getPosition().y + 400 && initialPos.y > powerBarBorder.getPosition().y)){
             // powerBar[0] = sf::Vertex(sf::Vector2f(30, powerBarBorder.getPosition().y + 400), sf::Color::Red);
             if (sf::Mouse::getPosition(window).y < powerBarBorder.getPosition().y + 400 && sf::Mouse::getPosition(window).y > powerBarBorder.getPosition().y){
-                powerBar.setRotation(180);
-                powerBar.setPosition(sf::Vector2f(powerBarBorder.getPosition().x + powerBarBorder.getSize().x - 12, powerBarBorder.getPosition().y + 400));
-                powerBar.setFillColor(sf::Color::Red);
                 powerBar.setSize(sf::Vector2f(25, (powerBarBorder.getPosition().y + 400) - sf::Mouse::getPosition(window).y));
                 float d = sqrt((poolCue.getPosition().x - whiteBall->x)*(poolCue.getPosition().x - whiteBall->x) + (poolCue.getPosition().y - whiteBall->y)*(poolCue.getPosition().y - whiteBall->y));
                 float t = (powerBar.getSize().y/2)/d;

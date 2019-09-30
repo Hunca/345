@@ -98,6 +98,9 @@ void draw() {
         powerBarSprite.setTexture(powerBarTexture);
         powerBarSprite.setPosition(20, 200);
         powerBarBorder.setPosition(20, 200);
+        powerBar.setRotation(180);
+        powerBar.setPosition(sf::Vector2f(powerBarBorder.getPosition().x + powerBarBorder.getSize().x - 12, powerBarBorder.getPosition().y + 400));
+        powerBar.setFillColor(sf::Color::Red);
         window.draw(powerBarBorder);
         window.draw(powerBar);
         window.draw(powerBarSprite);
