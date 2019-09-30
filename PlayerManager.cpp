@@ -112,9 +112,9 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event, sf::RenderWindo
                 float t = (powerBar.getSize().y/2)/d;
                 poolCue.setPosition((((1-t)*whiteBall->x) + (t*poolCue.getPosition().x)), (((1-t)*whiteBall->y) + (t*poolCue.getPosition().y)));
                 rad = sqrtf(((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) *
-                                ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
-                            ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) *
-                                ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
+                        ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
+                        ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) *
+                        ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
             }
             if (!(sf::Mouse::getPosition(window).y > powerBarBorder.getPosition().y + 400) && !(sf::Mouse::getPosition(window).y < powerBarBorder.getPosition().y)){
                 // powerBar[1] = sf::Vertex(sf::Vector2f(30, sf::Mouse::getPosition(window).y), sf::Color::Red);

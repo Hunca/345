@@ -140,7 +140,14 @@ void draw() {
         window.draw(exitSprite);
     }
     if(state == END) {
+        sf::Texture menuTexture;
+        sf::Sprite menuSprite;
+        menuTexture.loadFromFile("sprites/menu_button.png");
+        menuTexture.setSmooth(true);
+        menuSprite.setTexture(menuTexture);
+        menuSprite.setPosition(511, 360);
         endGameText.setPosition(500, 300);
+        window.draw(menuSprite);
         window.draw(endGameText);
     }
     window.display();
@@ -196,6 +203,18 @@ int main() {
                     window.close();
                     return 0;
                 }
+            }
+        }
+        if(state == END) {
+            sf::Vector2i pos = sf::Mouse::getPosition(window);
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 360 && pos.y < 360 + 40)) {cueTexture.loadFromFile("sprites/1_cue.png");
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    GameManager::tableSetup(balls, ballShapes, ballNumbers);
+                    ballsLeft = 15;
+                    playerGoing = 0;
+                    state = MENU;
+                }
+                    
             }
         }
         draw();
