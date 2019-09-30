@@ -77,25 +77,27 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
     poolCue.setFillColor(sf::Color::Black);
 }
-void GameManager::lose() {
-    std::cout << "loser\n";
-}
-void GameManager::win() {
-    std::cout << "winner\n";
+void GameManager::end(int loser) {
+    std::cout << "Player " << loser << "loses\n"; 
+    // state = END;
 }
 void GameManager::ballSunk(Ball *ball) {
     if(ball->num == 0) {
         if(players[playerGoing]->playersBallsLeft == 0) {
-            lose();
+            end(playerGoing);
         }
         ball->isSunk = true;
         foulSunk = true;
     } else if(ball->num == 8) {
         ball->isSunk = true;
         if(players[playerGoing]->playersBallsLeft == 0) {
-            win();
+            if(playerGoing == 0) {
+                end(1);
+            } else {
+                end(0);
+            }
         } else {
-            lose();
+            end(playerGoing);
         }
     } else {
         if(players[playerGoing]->ballSuit == 0) {
