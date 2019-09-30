@@ -136,9 +136,7 @@ void draw() {
         window.draw(exitSprite);
     }
     if(state == END) {
-
-        endGameText.setPosition(561, 300);
-        endGameText.setFillColor(sf::Color::Black);
+        endGameText.setPosition(500, 300);
         window.draw(endGameText);
     }
     window.display();
