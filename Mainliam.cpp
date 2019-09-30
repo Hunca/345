@@ -155,6 +155,7 @@ int main() {
 				window.close();
 		}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT && state != MENU) {//reset
+            cueTexture.loadFromFile("sprites/1_cue.png");
             GameManager::tableSetup(balls, ballShapes, ballNumbers);
             ballsLeft = 15;
             playerGoing = 0;
