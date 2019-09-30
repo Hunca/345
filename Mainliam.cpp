@@ -61,7 +61,7 @@ bool endTurn = false;
 gameState state = MENU;
 bool screenSelected = true;
 sf::Sprite cueSprite, ballSprites[16], tableSprite;
-sf::Texture tableTexture, ballTexture[16], cueTexture1, cueTexture2;
+sf::Texture tableTexture, ballTexture[16], cueTexture;
 void loadSprites(){
     tableTexture.loadFromFile("sprites/table.png");
     for(int i = 0; i < ballNumbers; i++) {
@@ -69,8 +69,7 @@ void loadSprites(){
         ballTexture[i].loadFromFile(fileName + "_ball.png");
         ballTexture[i].setSmooth(true);
     }
-    cueTexture1.loadFromFile("sprites/1_cue.png");
-    cueTexture2.loadFromFile("sprites/2_cue.png");
+    cueTexture.loadFromFile("sprites/1_cue.png");
 }
 
 void draw() {
@@ -93,9 +92,8 @@ void draw() {
         }
     }  
     if(state == PLAYERTURN || state == MOVECUE) {
-        cueTexture1.setSmooth(true);
-        cueTexture2.setSmooth(true);
-        cueSprite.setTexture(cueTexture1);
+        cueTexture.setSmooth(true);
+        cueSprite.setTexture(cueTexture);
         cueSprite.setOrigin(sf::Vector2f(7,291));
         cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
         window.draw(guideLine, 2, sf::Lines);
