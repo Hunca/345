@@ -1,7 +1,7 @@
 # COSC345 Year Long Project - 8 Ball Pool
 
 An 8 ball pool game which follows the concept of 'Small Is Beautiful'. We are aiming to create a program which is very lite, challenging, but enjoyable to play. Our game is for offline play, allowing for local player versus player mode. ~~a puzzle trickshot 
-mode.
+mode.~~
 
 ---
 ## Prerequisites:
@@ -120,7 +120,7 @@ Player      | Which player turn it is.
 Suit        | The players suit.
 Remaining   | Number of player balls remaining on table.
 ```
-~~*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__* 
+~~*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__*~~
 
 ###### Currently implemented game rules:
 - Player one initiates the break.
@@ -134,7 +134,7 @@ Remaining   | Number of player balls remaining on table.
 - If the black ball is sunk after sinking the reamining players balls, then 'Winner' is printed to the console.
 - While the table has the cue ball and black ball remaining, if the white ball is sunk, then 'Loser' is printed to the console.
 
-~~*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*    
+~~*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*~~
 
 ---
 ## Testing:
