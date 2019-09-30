@@ -115,6 +115,10 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
 }
 void PlayerManager::placeWhiteBall(Ball *ball, sf::CircleShape *ballShape, Ball *balls[]) {
     float speed = 100;
+    cueSprite.setRotation(0);
+    poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
+    guideLine[0] = sf::Vertex(sf::Vector2f(ball->x + ball->radius, ball->y + ball->radius), sf::Color::White);
+    guideLine[1] = sf::Vertex(sf::Vector2f(guidelineVector(ball, poolCue)), sf::Color::White);
     dt = dtClock.restart().asSeconds();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         if(ball->x + (ball->radius*2) < 210+tableWidth && state == WHITEPLACEMENT) {
