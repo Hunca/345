@@ -113,13 +113,15 @@ Exit button from start menu screen.
 
 ---
 ### Game functionality:
-###### The game window currently displays:
+###### Game window:
+The program will initially open to show the start game menu consisting of the 'Play' and 'Exit' buttons.
+During play, the prgram will display the following information on the top left corner of the window: 
 ```
 Player      | Which player turn it is.
 Suit        | The players suit.
 Remaining   | Number of player balls remaining on table.
 ```
-A power meter is also shown on the left hand side of the game window.
+A power meter is also shown on the left hand side of the game window and can be used to alter the power.
 
 ###### Currently implemented game rules:
 - Player one initiates the break.
@@ -129,14 +131,12 @@ A power meter is also shown on the left hand side of the game window.
     - Player ones turn ends.
 - Each player turn ends if they sink an opponents ball or the cue ball.
 - Each player turn continues if they sink a ball of their own suit.
-- If the black ball is sunk prior to sinking the remain players balls, then 'Loser' is printed to the console.
-- If the black ball is sunk after sinking the reamining players balls, then 'Winner' is printed to the console.
-- While the table has the cue ball and black ball remaining, if the white ball is sunk, then 'Loser' is printed to the console.
+- If a player sinks the 8 ball, then the oppent wins and the end game screen is displayed showing the winner.
 
 ---
-## Testing:
-
-Our code base is currently too small for any automated testing to be implemented.
+## User Testing:
+We tested our program with different individuals after our beta release in order to find major bugs and improvements.
+Multiple comments were made to include mouse inputs as the usability of just the arrow keys for aiming felt inaccurate and inconsistent for many players.
 
 ---
 ## Coding Style:
@@ -165,7 +165,7 @@ Using SFML a program window, a rectangle table shape, sockets, and cushions are 
         - Aiming input for the cue ball via mouse.
             - Cue ball aimer displays trajectory of the shot.
         - Input for placement of the cue ball via key press.
-        - Power level of the shot via key press.
+        - Power level of the shot via key press or by use of mouse inputs.
         
 * GameManager()
     - Initialises all the objects to the game screen at their default positions and initialises UI elements.
@@ -239,10 +239,11 @@ Final release.
 ---
 ## Project Changes:
 **__ Final release changes: __**
+* Program window size has been locked to prevent rendering errors
 * Addition of power meter
     - The power of the shot can be altered using the left mouse button and draging up and down the meter.
 * Addition of mouse input
-    - Testing using the keyboard controls for the cue direction proved to be too difficult and inaccurate for aiming.
+    - Testing based on user feedback, using the keyboard controls for the cue direction proved to be too difficult and inaccurate for aiming.
     - We have implemented a mouse input which allows for left click and dragging the cue around the cue ball in order to aim.
 * Cue alterations and aimer
     - The cue will display red or blue triangles to represent each player during their turn.
@@ -251,7 +252,7 @@ Final release.
 * Fixed physics overlap collisions with walls
     - Ball collisions and movement look and interact realistically.
 * Physics for ball-pocket interactions
-    - The pocket interaction with incoming balls required specific implementation to account for the various angles of which the ball         could collide with.
+    - The pocket interaction with incoming balls required specific implementation to account for the various angles of which the ball could collide with.
 * Addition of sprites and textures
 * Removal of Trickshot levels
     - After encountering difficulties from prior to the Beta release, we regrettably had to exclude the trickshot functionality due to continuous errors and due to our imposed line contraint of 1000 lines of code. 
