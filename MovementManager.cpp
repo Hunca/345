@@ -38,7 +38,7 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
         }
     }
     if(ball->x+ball->radius < 230.f || ball->x+ball->radius > 952.f || ball->y+ball->radius < 230.f || ball->y+ball->radius > 571.f){
-        for(int i = 0; i < 18; i++){ // 24 being the length of socketEdges. (Will always be 24)
+        for(int i = 0; i < 18; i++){ // 18 being the length of socketEdges. (Will always be 18)
             float edgeX = socketEdges[i][0].position.x - socketEdges[i][1].position.x;
             float edgeY = socketEdges[i][0].position.y - socketEdges[i][1].position.y;
             float edgeLength = edgeX*edgeX + edgeY*edgeY;
