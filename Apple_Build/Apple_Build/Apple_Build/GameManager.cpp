@@ -104,7 +104,9 @@ void GameManager::ballSunk(Ball *ball) {
         }
         if(ball->num < 8) {
             if(players[playerGoing]->ballSuit == 1) {
-                if(!ballSunk) players[playerGoing]->ballSunk = true;
+                if(!ballSunk){
+                    players[playerGoing]->ballSunk = true;
+                }
                 players[playerGoing]->playersBallsLeft--;
                 sunkBall = true;
             } else {
@@ -117,7 +119,9 @@ void GameManager::ballSunk(Ball *ball) {
             }
         } else if(ball->num > 8) {
             if(players[playerGoing]->ballSuit == 9) {
-                if(!ballSunk) players[playerGoing]->ballSunk = true;
+                if(!ballSunk){
+                    players[playerGoing]->ballSunk = true;
+                }
                 players[playerGoing]->playersBallsLeft--;
                 sunkBall = true;
             } else {
@@ -157,7 +161,9 @@ void GameManager::swapPlayer() {
         sunkBall = false;
         return;
     }
-    if(players[playerGoing]->fouled) state = WHITEPLACEMENT;
+    if(players[playerGoing]->fouled){
+        state = WHITEPLACEMENT;
+    }
     foulSunk = false;
     players[playerGoing]->fouled = false;
     if(playerGoing == 0){

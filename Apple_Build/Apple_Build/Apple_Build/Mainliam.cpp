@@ -125,7 +125,9 @@ void draw() {
         window.draw(remainingText);
         window.draw(suitText);
     }
-    if (state == BREAKING || state == WHITEPLACEMENT) window.draw(controlPrompText);
+    if (state == BREAKING || state == WHITEPLACEMENT){
+        window.draw(controlPrompText);
+    }
     if(state == MENU) {
         sf::Texture exitTexture, playTexute;
         sf::Sprite exitSprite, playSprite;
@@ -157,8 +159,9 @@ int main() {
     while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed){
 				window.close();
+            }
 		}
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::R) && state != MOVEMENT && state != MENU) {//reset
             cueTexture.loadFromFile("sprites/1_cue.png");
@@ -206,7 +209,8 @@ int main() {
         }
         if(state == END) {
             sf::Vector2i pos = sf::Mouse::getPosition(window);
-            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 360 && pos.y < 360 + 40)) {cueTexture.loadFromFile("sprites/1_cue.png");
+            if((pos.x > 511 && pos.x < 511+160) && (pos.y > 360 && pos.y < 360 + 40)) {
+                cueTexture.loadFromFile("sprites/1_cue.png");
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     GameManager::tableSetup(balls, ballShapes, ballNumbers);
                     ballsLeft = 15;
