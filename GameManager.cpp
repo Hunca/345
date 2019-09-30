@@ -13,12 +13,15 @@ sf::Text playerText("Player1", font);
 sf::Text remainingText("Remaining: 7", font);
 sf::Text suitText("Suit: ", font);
 sf::Text controlPrompText("Use the arrow keys to move the white ball and space to place it!", font);
+sf::Text endGameText("", font);
 
 int playerGoing = 0;
 Player *players[2];
 bool sunkBall = false;
 bool foulSunk = false;
+int winner = -1;
 void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int ballNumbers) {
+    winner = -1;
     dLine[0] = sf::Vertex(sf::Vector2f(400.5f, 210.f), sf::Color::Black);
     dLine[1] = sf::Vertex(sf::Vector2f(400.5f, 211.f+tableHeight), sf::Color::Black);
     innerTable.setPosition(210.f, 210.f);
@@ -77,14 +80,17 @@ void GameManager::tableSetup(Ball *balls[], sf::CircleShape *ballShapes[], int b
     poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
     poolCue.setFillColor(sf::Color::Black);
 }
-void GameManager::end(int loser) {
-    std::cout << "Player " << loser << "loses\n"; 
-    // state = END;
+void GameManager::end(int endState) {
+    if(winner == -1) {
+        winner = endState;
+    } else if(winner == 1) {
+        winner = endState;
+    }
 }
 void GameManager::ballSunk(Ball *ball) {
     if(ball->num == 0) {
         if(players[playerGoing]->playersBallsLeft == 0) {
-            end(playerGoing);
+            end(0);
         }
         ball->isSunk = true;
         foulSunk = true;
@@ -93,11 +99,9 @@ void GameManager::ballSunk(Ball *ball) {
         if(players[playerGoing]->playersBallsLeft == 0) {
             if(playerGoing == 0) {
                 end(1);
-            } else {
-                end(0);
-            }
+            } 
         } else {
-            end(playerGoing);
+            end(0);
         }
     } else {
         if(players[playerGoing]->ballSuit == 0) {
@@ -153,6 +157,24 @@ void GameManager::ballSunk(Ball *ball) {
 }
 
 void GameManager::swapPlayer() {
+    if(winner != -1) {
+        if(winner == 0) {
+            if (playerGoing == 0) {
+                endGameText.setString("Player: 2 Wins!");
+            } else {
+                endGameText.setString("Player: 1 Wins!");
+            }
+        } else if(winner == 1) {
+            if (playerGoing == 0) {
+                endGameText.setString("Player: 1 Wins!");
+            } else {
+                endGameText.setString("Player: 2 Wins!");
+            }
+        }
+        state = END;
+        return;
+    }
+    
     if(sunkBall && foulSunk == false && players[playerGoing]->fouled == false) {
         sunkBall = false;
         return;

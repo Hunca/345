@@ -141,6 +141,12 @@ void draw() {
         window.draw(exitButton);
         window.draw(exitButtonText);
     }
+    if(state == END) {
+
+        endGameText.setPosition(561, 300);
+        endGameText.setFillColor(sf::Color::Black);
+        window.draw(endGameText);
+    }
     window.display();
 }
 int main() {

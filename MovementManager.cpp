@@ -113,7 +113,7 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
             cueSprite.setRotation(0);
             poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
             if (players[playerGoing]->fouled && players[playerGoing]->playersBallsLeft == 0) {
-                GameManager::end(playerGoing);
+                GameManager::end(0);
                 return;
             }
             firstCollision = true;
