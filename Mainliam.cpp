@@ -21,10 +21,10 @@ float cornerRadius = 8.55f; //Radius of the circles on each cushion corner
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "8BallPool");
 sf::RectangleShape innerTable(sf::Vector2f(tableWidth, tableHeight));
 sf::CircleShape sockets[] = {sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f),  // Top row
-                             sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottomw row
+                             sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottom row
 sf::Vector2f socketPositions[] = {sf::Vector2f(174.9f, 174.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(967.1f, 174.9f),  // Top row
                                   sf::Vector2f(174.9f, 587.1f), sf::Vector2f(571.f, 595.25f), sf::Vector2f(967.1f, 587.1f)}; // Bottom row
-sf::Vertex socketEdges[24][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black)},   // TL Left
+sf::Vertex socketEdges[18][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Color::Black), sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black)},   // TL Left
                                  {sf::Vertex(sf::Vector2f(235.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 180.f), sf::Color::Black)},   // TL Right
                                  {sf::Vertex(sf::Vector2f(571.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(586.f, 180.f), sf::Color::Black)},   // TM Left
                                  {sf::Vertex(sf::Vector2f(611.f, 210.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 180.f), sf::Color::Black)},   // TM Right
@@ -41,13 +41,7 @@ sf::Vertex socketEdges[24][2] = {{sf::Vertex(sf::Vector2f(210.f, 235.f), sf::Col
                                  {sf::Vertex(sf::Vector2f(210.f, 235.f)), sf::Vertex(sf::Vector2f(210.f, 571.f))}, // Left
                                  {sf::Vertex(sf::Vector2f(972.f, 235.f)), sf::Vertex(sf::Vector2f(972.f, 571.f))}, // Right
                                  {sf::Vertex(sf::Vector2f(235.f, 591.f)), sf::Vertex(sf::Vector2f(571.f, 591.f))}, // Bottom Left
-                                 {sf::Vertex(sf::Vector2f(611.f, 591.f)), sf::Vertex(sf::Vector2f(947.f, 591.f))}, // Bottom Right
-                                 {sf::Vertex(sf::Vector2f(180.f, 205.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 180.f), sf::Color::Black)},   // TL Left
-                                 {sf::Vertex(sf::Vector2f(586.f, 180.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 180.f), sf::Color::Black)},   // TL Left
-                                 {sf::Vertex(sf::Vector2f(977.f, 180.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 205.f), sf::Color::Black)},   // TL Left
-                                 {sf::Vertex(sf::Vector2f(180.f, 601.f), sf::Color::Black), sf::Vertex(sf::Vector2f(205.f, 621.f), sf::Color::Black)},   // TL Left
-                                 {sf::Vertex(sf::Vector2f(586.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(596.f, 621.f), sf::Color::Black)},   // TL Left
-                                 {sf::Vertex(sf::Vector2f(977.f, 621.f), sf::Color::Black), sf::Vertex(sf::Vector2f(1002.f, 601.f), sf::Color::Black)}};   // TL Left
+                                 {sf::Vertex(sf::Vector2f(611.f, 591.f)), sf::Vertex(sf::Vector2f(947.f, 591.f))}};// Bottom Right
 sf::Vertex guideLine[2];
 Ball *balls[16];
 bool placing = false;

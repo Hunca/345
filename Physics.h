@@ -11,7 +11,7 @@ extern int windowWidth, windowHeight;
 extern int tableWidth, tableHeight;
 extern sf::Clock dtClock;
 extern float dt;
-extern sf::Vertex socketEdges[24][2];
+extern sf::Vertex socketEdges[18][2];
 extern Ball* cornerObjects[12];
 
 class Physics{
