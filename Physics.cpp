@@ -46,8 +46,8 @@ void Physics::cushionCollision(Ball *ballA, float x, float y) {
     ballB->vy = -ballA->vy;
     ballB->x-=ballB->radius;
     ballB->y-=ballB->radius;
-
     ballCollision(ballA, ballB);
+    delete(ballB);
 }
 bool Physics::overLapDetection(Ball *whiteBall, Ball *ball) {
     float x1 = whiteBall->x + whiteBall->radius, x2 = ball->x + ball->radius;
