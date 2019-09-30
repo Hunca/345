@@ -12,6 +12,7 @@ extern bool endTurn;
 extern bool screenSelected;
 extern sf::Sprite cueSprite;
 extern sf::Vector2f originalPower;
+extern sf::RectangleShape powerBarBorder;
 class PlayerManager {
     public:
         static void playerTurn(Ball *whiteBall, sf::Event event);
