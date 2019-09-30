@@ -13,8 +13,7 @@ extern sf::Vertex dLine[];
 extern sf::CircleShape sockets[];
 extern sf::Vector2f socketPositions[];
 extern sf::Vertex socketEdges[24][2];
-extern sf::Sprite cueSprite;
-extern sf::Texture cueTexture1, cueTexture2;
+extern sf::Texture cueTexture;
 
 extern int playerGoing;
 extern sf::Text playerText;

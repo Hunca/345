@@ -162,9 +162,9 @@ void GameManager::swapPlayer() {
     players[playerGoing]->fouled = false;
     if(playerGoing == 0){
         playerGoing = 1;
-        cueSprite.setTexture(cueTexture2);
+        cueTexture.loadFromFile("sprites/2_cue.png");
     } else {
         playerGoing = 0;
-        cueSprite.setTexture(cueTexture1);
+        cueTexture.loadFromFile("sprites/1_cue.png");
     }
 }
