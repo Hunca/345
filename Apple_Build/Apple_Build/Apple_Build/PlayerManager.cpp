@@ -102,8 +102,7 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event, sf::RenderWindo
         }
         if(rad == 0) rad = whiteBall->radius + poolCue.getRadius();
         if ((initialPos.x < powerBarBorder.getPosition().x + 50 && initialPos.x > powerBarBorder.getPosition().x) && (initialPos.y < powerBarBorder.getPosition().y + 400 && initialPos.y > powerBarBorder.getPosition().y)){
-            // powerBar[0] = sf::Vertex(sf::Vector2f(30, powerBarBorder.getPosition().y + 400), sf::Color::Red);
-            if (sf::Mouse::getPosition(window).y < powerBarBorder.getPosition().y + 400 && sf::Mouse::getPosition(window).y > powerBarBorder.getPosition().y){
+            if (sf::Mouse::getPosition(window).y < powerBarBorder.getPosition().y + 381 && sf::Mouse::getPosition(window).y > powerBarBorder.getPosition().y){
                 powerBar.setSize(sf::Vector2f(25, (powerBarBorder.getPosition().y + 400) - sf::Mouse::getPosition(window).y));
                 float d = sqrt((poolCue.getPosition().x - whiteBall->x)*(poolCue.getPosition().x - whiteBall->x) + (poolCue.getPosition().y - whiteBall->y)*(poolCue.getPosition().y - whiteBall->y));
                 float t = (powerBar.getSize().y/2)/d;
@@ -112,9 +111,6 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event, sf::RenderWindo
                         ((poolCue.getPosition().x + poolCue.getRadius()) - (whiteBall->x + whiteBall->radius)) +
                         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)) *
                         ((poolCue.getPosition().y + poolCue.getRadius()) - (whiteBall->y + whiteBall->radius)));
-            }
-            if (!(sf::Mouse::getPosition(window).y > powerBarBorder.getPosition().y + 400) && !(sf::Mouse::getPosition(window).y < powerBarBorder.getPosition().y)){
-                // powerBar[1] = sf::Vertex(sf::Vector2f(30, sf::Mouse::getPosition(window).y), sf::Color::Red);
             }
         } else {
             mouseAim(whiteBall, event, rad);
@@ -135,7 +131,7 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event, sf::RenderWindo
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         originalPower = poolCue.getPosition();
-        powerBar.setSize(sf::Vector2f(powerBar.getSize().x, 0));
+        powerBar.setSize(sf::Vector2f(powerBar.getSize().x, 19));
         state = MOVECUE;
         rad = whiteBall->radius + poolCue.getRadius();
     }

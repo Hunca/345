@@ -67,6 +67,7 @@ void loadSprites(){
     }
     cueTexture.loadFromFile("sprites/1_cue.png");
     powerBarTexture.loadFromFile("sprites/power_bar.png");
+    powerBar.setSize(sf::Vector2f(25, 19));
 }
 
 void draw() {
@@ -96,6 +97,7 @@ void draw() {
         cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
         powerBarTexture.setSmooth(true);
         powerBarSprite.setTexture(powerBarTexture);
+        powerBarSprite.setOrigin(0, 14);
         powerBarSprite.setPosition(20, 200);
         powerBarBorder.setPosition(20, 200);
         powerBar.setRotation(180);
