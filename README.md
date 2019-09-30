@@ -1,7 +1,7 @@
 # COSC345 Year Long Project - 8 Ball Pool
 
-An 8 ball pool game which follows the concept of 'Small Is Beautiful'. We are aiming to create a program which is very lite, challenging, but enjoyable to play. Our game is for offline play, allowing for local player versus player, and a puzzle trickshot 
-mode.
+An 8 ball pool game which follows the concept of 'Small Is Beautiful'. We are aiming to create a program which is very lite, challenging, but enjoyable to play. Our game is for offline play, allowing for local player versus player mode. ~~a puzzle trickshot 
+mode.~~
 
 ---
 ## Prerequisites:
@@ -86,15 +86,16 @@ app
 ---
 ### Running the program:
 
-The program takes inputs from the keyboard and will not require the use of a mouse.
-
-Player one  | depicted as a black circle when aiming.
-
-Player two  | depicted as a magenta circle when aiming.
+The program takes inputs from the keyboard and a mouse.
+Once run, you will be presented with a start menu screen.
+```
+Player 1 | Depicted by red triangles on the cue.
+Player 2 | Depicted by blue triangles on the cue.
+```
 
 #### Here is a list of input keys for our program:
 ```
-Left/Right Arrow Keys   | Changes direction of the cue on the cue ball.
+Mouse left click & drag | Changes direction of the cue on the cue ball.
 Up/Down Arrow Keys      | Changes the power input of the shot.
 Spacebar                | Initiates the shot to be made.
 R                       | Resets the game state to the start state.
@@ -103,10 +104,12 @@ R                       | Resets the game state to the start state.
 ###### On Windows:
 ```
 alt + f4
+Exit button from start menu screen.
 ```
 ###### On Mac:
 ```
 Pressing the stop button on the Xcode project window.
+Exit button from start menu screen.
 ```
 
 ---
@@ -117,13 +120,13 @@ Player      | Which player turn it is.
 Suit        | The players suit.
 Remaining   | Number of player balls remaining on table.
 ```
-*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__* 
+~~*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__*~~
 
 ###### Currently implemented game rules:
 - Player one initiates the break.
-- Sinking a coloured ball will initialise the players suit (red or blue balls).
-- If two balls of different colours are sunk in one turn:
-    - The colour of the first ball sunk will be chosen as the players suit.
+- Sinking a ball will initialise the players suit (solids or stripes).
+- If two balls of different suits are sunk in a single turn:
+    - The suit of the first ball sunk will be chosen as the players suit.
     - Player ones turn ends.
 - Each player turn ends if they sink an opponents ball or the cue ball.
 - Each player turn continues if they sink a ball of their own suit.
@@ -131,7 +134,7 @@ Remaining   | Number of player balls remaining on table.
 - If the black ball is sunk after sinking the reamining players balls, then 'Winner' is printed to the console.
 - While the table has the cue ball and black ball remaining, if the white ball is sunk, then 'Loser' is printed to the console.
 
-*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*    
+~~*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*~~
 
 ---
 ## Testing:
@@ -162,9 +165,11 @@ Using SFML a program window, a rectangle table shape, sockets, and cushions are 
    
 * PlayerManager()
     - Handles user inputs.
-        - Aiming input for the cue ball.
-        - Input for placement of the cue ball.
-
+        - Aiming input for the cue ball via mouse.
+            - Cue ball aimer displays trajectory of the shot.
+        - Input for placement of the cue ball via key press.
+        - Power level of the shot via key press.
+        
 * GameManager()
     - Initialises all the objects to the game screen at their default positions and initialises UI elements.
     - Contains placeholder methods for winning and losing states.
@@ -195,7 +200,8 @@ Using SFML a program window, a rectangle table shape, sockets, and cushions are 
         - Uses DeltaTime for synchronous movement speed.
           
     - collisionCheck():
-        - Check a given ball against all other balls for collision.
+        - Checks a given ball against all other balls for collision.
+        - Checks a given ball against the sockets of the table for collision.
           
 * Ball() & Player()
     - Classes used for holding data.
@@ -205,15 +211,18 @@ Using SFML a program window, a rectangle table shape, sockets, and cushions are 
         - Loops through an array of lines (edges of the cushions).
         - Calculates whether a ball is colliding with the line.
         - Changes the balls velocity appropriately.
-    - ballCollisions():
+    - ballCollision():
         - Handles collisions between balls.
         - Displaces each colliding ball by the amount of overlap which they collide with.
         - Changes the balls velocity appropriately.
         
     - cushionCollision():
-        - Currently unused.
+        - Handles collisions between the balls and the cushions.
+        - Creates a temporary ball at the x & y coordinates of the collision.
+        - Calls the ballCollision() with the ball and temporary ball.
+        
     - overLapDetection():
-        - Places the cue ball (checks whether if it has collided with another ball)
+        - Places the cue ball (checks whether if it has collided with another ball).
     
         
 ---
@@ -228,10 +237,26 @@ Using SFML a program window, a rectangle table shape, sockets, and cushions are 
 ---
 ## Version:
 
-Beta release.
+Final release.
 
 ---
 ## Project Changes:
+**__ Final release changes: __**
+* Addition of mouse input
+    - Testing using the keyboard controls for the cue direction proved to be too difficult and inaccurate for aiming.
+    - We have implemented a mouse input which allows for left click and dragging the cue around the cue ball in order to aim.
+* Cue alterations and aimer
+    - The cue will display red or blue triangles to represent each player during their turn.
+    - Power can be set pior to aiming or after aiming.
+    - The aimer has been implemented to rotate smoothly around the cue ball
+* Fixed physics overlap collisions with walls
+    - Ball collisions and movement look and interact realistically.
+* Physics for ball-pocket interactions
+    - The pocket interaction with incoming balls required specific implementation to account for the various angles of which the ball could collide with.
+* Addition of sprites and textures
+* Removal of Trickshot levels.
+    - After encountering difficulties from prior to the Beta release, we regrettably had to exclude the trickshot functionality due to continuous errors and due to our imposed line contraint of 1000 lines of code. 
+
 **__ Beta release changes: __**
 * Refactoring of code
     - The code in our Alpha release was very primitive and lacked proper structure.
@@ -260,6 +285,7 @@ Current there is no license, but if required we will use the MIT License.
 ## Acknowledgments:
 * Used javidx9's [youtube tutorial](https://www.youtube.com/watch?v=LPzyNOHY3A4) as a reference in creating circle collisions.
 * [Arial font](https://github.com/JotJunior/PHP-Boleto-ZF2/blob/master/public/assets/fonts/arial.ttf) from JotJunior's github
+* Used Ivan Voirol's [tileset](https://opengameart.org/sites/default/files/Slates%20%5B32x32px%20orthogonal%20tileset%20by%20Ivan%20Voirol%5D.png) for sprite creation.
 * COSC 345 Lecture slides
 * *Many thanks to Google.*
 * *Shout out to caffeine.*
