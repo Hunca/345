@@ -20,13 +20,6 @@ bool noMovement = true; //boolean for moving balls
 float cornerRadius = 8.55f; //Radius of the circles on each cushion corner
 sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "8BallPool");
 sf::RectangleShape innerTable(sf::Vector2f(tableWidth, tableHeight));
-
-sf::RectangleShape cushions[] = {sf::RectangleShape(sf::Vector2f(336.f, 44.25f)), sf::RectangleShape(sf::Vector2f(336.f, 44.25f)),  // Top 2
-                                 sf::RectangleShape(sf::Vector2f(44.25f, 336.f)), sf::RectangleShape(sf::Vector2f(44.25f, 336.f)),  // Left and right
-                                 sf::RectangleShape(sf::Vector2f(336.f, 44.25f)), sf::RectangleShape(sf::Vector2f(336.f, 44.25f))}; // Bottom 2
-sf::Vector2f cushionPositions[] = {sf::Vector2f(235.f, 165.75f), sf::Vector2f(611.f, 165.75f), // Top 2
-                                   sf::Vector2f(165.75f, 235.f), sf::Vector2f(972.f, 235.f),   // Left and right
-                                   sf::Vector2f(235.f, 591.f), sf::Vector2f(611.f, 591.f)};    // Bottom 2
 sf::CircleShape sockets[] = {sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f),  // Top row
                              sf::CircleShape(20.f), sf::CircleShape(20.f), sf::CircleShape(20.f)}; // Bottomw row
 sf::Vector2f socketPositions[] = {sf::Vector2f(174.9f, 174.9f), sf::Vector2f(571.f, 164.9f), sf::Vector2f(967.1f, 174.9f),  // Top row
@@ -68,7 +61,7 @@ bool endTurn = false;
 gameState state = MENU;
 bool screenSelected = true;
 sf::Sprite cueSprite, ballSprites[16], tableSprite;
-sf::Texture tableTexture, ballTexture[16], cueTexture;
+sf::Texture tableTexture, ballTexture[16], cueTexture1, cueTexture2;
 void loadSprites(){
     tableTexture.loadFromFile("sprites/table.png");
     for(int i = 0; i < ballNumbers; i++) {
@@ -76,7 +69,8 @@ void loadSprites(){
         ballTexture[i].loadFromFile(fileName + "_ball.png");
         ballTexture[i].setSmooth(true);
     }
-    cueTexture.loadFromFile("sprites/1_cue.png");
+    cueTexture1.loadFromFile("sprites/1_cue.png");
+    cueTexture2.loadFromFile("sprites/2_cue.png");
 }
 
 void draw() {
@@ -87,17 +81,7 @@ void draw() {
     tableSprite.setPosition(210,210);
     window.draw(tableSprite);
 
-    // window.draw(innerTable);
-    // window.draw(dLine, 2, sf::Lines);
-
-    // for(int i = 0; i < 6; i++){
-    //     window.draw(sockets[i]);
-    //     window.draw(cushions[i]);
-    // }
-    // for(int i = 0; i < 18; i++){
-    //     window.draw(socketEdges[i], 2, sf::Lines);
-    // }
-    if(state != MENU) {
+    if(state != MENU && state != END) {
         for(int i = 0; i < ballNumbers; i++) {
             if(balls[i]->isSunk == false) {
                 sf::Sprite ballSprite;
@@ -107,12 +91,11 @@ void draw() {
                 window.draw(ballSprites[i]);
             }
         }
-    }
-    if(balls[0]->isSunk == false && state != MENU) window.draw(*ballShapes[0]);
-    
+    }  
     if(state == PLAYERTURN || state == MOVECUE) {
-        cueTexture.setSmooth(true);
-        cueSprite.setTexture(cueTexture);
+        cueTexture1.setSmooth(true);
+        cueTexture2.setSmooth(true);
+        cueSprite.setTexture(cueTexture1);
         cueSprite.setOrigin(sf::Vector2f(7,291));
         cueSprite.setPosition(poolCue.getPosition().x + poolCue.getRadius(), poolCue.getPosition().y + poolCue.getRadius());
         window.draw(guideLine, 2, sf::Lines);
@@ -129,7 +112,7 @@ void draw() {
     } else {
         remainingText.setString("Remaining: Black");
     }
-    if(state != MENU)  {
+    if(state != MENU && state != END)  {
         window.draw(playerText);
         window.draw(remainingText);
         window.draw(suitText);
@@ -146,6 +129,12 @@ void draw() {
         playSprite.setPosition(511, 300);
         window.draw(playSprite);
         window.draw(exitSprite);
+    }
+    if(state == END) {
+
+        endGameText.setPosition(561, 300);
+        endGameText.setFillColor(sf::Color::Black);
+        window.draw(endGameText);
     }
     window.display();
 }

@@ -26,10 +26,10 @@ void MovementManager::collisionCheck(Ball *ball, Ball *balls[]) {
                 Physics::ballCollision(ball, balls[otherBall]);
                 if(firstCollision && ball->num == 0) {
                     firstCollision = false;
-                    if(players[playerGoing]->ballSuit != 0) {
-                        if(players[playerGoing]->ballSuit > 8 && balls[otherBall]->num < 8) {
+                    if(players[playerGoing]->ballSuit != 0 && players[playerGoing]->playersBallsLeft != 0) {
+                        if(players[playerGoing]->ballSuit > 8 && balls[otherBall]->num <= 8) {
                             players[playerGoing]->fouled = true;
-                        } else if(players[playerGoing]->ballSuit < 8 && balls[otherBall]->num > 8) {
+                        } else if(players[playerGoing]->ballSuit < 8 && balls[otherBall]->num >= 8) {
                             players[playerGoing]->fouled = true;
                         }
                     }
@@ -113,7 +113,7 @@ void MovementManager::moveTick(Ball *balls[], sf::CircleShape *ballShapes[], int
             cueSprite.setRotation(0);
             poolCue.setPosition(sf::Vector2f(balls[0]->x, balls[0]->y - poolCue.getRadius()));
             if (players[playerGoing]->fouled && players[playerGoing]->playersBallsLeft == 0) {
-                GameManager::end(playerGoing);
+                GameManager::end(0);
                 return;
             }
             firstCollision = true;

@@ -98,7 +98,7 @@ void PlayerManager::playerTurn(Ball *whiteBall, sf::Event event) {
         mouseAim(whiteBall, event, rad);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        if (distance <= 600) { //alter distance of cue
+        if (distance <= 200) { //alter distance of cue
             setPower(whiteBall, false);
         }
     }
