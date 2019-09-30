@@ -1,7 +1,6 @@
 # COSC345 Year Long Project - 8 Ball Pool
 
-An 8 ball pool game which follows the concept of 'Small Is Beautiful'. We are aiming to create a program which is very lite, challenging, but enjoyable to play. Our game is for offline play, allowing for local player versus player mode. ~~a puzzle trickshot 
-mode.~~
+An 8 ball pool game which follows the concept of 'Small Is Beautiful'. We are aiming to create a program which is very lite, challenging, but enjoyable to play. Our game is for offline play, allowing for local player versus player mode.
 
 ---
 ## Prerequisites:
@@ -95,8 +94,8 @@ Player 2 | Depicted by blue triangles on the cue.
 
 #### Here is a list of input keys for our program:
 ```
-Mouse left click & drag | Changes direction of the cue on the cue ball.
-Up/Down Arrow Keys      | Changes the power input of the shot.
+Mouse left click & drag | Changes direction of the cue on the cue ball & can alter power of the shot.
+Arrow Keys              | Changes the power input of the shot. Also used to place cue ball.
 Spacebar                | Initiates the shot to be made.
 R                       | Resets the game state to the start state.
 ```
@@ -120,7 +119,7 @@ Player      | Which player turn it is.
 Suit        | The players suit.
 Remaining   | Number of player balls remaining on table.
 ```
-~~*__NB: The current version of our game will display 'Remaining: Black' after all balls have been sunk for the player. This is not a bug, but an intentional "feature" of sorts at this stage.__*~~
+A power meter is also shown on the left hand side of the game window.
 
 ###### Currently implemented game rules:
 - Player one initiates the break.
@@ -133,8 +132,6 @@ Remaining   | Number of player balls remaining on table.
 - If the black ball is sunk prior to sinking the remain players balls, then 'Loser' is printed to the console.
 - If the black ball is sunk after sinking the reamining players balls, then 'Winner' is printed to the console.
 - While the table has the cue ball and black ball remaining, if the white ball is sunk, then 'Loser' is printed to the console.
-
-~~*__NB: The current version of our game will continue to allow the players to play until only the cue ball remains. This is not a bug, but an intentional "feature" of sorts at this stage.__*~~
 
 ---
 ## Testing:
@@ -242,19 +239,21 @@ Final release.
 ---
 ## Project Changes:
 **__ Final release changes: __**
+* Addition of power meter
+    - The power of the shot can be altered using the left mouse button and draging up and down the meter.
 * Addition of mouse input
     - Testing using the keyboard controls for the cue direction proved to be too difficult and inaccurate for aiming.
     - We have implemented a mouse input which allows for left click and dragging the cue around the cue ball in order to aim.
 * Cue alterations and aimer
     - The cue will display red or blue triangles to represent each player during their turn.
     - Power can be set pior to aiming or after aiming.
-    - The aimer has been implemented to rotate smoothly around the cue ball
+    - The aimer has been implemented to rotate smoothly around the cue ball.
 * Fixed physics overlap collisions with walls
     - Ball collisions and movement look and interact realistically.
 * Physics for ball-pocket interactions
-    - The pocket interaction with incoming balls required specific implementation to account for the various angles of which the ball could collide with.
+    - The pocket interaction with incoming balls required specific implementation to account for the various angles of which the ball         could collide with.
 * Addition of sprites and textures
-* Removal of Trickshot levels.
+* Removal of Trickshot levels
     - After encountering difficulties from prior to the Beta release, we regrettably had to exclude the trickshot functionality due to continuous errors and due to our imposed line contraint of 1000 lines of code. 
 
 **__ Beta release changes: __**
