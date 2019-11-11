@@ -14,44 +14,6 @@ For Windows you will require to have [Make](https://www.gnu.org/software/make/) 
 ---
 ## Installing:
 
-### For MacOS Users:
-
-**_Please note that these instructions are for Mac users using the Xcode IDE._**
-
-**_We will assume you have [Xcode installed](https://itunes.apple.com/nz/app/xcode/id497799835?mt=12) on your computer._**
-
-**Step1:**
-
-Clone or download this Github repository to your local computer.
-
-**Step2:**
-
-*If you have cloned the repository, skip to Step3*
-
-Move zip file to desired directory and unzip.
-
-**Step3:**
-
-Navigate through the project directory to the Apple_Build directory which contains the Xcode project file *Apple_Build.xcodeproj*
-```
-345-master/Apple_Build/Apple_Build/Apple_Build.xcodeproj
-```
-Then open the *Apple_Build.xcodeproj* with Xcode.
-
-**Final Step:**
-
-Once open, to build the project, press the build and run button (Located top left of the Xcode project window).
-
-_A new window will pop up with the application running._
-
-To stop the application from running, return to the Xcode project window and press the stop button which is next to the run button.
-
-**NB: If you edit the code, you will need to clean the build folder before building the project again for it to run.
-This can be done by using the following keyboard shortcut:**
-```
-Command + Alt + Shift + k
-```
----
 ### For Windows:
 
 ***We will assume you have properly installed [Make](https://www.gnu.org/software/make/) and [setup Visual Studio Code with MinGW.](https://code.visualstudio.com/docs/cpp/config-mingw)***
